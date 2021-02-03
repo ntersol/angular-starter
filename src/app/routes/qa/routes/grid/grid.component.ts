@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { cars } from '../tables/cars';
-import { ColDef, GridOptions } from 'ag-grid-community';
+import { ColDef, GridOptions } from '@ag-grid-community/core';
 import { DomainService } from '$domain';
 import { gridState1, gridState2, gridState3 } from './gridStates';
 import { environment } from '$env';
@@ -70,10 +70,10 @@ export class GridComponent implements OnInit {
       this.domain.users.delete(5).subscribe();
     }, 1000);
 
-      this.domain.users.select$.subscribe(x => console.log(x));
+    this.domain.users.select$.subscribe(x => console.log(x));
   }
 
-  public gridStateChange(gridState: NtsGridState ) {
+  public gridStateChange(gridState: NtsGridState) {
     // console.warn('gridStateChange', JSON.stringify(gridState));
     window.localStorage.setItem('qaGrid', JSON.stringify(gridState));
   }

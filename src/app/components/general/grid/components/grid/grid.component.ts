@@ -15,9 +15,10 @@ import {
   HostListener,
   SimpleChanges,
 } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { GridOptions, ColumnApi, ColDef, GridApi, RowNode } from 'ag-grid-community';
-import { LicenseManager } from 'ag-grid-enterprise';
+
+import { AgGridAngular } from '@ag-grid-community/angular';
+import { GridOptions, ColumnApi, ColDef, GridApi, RowNode } from '@ag-grid-community/core';
+import { LicenseManager } from '@ag-grid-enterprise/core';
 import { fromEvent } from 'rxjs/internal/observable/fromEvent';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -28,18 +29,20 @@ import { GridColumnDirective } from '../../directives/column.directive';
 import { columnsTemplateAttach } from '../../utils/attachColumnTemplates.util';
 import { rowsReselect } from '../../utils/reselectRows.util';
 import { NtsGridState } from '../../grid';
-const defaultsDeep = require('lodash/defaultsDeep');
-const cloneDeep = require('lodash/cloneDeep');
+import { defaultsDeep } from 'lodash-es';
+import { cloneDeep } from 'lodash-es';
+
 /**
  * A powerful data grid for visualizing and managing complex information
  */
+// import { RowNode } from '@ag-grid-community/core/dist/styles/ag-theme-balham.css';
 @Component({
   selector: 'nts-grid',
   templateUrl: './grid.component.html',
   styleUrls: [
     // After moving starter OUT of monorepo, update path to node_modules
-    '../../../../../../../node_modules/ag-grid-community/dist/styles/ag-grid.css',
-    '../../../../../../../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css',
+    '../../../../../../../node_modules/@ag-grid-community/core/dist/styles/ag-grid.css',
+    '../../../../../../../node_modules/@ag-grid-community/core/dist/styles/ag-theme-balham.css',
     './grid.component.scss',
   ],
   // tslint:disable-next-line:use-component-view-encapsulation
@@ -59,7 +62,7 @@ export class GridComponent implements OnInit, OnChanges, OnDestroy {
   /** Hold and set default options for grid*/
   private _gridOptions: GridOptions = {
     context: {
-      this: this.parentRef,
+      // this: this.parentRef,
     },
     // A default column definition with properties that get applied to every column
     defaultColDef: {
@@ -170,9 +173,7 @@ export class GridComponent implements OnInit, OnChanges, OnDestroy {
   public gridComponents = { statusBarComponent: GridStatusBarComponent };
   public gridStatusComponent: GridStatusBarComponent | undefined;
   /** Watch all grid state changes */
-  public gridEvent$ = new Subject<
-    'sortChanged' | 'filterChanged' | 'columnRowGroupChanged' | 'columnPinned' | 'columnMoved' | 'columnResized'
-  >();
+  public gridEvent$ = new Subject<'sortChanged' | 'filterChanged' | 'columnRowGroupChanged' | 'columnPinned' | 'columnMoved' | 'columnResized'>();
   /** Hold latest gridstate */
   public gridState$ = new BehaviorSubject<any>(this.gridState);
   public columns$ = new BehaviorSubject<ColDef[] | null>(null);
@@ -304,9 +305,7 @@ export class GridComponent implements OnInit, OnChanges, OnDestroy {
     this.gridColumnApi = params.columnApi;
     this.gridApi = this.grid.api;
     // Set reference to status component so state can be pushed
-    this.gridStatusComponent = (<any>this).gridOptions.api
-      .getStatusPanel('statusBarComponent')
-      .getFrameworkComponentInstance();
+    this.gridStatusComponent = (<any>this).gridOptions.api.getStatusPanel('statusBarComponent').getFrameworkComponentInstance();
     if (this.gridStatusComponent) {
       // Attach reset method to status component so the status method
       this.gridStatusComponent.reset = this.gridReset.bind(this);
@@ -385,14 +384,8 @@ export class GridComponent implements OnInit, OnChanges, OnDestroy {
         selections.forEach(selection => {
           if (selection.startRow && selection.endRow) {
             // Determine if this is a top to bottom or bottom to top drag, set appropriate index for FOR loop below
-            const start =
-              selection.startRow.rowIndex < selection.endRow.rowIndex
-                ? selection.startRow.rowIndex
-                : selection.endRow.rowIndex;
-            const end =
-              selection.startRow.rowIndex > selection.endRow.rowIndex
-                ? selection.startRow.rowIndex
-                : selection.endRow.rowIndex;
+            const start = selection.startRow.rowIndex < selection.endRow.rowIndex ? selection.startRow.rowIndex : selection.endRow.rowIndex;
+            const end = selection.startRow.rowIndex > selection.endRow.rowIndex ? selection.startRow.rowIndex : selection.endRow.rowIndex;
             // Loop through all nodes, if it's index falls between start and end, add it to nodes list
             this.grid.api.forEachNode((node: any) => {
               if (node.rowIndex >= start && node.rowIndex <= end) {
