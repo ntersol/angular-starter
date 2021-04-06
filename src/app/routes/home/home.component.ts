@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public pages: Wizard.Page[] = pages;
   public routes: Wizard.Route[] = routes;
 
+  public complete = false;
+
   /***/
   public formGroup = this.fb.group({
     $$computed: this.fb.group({

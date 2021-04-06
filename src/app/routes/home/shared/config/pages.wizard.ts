@@ -136,6 +136,22 @@ export const pages: Wizard.Page[] = [
           },
         ],
       },
+      {
+        type: 'html',
+        html: '<h3 class="text-center">Thank you for your service!</h3>',
+        visible: [
+          {
+            condition: 'AND',
+            rules: [
+              {
+                field: '$$computed.isMilitary',
+                operator: WizardOperator.EQ,
+                value: true,
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 

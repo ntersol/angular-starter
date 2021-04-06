@@ -5,14 +5,27 @@
       (sectionStateChanged)="sectionStateChanged($event)"
       (ready)="store = $event"
       (stateChange)="stateChange($event)"
-      (complete)="complete()"
+      
   -->
   <div style="min-height: 90px">
     <nts-wizard-nav-top [store]="store" *ngIf="store"></nts-wizard-nav-top>
   </div>
   <p-card>
     <div class="p-3">
-      <nts-wizard [form]="formGroup" [sections]="sections" [pages]="pages" [routes]="routes" (ready)="store = $event"> </nts-wizard>
+      <ng-container *ngIf="complete">
+        <h2>Submission complete</h2>
+        <p>A customer service advocate will be in touch with you in 2-3 business days.</p>
+      </ng-container>
+      <nts-wizard
+        *ngIf="!complete"
+        [form]="formGroup"
+        [sections]="sections"
+        [pages]="pages"
+        [routes]="routes"
+        (ready)="store = $event"
+        (complete)="complete = true"
+      >
+      </nts-wizard>
     </div>
   </p-card>
 </div>
