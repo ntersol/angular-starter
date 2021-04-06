@@ -31,12 +31,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   });
    */
 
-/***/
+  /***/
   public formGroup = this.fb.group({
     $$computed: this.fb.group({
-      hasBankruptcy: [],
-      isMilitary: [],
-      hasCoborrower: [],
+      hasBankruptcy: null,
+      isMilitary: null,
+      hasCoborrower: null,
     }),
     borrowers: this.fb.group({
       phoneNumber: [],
@@ -44,11 +44,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       emailAddress: [],
     }),
   });
-   
+
   constructor(private fb: FormBuilder) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   /** Must be present even if not used for autounsub */
   ngOnDestroy() {}
