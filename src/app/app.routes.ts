@@ -40,10 +40,15 @@ export const ROUTES: Routes = [
 
       // Empty path string for homepage ('') needs to be LAST otherwise it catches all other routes
       {
-        path: 'route',
-        pathMatch: 'full',
-        loadChildren: () =>
-          import('./routes/_route/route.module').then(m => m.RouteModule),
+        path: 'wizard',
+        loadChildren: () => import('./routes/home/home.module').then(m => m.HomeModule),
+        // canActivate: [AuthGuard],
+      },
+
+      {
+        path: 'qa',
+        loadChildren: () => import('./routes/qa/qa.module').then(m => m.QaModule),
+        data: { title: 'E2E Testing' },
         canActivate: [AuthGuard],
       },
 
@@ -51,24 +56,15 @@ export const ROUTES: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadChildren: () =>
-          import('./routes/home/home.module').then(m => m.HomeModule),
-        canActivate: [AuthGuard],
-      },
-
-      {
-        path: 'qa',
-        loadChildren: () =>
-          import('./routes/qa/qa.module').then(m => m.QaModule),
-        data: { title: 'E2E Testing' },
-        canActivate: [AuthGuard],
+        loadChildren: () => import('./routes/_route/route.module').then(m => m.RouteModule),
+        // canActivate: [AuthGuard],
       },
 
       {
         path: '**',
         component: NoContentComponent,
         data: { title: 'Page Not Found' },
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
       },
     ],
   },

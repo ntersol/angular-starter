@@ -15,9 +15,10 @@ import {
   RouteUiStateStore,
 } from './shared/state/ui';
 import { RouteDomainStateService } from './shared/state/domain';
+import { NtsWizardModule } from 'src/app/components/general/wizard';
 
 @NgModule({
-  imports: [CommonModule, SiteModule, routing],
+  imports: [CommonModule, SiteModule, routing, NtsWizardModule],
   declarations: [HomeComponent],
   providers: [
     RouteUiStateService,

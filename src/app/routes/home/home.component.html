@@ -1,3 +1,12 @@
 <div class="ui-container">
-  <h1>Write Cool Code</h1>
+  <!--
+      [dataFields]="lmDomain.dataFields$ | async"
+      (routeChanged)="routeChanged()"
+      (sectionStateChanged)="sectionStateChanged($event)"
+      (ready)="store = $event"
+      (stateChange)="stateChange($event)"
+      (complete)="complete()"
+  -->
+  <nts-wizard-nav-top [store]="store" *ngIf="store"></nts-wizard-nav-top>
+  <nts-wizard wizardId="wiz-demo" [form]="formGroup" [sections]="sections" [pages]="pages" [routes]="routes" (ready)="store = $event"> </nts-wizard>
 </div>

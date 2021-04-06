@@ -1,35 +1,54 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy,
-} from '@angular/core';
-// import { untilDestroyed } from 'ngx-take-until-destroy';
-
-// Global state
-// import { DomainService } from '$domain';
-// import { UiStateService } from '$ui';
-// import { SettingsService } from 'src/app/shared/state/settings';
-
-// Route State
-// import { RouteUiStateService } from '../../shared/state/ui';
-// import { RouteDomainStateService } from '../../shared/state/domain';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { WizardStore } from 'src/app/components/general/wizard/shared/store/wizard.store';
+import { Wizard } from 'src/app/components/general/wizard/wizard';
+import { pages } from './shared/config/pages.wizard';
+import { routes } from './shared/config/routes.wizard';
+import { sections } from './shared/config/sections.wizard';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  constructor() {}
-  // private domainState: DomainService, // Global domain state
-  // public uiState: UiStateService, // Global UI state
-  // private routeDomainState: RouteDomainStateService, // Route only domain state
-  // private routeUIState: RouteUiStateService, // Route only UI state
-  // private settings: SettingsService, // App settings/global properties
+  /** Keep reference to this wizards store instance */
+  public store?: WizardStore;
+  public sections: Wizard.Section[] = sections;
+  public pages: Wizard.Page[] = pages;
+  public routes: Wizard.Route[] = routes;
 
-  ngOnInit() {}
+  /**
+  public formGroup = jsonToFormGroup({
+    $$computed: {
+      hasBankruptcy: '',
+      isMilitary: '',
+      hasCoborrower: '',
+    },
+    
+  });
+   */
+
+/***/
+  public formGroup = this.fb.group({
+    $$computed: this.fb.group({
+      hasBankruptcy: [],
+      isMilitary: [],
+      hasCoborrower: [],
+    }),
+    borrowers: this.fb.group({
+      phoneNumber: [],
+      alternatePhoneNumberType: [],
+      emailAddress: [],
+    }),
+  });
+   
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+  }
 
   /** Must be present even if not used for autounsub */
   ngOnDestroy() {}
