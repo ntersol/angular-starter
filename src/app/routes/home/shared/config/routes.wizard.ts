@@ -56,8 +56,38 @@ export const routes: Wizard.Route[] = [
     sectionId: sectionID,
     urlSlug: 'military',
     pageId: 'military',
+    routeNext: [
+      {
+        routeNext: 'military2',
+        condition: 'AND',
+        rules: [
+          {
+            field: '$$computed.isMilitary',
+            operator: WizardOperator.EQ,
+            value: true,
+          },
+        ],
+      },
+      {
+        routeNext: 'email',
+        condition: 'AND',
+        rules: [
+          {
+            field: '$$computed.isMilitary',
+            operator: WizardOperator.EQ,
+            value: false,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    sectionId: sectionID,
+    urlSlug: 'military2',
+    pageId: 'military2',
     routeNext: 'email',
   },
+
   {
     sectionId: sectionID,
     urlSlug: 'email',

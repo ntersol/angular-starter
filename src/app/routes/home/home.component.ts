@@ -20,22 +20,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public pages: Wizard.Page[] = pages;
   public routes: Wizard.Route[] = routes;
 
-  /**
-  public formGroup = jsonToFormGroup({
-    $$computed: {
-      hasBankruptcy: '',
-      isMilitary: '',
-      hasCoborrower: '',
-    },
-    
-  });
-   */
-
   /***/
   public formGroup = this.fb.group({
     $$computed: this.fb.group({
       hasBankruptcy: null,
       isMilitary: null,
+      isMilitary2: null,
       hasCoborrower: null,
     }),
     borrowers: this.fb.group({
@@ -44,6 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       phoneNumber: [],
       alternatePhoneNumberType: [],
       emailAddress: [],
+      served1: null,
+      served2: null,
       b1Name: 'John Borrower',
       b2Name: 'Jane Borrower',
     }),

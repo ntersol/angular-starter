@@ -135,6 +135,26 @@ export const pages: Wizard.Page[] = [
             value: false,
           },
         ],
+      },
+    ],
+  },
+
+  {
+    sectionId: sectionID,
+    id: 'military2',
+    title: 'Which borrower(s) have served with the military?',
+    content: [
+      {
+        type: 'formField',
+        field: 'borrowers.served1',
+        formFieldType: 'buttonToggle',
+        placeholder: '{{borrowers.b1Name}}',
+      },
+      {
+        type: 'formField',
+        field: 'borrowers.served2',
+        formFieldType: 'buttonToggle',
+        placeholder: '{{borrowers.b2Name}}',
         visible: [
           {
             condition: 'AND',
@@ -143,33 +163,6 @@ export const pages: Wizard.Page[] = [
                 field: '$$computed.hasCoborrower',
                 operator: WizardOperator.EQ,
                 value: true,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        type: 'formField',
-        field: 'borrowers.isMilitary',
-        formFieldType: 'buttons',
-        options: [
-          {
-            label: 'Yes',
-            value: true,
-          },
-          {
-            label: 'No',
-            value: false,
-          },
-        ],
-        visible: [
-          {
-            condition: 'AND',
-            rules: [
-              {
-                field: '$$computed.hasCoborrower',
-                operator: WizardOperator.EQ,
-                value: false,
               },
             ],
           },
