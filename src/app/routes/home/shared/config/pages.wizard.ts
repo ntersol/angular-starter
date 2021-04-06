@@ -11,6 +11,7 @@ export const pages: Wizard.Page[] = [
       {
         type: 'row',
         columns: [
+          /**
           {
             columnSize: 4,
             content: [
@@ -20,6 +21,7 @@ export const pages: Wizard.Page[] = [
               },
             ],
           },
+           */
           {
             columnSize: 8,
             content: [
@@ -32,6 +34,28 @@ export const pages: Wizard.Page[] = [
                 </div>`,
               },
             ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    sectionId: sectionID,
+    id: 'coborrower',
+    title: 'Will there be a coborrower on this loan?',
+    content: [
+      {
+        type: 'formField',
+        field: '$$computed.hasCoborrower',
+        formFieldType: 'buttons',
+        options: [
+          {
+            label: 'Yes',
+            value: true,
+          },
+          {
+            label: 'No',
+            value: false,
           },
         ],
       },
@@ -54,6 +78,38 @@ export const pages: Wizard.Page[] = [
           {
             label: 'No',
             value: false,
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    sectionId: sectionID,
+    id: 'bankruptcy2',
+    title: 'Which borrower(s) have file for bankrupcy?',
+    content: [
+      {
+        type: 'formField',
+        field: 'borrowers.hasBankruptcy1',
+        formFieldType: 'buttonToggle',
+        placeholder: '{{borrowers.b1Name}}',
+      },
+      {
+        type: 'formField',
+        field: 'borrowers.hasBankruptcy2',
+        formFieldType: 'buttonToggle',
+        placeholder: '{{borrowers.b2Name}}',
+        visible: [
+          {
+            condition: 'AND',
+            rules: [
+              {
+                field: '$$computed.hasCoborrower',
+                operator: WizardOperator.EQ,
+                value: true,
+              },
+            ],
           },
         ],
       },
@@ -121,7 +177,6 @@ export const pages: Wizard.Page[] = [
       },
     ],
   },
-
 
   {
     sectionId: sectionID,
@@ -245,13 +300,6 @@ export const pages: Wizard.Page[] = [
       },
     ],
   },
-
-
-
-
-
-
-
 
   // Property
   {

@@ -1,4 +1,5 @@
 import { Wizard } from 'src/app/components/general/wizard/wizard';
+import { WizardOperator } from 'src/app/components/general/wizard/wizard.enums';
 // import { WizardOperator } from 'src/app/components/general/wizard/wizard.enums';
 
 const sectionID = 'borrower';
@@ -8,12 +9,47 @@ export const routes: Wizard.Route[] = [
     sectionId: sectionID,
     urlSlug: 'start',
     pageId: 'start',
+    routeNext: 'coborrower',
+  },
+  {
+    sectionId: sectionID,
+    urlSlug: 'coborrower',
+    pageId: 'coborrower',
     routeNext: 'bankruptcy',
   },
   {
     sectionId: sectionID,
     urlSlug: 'bankruptcy',
     pageId: 'bankruptcy',
+    routeNext: [
+      {
+        routeNext: 'bankruptcy2',
+        condition: 'AND',
+        rules: [
+          {
+            field: '$$computed.hasBankruptcy',
+            operator: WizardOperator.EQ,
+            value: true,
+          },
+        ],
+      },
+      {
+        routeNext: 'military',
+        condition: 'AND',
+        rules: [
+          {
+            field: '$$computed.hasBankruptcy',
+            operator: WizardOperator.NE,
+            value: true,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    sectionId: sectionID,
+    urlSlug: 'bankruptcy2',
+    pageId: 'bankruptcy2',
     routeNext: 'military',
   },
   {

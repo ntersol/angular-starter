@@ -7,6 +7,12 @@
       (stateChange)="stateChange($event)"
       (complete)="complete()"
   -->
-  <nts-wizard-nav-top [store]="store" *ngIf="store"></nts-wizard-nav-top>
-  <nts-wizard wizardId="wiz-demo" [form]="formGroup" [sections]="sections" [pages]="pages" [routes]="routes" (ready)="store = $event"> </nts-wizard>
+  <div style="min-height: 90px">
+    <nts-wizard-nav-top [store]="store" *ngIf="store"></nts-wizard-nav-top>
+  </div>
+  <p-card>
+    <div class="p-3">
+      <nts-wizard wizardId="wiz-demo" [form]="formGroup" [sections]="sections" [pages]="pages" [routes]="routes" (ready)="store = $event"> </nts-wizard>
+    </div>
+  </p-card>
 </div>

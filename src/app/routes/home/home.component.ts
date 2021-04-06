@@ -39,9 +39,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       hasCoborrower: null,
     }),
     borrowers: this.fb.group({
+      hasBankruptcy1: null,
+      hasBankruptcy2: null,
       phoneNumber: [],
       alternatePhoneNumberType: [],
       emailAddress: [],
+      b1Name: 'John Borrower',
+      b2Name: 'Jane Borrower',
     }),
   });
 
