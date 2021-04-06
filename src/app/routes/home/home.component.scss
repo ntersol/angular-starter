@@ -1,9 +1,39 @@
 /* Include site variables and mixins */
 @import '../../../styles/globals';
 
-.nts-section-title {
-  display: none;
-}
-.p-md-4{
-  padding:initial!important;
+#home {
+  .nts-section-title {
+    display: none;
+  }
+  .p-md-4 {
+    padding: initial !important;
+  }
+  .btn.btn-main {
+    background-color: #138890;
+    background-image: initial;
+    border: 0;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+  .btn-primary.active {
+    background-color: #9ac125;
+    background: #9ac125;
+    color: #fff;
+    border: 0;
+  }
+  .btn.btn-outline-primary {
+    color: #138890;
+    background-color: #fff;
+    border: 1px solid #138890;
+    &:hover {
+      background: #138890;
+      color: #fff;
+    }
+  }
+  .ui-progressbar .ui-progressbar-value {
+    background: #138890;
+  }
+  .nts-wizard-topnav .nts-progress .nts-wizard-loc.completed {
+    background: #138890;
+  }
 }

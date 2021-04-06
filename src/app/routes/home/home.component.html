@@ -1,4 +1,4 @@
-<div class="ui-container">
+<div class="ui-container pt-4" id="home">
   <!--
       [dataFields]="lmDomain.dataFields$ | async"
       (routeChanged)="routeChanged()"
@@ -7,7 +7,7 @@
       (stateChange)="stateChange($event)"
       
   -->
-  <div style="min-height: 90px">
+  <div style="min-height: 110px">
     <nts-wizard-nav-top [store]="store" *ngIf="store"></nts-wizard-nav-top>
   </div>
   <p-card>

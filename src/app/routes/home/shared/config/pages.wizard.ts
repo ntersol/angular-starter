@@ -186,7 +186,6 @@ export const pages: Wizard.Page[] = [
       },
     ],
   },
-
   {
     sectionId: sectionID,
     id: 'email',
@@ -198,12 +197,12 @@ export const pages: Wizard.Page[] = [
         formFieldType: 'email',
         placeholder: 'E-mail Address',
         validators: {
+          required: true,
           email: true,
         },
       },
     ],
   },
-
   {
     sectionId: sectionID,
     id: 'phone',

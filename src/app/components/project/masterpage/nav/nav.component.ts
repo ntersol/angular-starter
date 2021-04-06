@@ -31,13 +31,13 @@ export class NavComponent {
   public navMenu: MenuItem[] = [
     {
       label: 'Home',
-      icon: 'fas fa-tachometer mr-1',
+      // icon: 'fas fa-tachometer mr-1',
       routerLink: '/',
       routerLinkActiveOptions: { exact: true },
     },
     {
       label: 'Online Mortgage Form',
-      icon: 'fas fa-cubes mr-1',
+      // icon: 'fas fa-cubes mr-1',
       routerLink: '/wizard',
     },
   ];

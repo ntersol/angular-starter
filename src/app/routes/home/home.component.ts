@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { WizardStore } from 'src/app/components/general/wizard/shared/store/wizard.store';
 import { Wizard } from 'src/app/components/general/wizard/wizard';
 import { pages } from './shared/config/pages.wizard';
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       hasBankruptcy2: null,
       phoneNumber: [],
       alternatePhoneNumberType: [],
-      emailAddress: [],
+      emailAddress: null,
       served1: null,
       served2: null,
       b1Name: 'John Borrower',
@@ -45,7 +45,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    localStorage.clear();
+  }
 
   /** Must be present even if not used for autounsub */
   ngOnDestroy() {}
