@@ -11,17 +11,15 @@ export const pages: Wizard.Page[] = [
       {
         type: 'row',
         columns: [
-          /**
           {
             columnSize: 4,
             content: [
               {
                 type: 'html',
-                html: '<div class="intro-image borrower" aria-hidden="true"></div>',
+                html: '<img src="assets/img/dreamhome.jpg" style="max-width:100%"/>',
               },
             ],
           },
-           */
           {
             columnSize: 8,
             content: [
@@ -29,7 +27,8 @@ export const pages: Wizard.Page[] = [
                 type: 'html',
                 html: `<div class="intro-screen">
                 <h1 class="mb-0">Borrower Information</h1>
-                <p class="mb-0"><strong><i class="fa fa-clock-o" aria-hidden="true"></i> This section is expected to take about 2 minutes to complete.</strong></p>
+                <p class="mb-0 mt-3">Hello <strong>{{borrowers.b1Name}}</strong>! Thanks for choosing CMG Financial for your home loan.</p>
+                <p class="mb-0 mt-3"> This section is expected to take about 2 minutes to complete.</strong></p>
                 <p class="mb-0 mt-3">Let's get started with the process! It will take about 15 minutes and then your information will be reviewed by one of our customer service representatives.</p>
                 </div>`,
               },
@@ -322,7 +321,7 @@ export const pages: Wizard.Page[] = [
             content: [
               {
                 type: 'html',
-                html: '<div class="intro-image borrower" aria-hidden="true"></div>',
+                html: '<img src="assets/img/dreamhome.jpg" style="max-width:100%"/>',
               },
             ],
           },
@@ -355,7 +354,7 @@ export const pages: Wizard.Page[] = [
             content: [
               {
                 type: 'html',
-                html: '<div class="intro-image borrower" aria-hidden="true"></div>',
+                html: '<img src="assets/img/dreamhome.jpg" style="max-width:100%"/>',
               },
             ],
           },
@@ -388,7 +387,7 @@ export const pages: Wizard.Page[] = [
             content: [
               {
                 type: 'html',
-                html: '<div class="intro-image borrower" aria-hidden="true"></div>',
+                html: '<img src="assets/img/dreamhome.jpg" style="max-width:100%"/>',
               },
             ],
           },
@@ -422,7 +421,7 @@ export const pages: Wizard.Page[] = [
             content: [
               {
                 type: 'html',
-                html: '<div class="intro-image borrower" aria-hidden="true"></div>',
+                html: '<img src="assets/img/dreamhome.jpg" style="max-width:100%"/>',
               },
             ],
           },
@@ -455,7 +454,7 @@ export const pages: Wizard.Page[] = [
             content: [
               {
                 type: 'html',
-                html: '<div class="intro-image borrower" aria-hidden="true"></div>',
+                html: '<img src="assets/img/dreamhome.jpg" style="max-width:100%"/>',
               },
             ],
           },

@@ -13,7 +13,7 @@
             <span class="nts-wizard-loc-anim"></span>
           </a>
         </div>
-        <div>
+        <div class="nts-progress-select">
           <nts-form-field (onChange)="store.routeChange({ sectionUrl: $event.value })" [formControl]="selector.get('active')" [options]="sectionsSelector$ | async" type="dropdown"> </nts-form-field>
         </div>
       </div>

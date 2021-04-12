@@ -8,6 +8,9 @@ $complete-bg: #4caf50;
 
   .nts-progress {
     display: flex;
+    .nts-progress-select {
+      flex-grow: 1;
+    }
     .nts-wizard-loc {
       text-align: center;
       border-radius: 50%;
@@ -72,7 +75,7 @@ $complete-bg: #4caf50;
       }
     }
   }
-/*
+  /*
   ul,
   li {
     list-style: none;

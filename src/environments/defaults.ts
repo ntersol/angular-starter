@@ -8,7 +8,7 @@ export const defaults: EnvironmentConfig = {
   production: false,
   properties: {
     /** Name of application */
-    appName: 'Angular Starter',
+    appName: 'CMG Financial',
   },
   settings: {
     /** Enable service worker functionality */
