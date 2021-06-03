@@ -45,7 +45,7 @@ export interface StoreState<t> {
  * Dynamically created an Akita store for entities
  */
 export class BaseStoreClass<t> {
-  public store: Store;
+  public store: Store<t>;
   public query: Query<StoreState<t>>;
   public data$: Observable<StoreState<t>>;
 
@@ -81,11 +81,11 @@ export class BaseStoreClass<t> {
       const apiUrlResolved = typeof apiUrl === 'function' ? apiUrl() : apiUrl;
       // Make get request
       return this.http.get<t[]>(apiUrlResolved).pipe(
-        tap(entities => {
+        tap((entities) => {
           const result: t[] = this.config.map && this.config.map.get ? this.config.map.get(entities) : entities;
           this.store.update(result);
         }), // On success, add response to store
-        catchError(err => {
+        catchError((err) => {
           applyTransaction(() => {
             this.store.setError(err);
             this.store.setLoading(false);
@@ -158,7 +158,7 @@ export class BaseStoreClass<t> {
   public upsert(request: Observable<t>, entity: Partial<t> | Partial<t>[], map: ((x: any) => any) | null) {
     this.store.update({ modifying: true, modifyError: false });
     return request.pipe(
-      tap(res => {
+      tap((res) => {
         // If web api response is nill, default to supplied entity
         let result = res === null || res === undefined ? <t | t[]>entity : res;
         // If map function pass result through that
@@ -180,7 +180,7 @@ export class BaseStoreClass<t> {
           this.store.update({ modifying: false, modifyError: false });
         });
       }),
-      catchError(err => {
+      catchError((err) => {
         this.store.update({ modifying: false, modifyError: err });
         return throwError(err);
       }),
@@ -208,7 +208,7 @@ export class BaseStoreClass<t> {
           this.store.update({ modifying: false, modifyError: false });
         });
       }),
-      catchError(err => {
+      catchError((err) => {
         applyTransaction(() => {
           this.store.setError(err);
           this.store.update({ modifying: false, modifyError: err });
@@ -230,6 +230,6 @@ export class BaseStoreClass<t> {
  * Generate a new entity store
  * @param http
  * @param config
- 
+
 export const generateEntityStore = <t>(http: HttpClient, config: EntityStoreConfig) => new BaseStoreClass<t>(http, config);
 */

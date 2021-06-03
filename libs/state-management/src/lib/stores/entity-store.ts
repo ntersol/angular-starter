@@ -82,7 +82,7 @@ export class NtsEntityStore<t> {
     this.select$ = this.query.select().pipe(
       // Check for any changes to the entity models in the store and update the data property
       // Ensure that the data property only updates its memory signature when the data changes
-      tap((q) => {
+      tap((q: any) => {
         const dataExistingHash = this.data?.length ? this.data.map((d) => d[this.idKey as keyof t]).join('') : null;
         const queryDash = q?.ids?.length ? q.ids.join('') : null;
         // If data does not exist and query has any data
@@ -93,7 +93,7 @@ export class NtsEntityStore<t> {
           (dataExistingHash && dataExistingHash !== queryDash)
         ) {
           // Update data property
-          this.data = q.ids.map((id) => q.entities[id]);
+          this.data = q.ids.map((id: any) => q.entities[id]);
           this.needDataUpdate = false;
         }
         // If autoload was requested and no data is in the store, load the data
@@ -116,25 +116,25 @@ export class NtsEntityStore<t> {
 
     // Create select all query that accepts default akita parameters
     this.selectAll$ = (
-      select?:
-        | SelectAllOptionsA<t>
-        | SelectAllOptionsB<t>
-        | SelectAllOptionsC<t>
-        | SelectAllOptionsD<t>
-        | SelectAllOptionsE<t>,
+      select?: any,
+      // | SelectAllOptionsA<t>
+      // | SelectAllOptionsB<t>
+      // | SelectAllOptionsC<t>
+      // | SelectAllOptionsD<t>
+      // | SelectAllOptionsE<t>,
     ) => {
       return this.query.selectAll({ ...select }).pipe(
-        switchMap((entities) =>
+        switchMap((entities: any) =>
           this.query.select().pipe(
             map((stateSrc) => {
               const stateNew: NtsState.EntityState<t, any> = {
                 ...initialEntityState,
                 entities: {},
-                ids: entities.map((entity) => (<any>entity)[this.idKey]),
+                ids: entities.map((entity: any) => (<any>entity)[this.idKey]),
                 // Data will always be null or undefined until initial get success
                 data: entities,
               };
-              entities.forEach((entity) => stateNew[(<any>entity)[this.idKey]]);
+              entities.forEach((entity: any) => stateNew[(<any>entity)[this.idKey]]);
               return Object.assign({}, stateSrc, stateNew);
             }),
           ),

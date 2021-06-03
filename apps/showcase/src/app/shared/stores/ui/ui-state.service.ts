@@ -16,6 +16,23 @@ export function createInitialState(): UIState {
 
 // tslint:disable-next-line:max-classes-per-file
 @Injectable({ providedIn: 'root' })
+@StoreConfig({ name: 'uiState' /*, resettable: true*/ })
+export class UiStateStore extends Store<UIState> {
+  constructor() {
+    super(createInitialState());
+  }
+}
+
+// tslint:disable-next-line:max-classes-per-file
+@Injectable({ providedIn: 'root' })
+export class UiStateQuery extends Query<UIState> {
+  constructor(protected store: UiStateStore) {
+    super(store);
+  }
+}
+
+// tslint:disable-next-line:max-classes-per-file
+@Injectable({ providedIn: 'root' })
 export class UiStateService {
   /** Is an app update available, either from the service worker or the version checker */
   public updateAvailable$ = merge(this.ntsSw.updateAvailable$, this.ntsVersion.updateAvailable$);
@@ -104,22 +121,5 @@ export class UiStateService {
    */
   public reset() {
     this.store.reset();
-  }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-@Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'uiState', resettable: true })
-export class UiStateStore extends Store<UIState> {
-  constructor() {
-    super(createInitialState());
-  }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-@Injectable({ providedIn: 'root' })
-export class UiStateQuery extends Query<UIState> {
-  constructor(protected store: UiStateStore) {
-    super(store);
   }
 }

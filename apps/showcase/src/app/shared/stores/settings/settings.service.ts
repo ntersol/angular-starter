@@ -17,6 +17,23 @@ export function createInitialState(): Settings {
   };
 }
 
+// tslint:disable-next-line:max-classes-per-file
+@Injectable({ providedIn: 'root' })
+@StoreConfig({ name: 'settings' /*, resettable: true*/ })
+export class SettingsStore extends Store<Settings> {
+  constructor() {
+    super(createInitialState());
+  }
+}
+
+// tslint:disable-next-line:max-classes-per-file
+@Injectable({ providedIn: 'root' })
+export class SettingsQuery extends Query<Settings> {
+  constructor(protected store: SettingsStore) {
+    super(store);
+  }
+}
+
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
   /** Is the browsers available, used for SSR/Angular universal */
@@ -55,13 +72,9 @@ export class SettingsService {
   /** Holds the current synchronous value of the store. The getters retrieve data from this object */
   private settings = createInitialState();
 
-  constructor(
-    private store: SettingsStore,
-    private query: SettingsQuery,
-    @Inject(PLATFORM_ID) private platformId: Object,
-  ) {
+  constructor(private store: SettingsStore, private query: SettingsQuery, @Inject(PLATFORM_ID) private platformId: Object) {
     // On settings changes, update synchronous properties
-    this.query.select().subscribe(state => (this.settings = { ...state }));
+    this.query.select().subscribe((state: any) => (this.settings = { ...(state as Settings) }));
   }
 
   /**
@@ -80,22 +93,5 @@ export class SettingsService {
    */
   public reset() {
     this.store.reset();
-  }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-@Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'settings', resettable: true })
-export class SettingsStore extends Store<Settings> {
-  constructor() {
-    super(createInitialState());
-  }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-@Injectable({ providedIn: 'root' })
-export class SettingsQuery extends Query<Settings> {
-  constructor(protected store: SettingsStore) {
-    super(store);
   }
 }
