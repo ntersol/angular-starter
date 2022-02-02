@@ -12,7 +12,6 @@ import { untilDestroyed } from '@ngneat/until-destroy';
   selector: 'app-nav',
   styleUrls: ['./nav.component.scss'],
   templateUrl: './nav.component.html',
-  // tslint:disable-next-line:use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class NavComponent implements OnInit, OnDestroy {
