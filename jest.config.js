@@ -1,6 +1,5 @@
 module.exports = {
   displayName: 'angular-starter',
-  preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
