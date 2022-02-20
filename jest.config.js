@@ -1,3 +1,6 @@
+const { pathsToModuleNameMapper } = require('ts-jest');
+const { compilerOptions } = require('./tsconfig.json');
+
 module.exports = {
   displayName: 'angular-starter',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
@@ -7,6 +10,7 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   coverageDirectory: '../../coverage/apps/angular-starter',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
