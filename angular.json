@@ -35,6 +35,14 @@
             ]
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "qa": {
               "budgets": [
                 {
@@ -111,11 +119,11 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "angular-starter:build",
-            "port": 4200
-          },
+          "defaultConfiguration": "development",
           "configurations": {
+            "development": {
+              "browserTarget": "angular-starter:build:development"
+            },
             "production": {
               "browserTarget": "angular-starter:build:production"
             }

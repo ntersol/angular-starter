@@ -59,7 +59,6 @@
     "@angular/router": "^13.2.0",
     "@angular/service-worker": "^13.2.0",
     "@fortawesome/fontawesome-free": "5.15.4",
-    "@ngneat/until-destroy": "9.0.0",
     "@ntersol/schematics": "0.0.70",
     "@ntersol/state-management": "1.0.6",
     "@schematics/update": "^0.1102.18",
