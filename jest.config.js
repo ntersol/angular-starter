@@ -12,7 +12,7 @@ module.exports = {
     },
   },
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-  coverageDirectory: '../../coverage/apps/angular-starter',
+  coverageDirectory: './dist/coverage/apps/angular-starter',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
