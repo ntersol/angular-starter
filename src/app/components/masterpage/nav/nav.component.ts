@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SettingsService } from '$settings';
@@ -6,7 +6,6 @@ import { SettingsService } from '$settings';
 import { MenuItem } from 'primeng/api';
 import { UiStateService } from '$ui';
 import { AuthService, AuthState } from '../../../shared/services';
-import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +13,7 @@ import { untilDestroyed } from '@ngneat/until-destroy';
   templateUrl: './nav.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class NavComponent implements OnInit, OnDestroy {
+export class NavComponent implements OnInit {
   /** Turn the username into title case */
   public userName$ = this.settings.userName$;
   /**   Does the app have an update */
@@ -50,12 +49,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // On route change, if mobile nav is open close it
-    this.router.events
-      .pipe(
-        untilDestroyed(this),
-        filter(event => event instanceof NavigationEnd),
-      )
-      .subscribe(() => (this.sidebarVisible = false));
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => (this.sidebarVisible = false));
   }
 
   /**
@@ -71,6 +65,4 @@ export class NavComponent implements OnInit, OnDestroy {
   public logOut() {
     this.auth.logOut(AuthState.loggedOut);
   }
-
-  ngOnDestroy(): void {}
 }

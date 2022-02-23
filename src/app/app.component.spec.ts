@@ -8,10 +8,9 @@ import { AppComponent } from './app.component';
 import { NtsVersionManagementService } from './shared/services';
 import { environment } from '$env';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 
-jest.mock('./shared/services');
 let component: AppComponent;
 let fixture: ComponentFixture<AppComponent>;
 let versionMock: any;
@@ -84,7 +83,7 @@ describe('AppComponent', () => {
   });
 
   describe('routeChange', () => {
-    it('should call setTitle on this.title with the title|appName', () => {
+    it('should call setTitle on this.title with the title | appName', () => {
       environment.properties.appName = '456';
       component.routeChange();
       expect(titleMock.setTitle).toHaveBeenNthCalledWith(1, '123 | 456');
