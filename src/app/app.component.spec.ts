@@ -32,10 +32,12 @@ describe('AppComponent', () => {
         events: new BehaviorSubject<NavigationEnd>(new NavigationEnd(0, '', '')),
       };
       activatedRouteMock = {
-        outlet: 'primary',
-        data: of({
-          title: '123',
-        }),
+        firstChild: {
+          outlet: 'primary',
+          data: of({
+            title: '123',
+          }),
+        },
       };
       TestBed.configureTestingModule({
         declarations: [AppComponent],
