@@ -26,8 +26,5 @@
 // TODO: Update Theme Designer to support PrimeNG 11
 //@import 'styles/theme/nova-light/theme';
 
-// Global styling
-@import './styles/globals';
-
 // Application styling
-@import './styles/app';
+@import '~@ntersol/scss/src/index.scss';

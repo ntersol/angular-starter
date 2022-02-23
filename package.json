@@ -84,6 +84,7 @@
     "@angular/compiler-cli": "^13.2.0",
     "@angular/language-service": "^13.2.0",
     "@compodoc/compodoc": "^1.1.18",
+    "@ntersol/scss": "0.0.1",
     "@types/bingmaps": "0.0.1",
     "@types/express": "4.17.13",
     "@types/jest": "^27.4.0",
