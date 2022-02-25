@@ -55,6 +55,11 @@ describe('LogoutModalComponent', () => {
       component.ngOnDestroy();
       expect(component.timerSub.unsubscribe).toBeCalledTimes(1);
     });
+    it('should NOT call unsubscribe if timerSub is undefined', () => {
+      component.timerSub = undefined as unknown as Subscription;
+      component.ngOnDestroy();
+      expect(component.timerSub).toEqual(undefined);
+    });
   });
 
   describe('logout', () => {
