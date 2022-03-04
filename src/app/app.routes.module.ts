@@ -2,20 +2,19 @@ import { NgModule } from '@angular/core';
 import { NoPreloading, PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { environment } from '../environments/environment';
 import { LayoutMainComponent } from './components/masterpage';
+import { HomeComponent } from './routes/home/home.component';
 import { NoContentComponent } from './routes/no-content/no-content.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 
 export const ROUTES: Routes = [
   // Routes without masterpage or that do not need to be authenticated need to go first
 
-  /**
-  {
-    path: 'login',
-    pathMatch: 'full',
-    loadChildren: () => import('./routes/login/login.module').then(m => m.LoginModule),
-    data: { title: 'Please Log In' },
-  },
-   */
+  // {
+  //   path: 'login',
+  //   pathMatch: 'full',
+  //   loadChildren: () => import('./routes/login/login.module').then(m => m.LoginModule),
+  //   data: { title: 'Please Log In' },
+  // },
 
   // Example route param
   // {
@@ -37,38 +36,36 @@ export const ROUTES: Routes = [
         data: { title: 'Users' },
       },
       // Homepage non-lazy load implementation
-      // {
-      //  path: '',
-      //  component: HomeComponent,
-      //  data: { title: 'Dashboard' },
-      //  canActivate: [AuthGuard]
-      // },
+      {
+        path: '',
+        component: HomeComponent,
+        data: { title: 'Dashboard' },
+      },
 
       // Example for lazy loaded module with route params
       // { path: 'users/:empowerGuid', loadChildren: './routes/users/users.module#UsersModule', canActivate: [AuthGuard] },
       // { path: 'users', loadChildren: './routes/users/users.module#UsersModule', canActivate: [AuthGuard] },
 
       // Empty path string for homepage ('') needs to be LAST otherwise it catches all other routes
-      {
-        path: 'route',
-        pathMatch: 'full',
-        loadChildren: () => import('./routes/_route/route.module').then(m => m.RouteModule),
-        canActivate: [AuthGuard],
-      },
+      // {
+      //   path: 'route',
+      //   pathMatch: 'full',
+      //   loadChildren: () => import('./routes/_route/route.module').then(m => m.RouteModule),
+      //   canActivate: [AuthGuard],
+      // },
 
       // Empty path string for homepage ('') needs to be LAST otherwise it catches all other routes
-      {
-        path: '',
-        pathMatch: 'full',
-        loadChildren: () => import('./routes/home/home.module').then(m => m.HomeModule),
-        canActivate: [AuthGuard],
-      },
+      // {
+      //   path: '',
+      //   pathMatch: 'full',
+      //   loadChildren: () => import('./routes/home/home.module').then(m => m.HomeModule),
+      //   canActivate: [AuthGuard],
+      // },
 
       {
         path: '**',
         component: NoContentComponent,
         data: { title: 'Page Not Found' },
-        canActivate: [AuthGuard],
       },
     ],
   },

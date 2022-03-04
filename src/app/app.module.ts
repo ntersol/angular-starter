@@ -11,6 +11,7 @@ import { NoContentComponent } from './routes/no-content/no-content.component';
 import { GlobalErrorHandler } from './shared/interceptors/error.interceptor';
 import { HttpInterceptorService } from './shared/interceptors/http.interceptor';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { HomeModule } from './routes/home';
 
 // Enables faster prod mode, does disable some dirty error checking though
 // enableProdMode();
@@ -31,6 +32,7 @@ export let InjectorInstance: Injector;
     HttpClientModule,
     BrowserAnimationsModule,
     AppRouterModule,
+    HomeModule,
 
     /** Uncomment to enable SW
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -40,7 +42,7 @@ export let InjectorInstance: Injector;
      */
 
     SiteModule,
-      ScullyLibModule,
+    ScullyLibModule,
   ],
   providers: [
     // AppConfigService, // App config/env settings

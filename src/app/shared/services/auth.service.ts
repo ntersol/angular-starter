@@ -58,29 +58,26 @@ export class AuthService {
   ) {
     // Manage logout timer
     // Only fire events when timer expires and is not inactive (IE the logout modal is active)
-    this.logoutTimerExpired$.pipe(filter(expired => expired && !this.logoutModalVisible)).subscribe(() => {
-      this.launchLogoutModal();
-      this.logoutModalVisible = true;
-    });
-
-    // If an endpoint for auth refresh provided
-    if (environment.endpoints.authTokenRefresh) {
-      this.refreshEvent$
-        .pipe(
-          filter(() => !!this.settings.token), // Only capture refresh events if token present
-          throttleTime(this.tokenRefreshInterval), // Throttle time using refresh interval
-          filter(() => !this.logoutModalVisible), // Only refresh token if timer not expired
-        )
-        .subscribe(() => this.refreshToken()); // Refresh token
-    }
-
-    // If a token was passed in via query param
-    this.route.queryParams.pipe(take(1)).subscribe(params => {
-      if (params['token']) {
-        this.settings.token = params['token'];
-      }
-    });
-
+    // this.logoutTimerExpired$.pipe(filter(expired => expired && !this.logoutModalVisible)).subscribe(() => {
+    //   this.launchLogoutModal();
+    //   this.logoutModalVisible = true;
+    // });
+    // // If an endpoint for auth refresh provided
+    // if (environment.endpoints.authTokenRefresh) {
+    //   this.refreshEvent$
+    //     .pipe(
+    //       filter(() => !!this.settings.token), // Only capture refresh events if token present
+    //       throttleTime(this.tokenRefreshInterval), // Throttle time using refresh interval
+    //       filter(() => !this.logoutModalVisible), // Only refresh token if timer not expired
+    //     )
+    //     .subscribe(() => this.refreshToken()); // Refresh token
+    // }
+    // // If a token was passed in via query param
+    // this.route.queryParams.pipe(take(1)).subscribe(params => {
+    //   if (params['token']) {
+    //     this.settings.token = params['token'];
+    //   }
+    // });
     /** Extract a token passed in via matrix notation
     // If a token is passed in via matrix notation params, update app settings.
     // Need to use matrix notation /#/route;token=123456456456
