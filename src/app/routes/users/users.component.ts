@@ -15,9 +15,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    this.users.state$.subscribe(console.log);
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {}
 }
