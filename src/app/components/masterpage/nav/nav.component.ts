@@ -34,6 +34,12 @@ export class NavComponent implements OnInit, OnDestroy {
       icon: 'fas fa-cubes me-1',
       routerLink: '/route',
     },
+    {
+      label: 'Users',
+      expanded: true,
+      icon: 'fas fa-users me-1',
+      routerLink: '/users',
+    },
   ];
 
   public utilityMenu: MenuItem[] = [

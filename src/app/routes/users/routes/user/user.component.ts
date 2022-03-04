@@ -1,16 +1,27 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { untilDestroyed } from '@ngneat/until-destroy';
+import { mergeMap } from 'rxjs';
+import { Models } from '../../../../shared/models';
+import { ApiService } from '../../shared/stores/api-store.service';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
+  public user$ = this.route.params.pipe(
+    untilDestroyed(this),
+    mergeMap(params => this.api.http.get<Models.User>('//jsonplaceholder.typicode.com/users/' + params['userId'])),
+  );
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private api: ApiService) {}
 
   ngOnInit(): void {
+    this.user$.subscribe(console.log);
   }
 
+  ngOnDestroy(): void {}
 }
