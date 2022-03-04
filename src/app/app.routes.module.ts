@@ -9,6 +9,12 @@ export const ROUTES: Routes = [
   // Routes without masterpage or that do not need to be authenticated need to go first
 
   {
+    path: 'users',
+    loadChildren: () => import('./routes/users/users.module').then(m => m.UsersModule),
+    data: { title: 'Users' },
+  },
+
+  {
     path: 'login',
     pathMatch: 'full',
     loadChildren: () => import('./routes/login/login.module').then(m => m.LoginModule),
