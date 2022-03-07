@@ -1,6 +1,6 @@
 <p-menubar [model]="navMenu" class="main-menu">
   <ng-container *ngIf="hasUpdate$ | async as hasUpdate">
-    <button pButton type="button" icon="fas fa-exclamation-triangle" label="Update Available" (click)="updateApp()"></button>
+    <button class="btn btn-primary" type="button" icon="fas fa-exclamation-triangle" label="Update Available" (click)="updateApp()">Update Available</button>
   </ng-container>
   <p-slideMenu #menu [model]="utilityMenu" [popup]="true" [viewportHeight]="utilityMenu.length * 70"></p-slideMenu>
   <a label="Show" (click)="menu.toggle($event)">

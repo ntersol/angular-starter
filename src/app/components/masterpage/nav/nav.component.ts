@@ -6,8 +6,9 @@ import { SettingsService } from '$settings';
 import { MenuItem } from 'primeng/api';
 import { UiStateService } from '$ui';
 import { AuthService, AuthState } from '../../../shared/services';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-nav',
   styleUrls: ['./nav.component.scss'],

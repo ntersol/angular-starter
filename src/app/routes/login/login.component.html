@@ -40,13 +40,15 @@
         <p-footer>
           <div class="text-end">
             <button
-              pButton
+              class="btn btn-primary"
               type="submit"
               label="Sign In"
               icon="fas fa-power-off"
               [disabled]="formMain.invalid || waiting"
               [ngClass]="{ 'btn-waiting': waiting }"
-            ></button>
+            >
+              Log In
+            </button>
           </div>
         </p-footer>
       </p-card>

@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { mergeMap } from 'rxjs';
 import { Models } from '../../../../shared/models';
 import { ApiService } from '../../shared/stores/api-store.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
