@@ -1,11 +1,10 @@
-import { registerPlugin, getPluginConfig } from '@scullyio/scully';
+const { registerPlugin, log, yellow } = require('@scullyio/scully');
 
-export const myPlugin = 'myPlugin';
+function skipPlugin(route, config = {}) {
+  log(`Skip Route "${yellow(route)}"`);
+  return Promise.resolve([]);
+}
 
-const myFunctionPlugin = async (html: string): Promise<string> => {
-  return html;
-};
-
-const validator = async () => [];
-
-registerPlugin('render', myPlugin, myFunctionPlugin, validator);
+const validator = async conf => [];
+registerPlugin('router', 'skip', skipPlugin, validator);
+module.exports.skipPlugin = skipPlugin;
