@@ -27,11 +27,11 @@ export const environment: EnvironmentConfig = {
   },
   endpoints: {
     /** Location to get environment and config settings */
-    envConfig: 'assets/mock-data/env-settings.json',
+    envConfig: 'http://localhost:4200/assets/mock-data/env-settings.json',
     /** Location of API if not getting that from envConfig */
     apiUrl: <string | null>null,
     /** Auth/Login endpoint */
-    authLogin: 'assets/mock-data/login.json',
+    authLogin: 'http://localhost:4200/assets/mock-data/login.json',
     /** Refresh token endpoint */
     authTokenRefresh: <string | null>null, // '/authentication/token',
     /** Api version endpoint. If not null then the app will request an update when the version changes */
