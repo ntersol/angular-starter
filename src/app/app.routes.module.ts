@@ -69,11 +69,12 @@ export const ROUTES: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(ROUTES, {
-      useHash: !environment.production,
-      preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
-      scrollPositionRestoration: 'enabled',
-      relativeLinkResolution: 'legacy',
-    }),
+    useHash: !environment.production,
+    preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
+    scrollPositionRestoration: 'enabled',
+    relativeLinkResolution: 'legacy',
+    initialNavigation: 'enabledBlocking'
+}),
   ],
   exports: [RouterModule],
 })
