@@ -43,6 +43,12 @@ export const ROUTES: Routes = [
 
       // Empty path string for homepage ('') needs to be LAST otherwise it catches all other routes
       {
+        path: 'users',
+        pathMatch: 'full',
+        loadChildren: () => import('./routes/users/users.module').then(m => m.UsersModule),
+      },
+
+      {
         path: 'route',
         pathMatch: 'full',
         loadChildren: () => import('./routes/_route/route.module').then(m => m.RouteModule),
@@ -69,12 +75,12 @@ export const ROUTES: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(ROUTES, {
-    useHash: !environment.production,
-    preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
-    scrollPositionRestoration: 'enabled',
-    relativeLinkResolution: 'legacy',
-    initialNavigation: 'enabledBlocking'
-}),
+      useHash: !environment.production,
+      preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
+      scrollPositionRestoration: 'enabled',
+      relativeLinkResolution: 'legacy',
+      initialNavigation: 'enabledBlocking',
+    }),
   ],
   exports: [RouterModule],
 })
