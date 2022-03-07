@@ -33,14 +33,14 @@ export class NavComponent implements OnInit, OnDestroy {
       label: 'Users',
       expanded: true,
       icon: 'fas fa-users me-1',
-      routerLink: '/users',
+      routerLink: '/users/',
       routerLinkActiveOptions: { exact: true },
     },
     {
       label: 'Demo Route',
       expanded: true,
       icon: 'fas fa-cubes me-1',
-      routerLink: '/route',
+      routerLink: '/route/',
     },
   ];
 
