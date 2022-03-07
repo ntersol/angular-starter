@@ -31,7 +31,6 @@
       "$modals": ["./src/compoments/modals"]
     }
   },
-  "exclude": ["node_modules"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
