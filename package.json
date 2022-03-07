@@ -34,7 +34,7 @@
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
     "build-ie-polyfills": "webpack-cli src/polyfills-ie.ts -o src/assets/scripts/polyfills-ie.min.js -c webpack-polyfill.config.js",
     "dev:ssr": "ng run angular-starter:serve-ssr",
-    "prerender": "ng run angular-starter:prerender"
+    "prerender": "ng run angular-starter:prerender --routes-file routes.txt"
   },
   "prettier": {
     "tabWidth": 2,
