@@ -11,6 +11,7 @@ import { NoContentComponent } from './routes/no-content/no-content.component';
 import { GlobalErrorHandler } from './shared/interceptors/error.interceptor';
 import { HttpInterceptorService } from './shared/interceptors/http.interceptor';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { isBrowser } from './shared/services';
 
 // Enables faster prod mode, does disable some dirty error checking though
 // enableProdMode();
@@ -21,6 +22,12 @@ export const APP_COMPONENTS = [
   AppComponent,
   NoContentComponent,
 ];
+
+// Scully is not node compatible, only load Scully when not on node
+let Scully = [ScullyLibModule];
+if (!isBrowser) {
+  Scully = [];
+}
 
 export let InjectorInstance: Injector;
 
@@ -38,10 +45,8 @@ export let InjectorInstance: Injector;
       registrationStrategy: 'registerImmediately',
     }),
      */
-
     SiteModule,
-    // Comment out to use Angular Universal/SSR. Leave active to use scully
-    ScullyLibModule,
+    ...Scully,
   ],
   providers: [
     // AppConfigService, // App config/env settings

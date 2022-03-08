@@ -20,9 +20,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private api: ApiService) {}
 
-  ngOnInit(): void {
-    this.user$.subscribe(console.log);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {}
 }
