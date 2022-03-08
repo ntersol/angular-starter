@@ -18,7 +18,8 @@ export const config: ScullyConfig = {
     '/users/:userId': {
       type: 'json',
       userId: {
-        url: 'http://localhost:1864/assets/mock-data/users.json',
+        url: 'https://jsonplaceholder.typicode.com/users',
+        // url: 'http://localhost:1864/assets/mock-data/users.json',
         property: 'id',
       },
     },
