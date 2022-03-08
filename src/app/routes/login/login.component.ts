@@ -4,13 +4,18 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 
 import { SettingsService } from '$settings';
 import { AuthService, AuthState } from '../../shared/services/auth.service';
+import { isBrowser } from '../../shared/services';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  public formMain!: FormGroup;
+  public formMain = this.fb.group({
+    userName: [null || 'juser', [Validators.required]],
+    password: ['password', [Validators.required]],
+    remember: [null],
+  });
   public waiting: boolean | undefined;
   public errorApi: any | null | undefined;
   public showErrorDetails = false;
@@ -31,6 +36,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     let isLogin, hasLogin;
+
+    if (!isBrowser) {
+      return;
+    }
     if (window.localStorage['rememberLogin'] && this.settings.userName) {
       isLogin = this.settings.userName;
     }
@@ -40,12 +49,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.authService.logOutModal = null; // Get rid of logout modal if it persists
-
-    this.formMain = this.fb.group({
-      userName: [isLogin || 'juser', [Validators.required]],
-      password: ['password', [Validators.required]],
-      remember: [hasLogin],
-    });
   }
 
   /**

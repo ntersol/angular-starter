@@ -2,6 +2,7 @@ import { ErrorHandler, Injectable } from '@angular/core';
 
 import { environment } from '$env';
 import { SettingsService } from '$settings';
+import { isBrowser } from '../services';
 
 interface AngularError {
   promise: any;
@@ -49,6 +50,9 @@ export class GlobalErrorHandler implements ErrorHandler {
    * @param error
    */
   private resetState(error: AngularError) {
+    if (!isBrowser) {
+      return;
+    }
     console.error({ error: error });
     // const resetAction = () => {
     localStorage.clear();

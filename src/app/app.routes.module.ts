@@ -50,10 +50,16 @@ export const ROUTES: Routes = [
 
       // Empty path string for homepage ('') needs to be LAST otherwise it catches all other routes
       {
+        path: 'users',
+        // pathMatch: '',
+        loadChildren: () => import('./routes/users/users.module').then(m => m.UsersModule),
+      },
+
+      {
         path: 'route',
         pathMatch: 'full',
         loadChildren: () => import('./routes/_route/route.module').then(m => m.RouteModule),
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
       },
 
       // Empty path string for homepage ('') needs to be LAST otherwise it catches all other routes
@@ -68,7 +74,7 @@ export const ROUTES: Routes = [
         path: '**',
         component: NoContentComponent,
         data: { title: 'Page Not Found' },
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
       },
     ],
   },
@@ -80,6 +86,7 @@ export const ROUTES: Routes = [
       preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
       scrollPositionRestoration: 'enabled',
       relativeLinkResolution: 'legacy',
+      initialNavigation: 'enabledBlocking',
     }),
   ],
   exports: [RouterModule],

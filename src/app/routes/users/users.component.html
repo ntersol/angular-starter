@@ -14,7 +14,7 @@
         <tbody>
           <tr *ngFor="let user of state.data">
             <td>
-              <a [routerLink]="['./' + user.id]">{{ user.name }}</a>
+              <a [routerLink]="['./' + user.id + '/']">{{ user.name }}</a>
             </td>
             <td>{{ user.phone }}</td>
             <td>{{ user.email }}</td>

@@ -40,7 +40,8 @@ export let InjectorInstance: Injector;
      */
 
     SiteModule,
-      ScullyLibModule,
+    // Comment out to use Angular Universal/SSR. Leave active to use scully
+    ScullyLibModule,
   ],
   providers: [
     // AppConfigService, // App config/env settings
