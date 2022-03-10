@@ -14,6 +14,10 @@ import { ConfirmationService } from 'primeng/api';
 import { FontsModule } from './shared/fonts/fonts.module';
 
 const MODULES = [
+  // Angular
+  RouterModule,
+  FormsModule,
+  ReactiveFormsModule,
   // Font-awesome icons
   FontsModule,
   // Prime NG UI Lib
@@ -27,16 +31,9 @@ const MODULES = [
 ];
 
 @NgModule({
-  imports: [
-    // Angular
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ...MODULES,
-  ],
+  imports: [CommonModule, ...MODULES],
   providers: [ConfirmationService, DialogService],
-  exports: [RouterModule, FormsModule, ReactiveFormsModule, ...MODULES],
+  exports: MODULES,
   declarations: [],
 })
 export class VendorModule {}
