@@ -11,8 +11,11 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
+import { FontsModule } from './shared/fonts/fonts.module';
 
-const modules = [
+const MODULES = [
+  // Font-awesome icons
+  FontsModule,
   // Prime NG UI Lib
   SlideMenuModule,
   MenubarModule,
@@ -30,10 +33,10 @@ const modules = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    ...modules,
+    ...MODULES,
   ],
   providers: [ConfirmationService, DialogService],
-  exports: [RouterModule, FormsModule, ReactiveFormsModule, ...modules],
+  exports: [RouterModule, FormsModule, ReactiveFormsModule, ...MODULES],
   declarations: [],
 })
 export class VendorModule {}

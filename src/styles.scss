@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 // Base CSS Size: 619k
-// New Size: 323k
+// New Size: 315k
 
 // Bootstrap
 // Option 1: Import only parts of Bootstrap - 99k
@@ -28,10 +28,10 @@
 // @import '~bootstrap/scss/bootstrap';
 
 // Font Awesome Free 5
-@import '~@fortawesome/fontawesome-free/css/all.css'; // 57k
+// @import '~@fortawesome/fontawesome-free/css/all.css'; // 57k
 
 // PrimeNG
-@import '~primeicons/primeicons.css'; // 9k
+// @import '~primeicons/primeicons.css'; // 500k including font files
 @import '~primeng/resources/primeng.min.css'; // 7k
 // @import '~primeflex/primeflex.css'; // 236k
 // Option 1: Pre-built PrimeNG theme
