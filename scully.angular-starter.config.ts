@@ -28,6 +28,7 @@ export const config: ScullyConfig = {
         property: 'id',
       },
     },
+     */
   },
 
   /** Static list of extra routes */
