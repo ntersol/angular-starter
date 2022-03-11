@@ -25,7 +25,12 @@ export const APP_COMPONENTS = [
 ];
 
 // Scully is not node compatible, only load Scully when not on node
-let Scully = [ScullyLibModule];
+let Scully = [
+  ScullyLibModule.forRoot({
+    useTransferState: true,
+    alwaysMonitor: true,
+  }),
+];
 if (!isBrowser) {
   Scully = [];
 }

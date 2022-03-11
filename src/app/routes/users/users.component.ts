@@ -12,7 +12,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(private api: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.users.refresh().subscribe();
+  }
 
   ngOnDestroy() {}
 }
