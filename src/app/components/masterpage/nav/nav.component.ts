@@ -40,7 +40,7 @@ export class NavComponent implements OnInit, OnDestroy {
       label: 'Demo Route',
       expanded: true,
       icon: 'fas fa-cubes me-1',
-      routerLink: '/route/',
+      routerLink: '/route',
     },
   ];
 

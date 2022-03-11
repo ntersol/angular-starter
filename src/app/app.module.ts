@@ -6,12 +6,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Main entrypoint component
 import { AppComponent } from './app.component';
-import { AppRouterModule } from './app.routes.module';
+import { AppRouterModule, TrailingSlashUrlSerializer } from './app.routes.module';
 import { NoContentComponent } from './routes/no-content/no-content.component';
 import { GlobalErrorHandler } from './shared/interceptors/error.interceptor';
 import { HttpInterceptorService } from './shared/interceptors/http.interceptor';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { isBrowser } from './shared/services';
+import { UrlSerializer } from '@angular/router';
 
 // Enables faster prod mode, does disable some dirty error checking though
 // enableProdMode();
@@ -49,6 +50,7 @@ export let InjectorInstance: Injector;
     ...Scully,
   ],
   providers: [
+    { provide: UrlSerializer, useClass: TrailingSlashUrlSerializer },
     // AppConfigService, // App config/env settings
 
     // Global error handling
