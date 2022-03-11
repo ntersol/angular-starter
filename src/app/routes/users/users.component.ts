@@ -29,7 +29,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(private api: ApiService, private fb: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.users.refresh().subscribe();
+  }
 
   /**
    * Save a new user or update existing
