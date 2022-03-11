@@ -123,7 +123,6 @@
     "prettier": "2.5.1",
     "protractor": "~7.0.0",
     "schematics-utilities": "^2.0.3",
-    "scully-plugin-amp-css": "^2.0.0",
     "source-map-explorer": "2.5.2",
     "ts-node": "10.4.0",
     "tslint-angular": "3.0.3",
