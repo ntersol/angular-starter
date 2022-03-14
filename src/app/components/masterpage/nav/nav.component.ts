@@ -27,6 +27,7 @@ export class NavComponent implements OnInit, OnDestroy {
       icon: 'fas fa-home me-1',
       routerLink: '/',
       routerLinkActiveOptions: { exact: true },
+      badge: 'test',
     },
     {
       label: 'Demo Route',

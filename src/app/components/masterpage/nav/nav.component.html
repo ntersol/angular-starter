@@ -1,4 +1,18 @@
+<div class="d-flex">
+  <a class="menu-link main-menu" *ngFor="let nav of navMenu">
+    <span [innerHtml]="nav.label"></span>
+  </a>
+  <div class="align-self-center ms-auto">
+    <p-slideMenu #menu [model]="utilityMenu" [popup]="true" [viewportHeight]="utilityMenu.length * 70"></p-slideMenu>
+    <a label="Show" (click)="menu.toggle($event)">
+      <fa-icon icon="user" class="me-2"></fa-icon> <span class="me-2">{{ userName$ | async }}</span>
+      <fa-icon icon="caret-down"></fa-icon>
+    </a>
+  </div>
+</div>
+<!--
 <p-menubar [model]="navMenu" class="main-menu">
+
   <ng-container *ngIf="hasUpdate$ | async as hasUpdate">
     <button class="btn btn-primary" type="button" icon="fas fa-exclamation-triangle" (click)="updateApp()">
       <fa-icon icon="exclamation-triangle" class="me-2"></fa-icon>
@@ -11,6 +25,7 @@
     <fa-icon icon="caret-down"></fa-icon>
   </a>
 </p-menubar>
+-->
 <div class="pt-2 float-end mobile-menu">
   <a (click)="sidebarVisible = true" class="p-2">
     <fa-icon icon="bars" class="me-2 fa-lg"></fa-icon>

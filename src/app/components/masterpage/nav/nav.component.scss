@@ -6,6 +6,23 @@
 }
 
 .nav-component {
+  .menu-link {
+    padding: 0.857rem;
+    color: #333;
+    border-radius: 3px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    display: inline-block;
+    align-items: center;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+    &:hover {
+      background: #eaeaea;
+    }
+  }
   // Fix dropdown menu
   .p-slidemenu {
     .p-slidemenu-content {
