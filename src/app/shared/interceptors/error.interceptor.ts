@@ -41,6 +41,10 @@ export class GlobalErrorHandler implements ErrorHandler {
       // this.settings.error$.next(error.message);
       this.resetState(error);
     }
+    // Display error in node
+    if (!this.settings.isBrowser) {
+      console.error(error);
+    }
     // Now throw the error to the console
     throw error;
   } // end handleError

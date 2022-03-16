@@ -1,21 +1,25 @@
 // @angular modules
 import { SiteModule } from '$site';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorHandler, Injector, NgModule } from '@angular/core'; // APP_INITIALIZER,
+import { enableProdMode, ErrorHandler, Injector, NgModule } from '@angular/core'; // APP_INITIALIZER,
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Main entrypoint component
 import { AppComponent } from './app.component';
-import { AppRouterModule, TrailingSlashUrlSerializer } from './app.routes.module';
 import { NoContentComponent } from './routes/no-content/no-content.component';
 import { GlobalErrorHandler } from './shared/interceptors/error.interceptor';
 import { HttpInterceptorService } from './shared/interceptors/http.interceptor';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { isBrowser } from './shared/services';
 import { UrlSerializer } from '@angular/router';
+import { environment } from '$env';
+import { TrailingSlashUrlSerializer } from './shared/utils/url-serializer.util';
+import { AppRouterModule } from './app.routes.module';
 
 // Enables faster prod mode, does disable some dirty error checking though
-// enableProdMode();
+if (environment.production) {
+  enableProdMode();
+}
 
 // Components
 export const APP_COMPONENTS = [
