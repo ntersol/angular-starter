@@ -5,7 +5,7 @@ import { SettingsService } from '$settings';
 
 import { MenuItem } from 'primeng/api';
 import { UiStateService } from '$ui';
-import { AuthState } from '../../../shared/services';
+import { AuthService, AuthState } from '../../../shared/services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -54,7 +54,7 @@ export class NavComponent implements OnInit, OnDestroy {
 
   public sidebarVisible = false;
 
-  constructor(private settings: SettingsService, private ui: UiStateService, private router: Router) {}
+  constructor(private settings: SettingsService, private ui: UiStateService, private router: Router, private auth: AuthService) {}
 
   ngOnInit(): void {
     // On route change, if mobile nav is open close it
@@ -77,7 +77,7 @@ export class NavComponent implements OnInit, OnDestroy {
    * Log out
    */
   public logOut() {
-    // this.auth.logOut(AuthState.loggedOut);
+    this.auth.logOut(AuthState.loggedOut);
   }
 
   ngOnDestroy(): void {}

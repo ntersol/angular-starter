@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 
 import { SettingsService } from '$settings';
 import { AuthService, AuthState } from '../../shared/services/auth.service';
-import { isBrowser } from '../../shared/services';
+import { DomService } from '../../shared/services/dom.service';
+
+// Localstorage key to store username
+const savedUserName = 'savedUserName';
 
 @Component({
   selector: 'app-login',
@@ -32,22 +35,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private settings: SettingsService,
+    private dom: DomService,
   ) {}
 
   public ngOnInit() {
-    let isLogin, hasLogin;
-
-    if (!isBrowser) {
-      return;
+    // Is there a saved username
+    const remember = this.dom.localStorage?.getItem(savedUserName);
+    // If so update the login form
+    if (!!remember) {
+      this.formMain.patchValue({
+        userName: remember,
+        remember: true,
+      });
     }
-    if (window.localStorage['rememberLogin'] && this.settings.userName) {
-      isLogin = this.settings.userName;
-    }
-
-    if (window.localStorage['rememberLogin']) {
-      hasLogin = true;
-    }
-
     this.authService.logOutModal = null; // Get rid of logout modal if it persists
   }
 
@@ -59,12 +59,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.errorApi = null;
     this.showErrorDetails = false;
 
-    // If remember username is set
+    // If remember username is set, save to localstorage
     if (this.formMain && this.formMain.value.remember) {
-      this.settings.userName = this.formMain.value.userName;
-      window.localStorage['rememberLogin'] = true;
+      this.dom.localStorage?.setItem(savedUserName, this.formMain.value.userName);
     } else {
-      window.localStorage.removeItem('rememberLogin');
+      this.dom.localStorage.removeItem(savedUserName);
     }
 
     // Authenticate

@@ -7,14 +7,12 @@ import { NoContentComponent } from './routes/no-content/no-content.component';
 export const ROUTES: Routes = [
   // Routes without masterpage or that do not need to be authenticated need to go first
 
-  /**
   {
     path: 'login',
     pathMatch: 'full',
     loadChildren: () => import('./routes/login/login.module').then(m => m.LoginModule),
     data: { title: 'Please Log In' },
   },
-   */
 
   // Example route param
   // {
