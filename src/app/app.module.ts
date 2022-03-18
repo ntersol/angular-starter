@@ -2,7 +2,7 @@
 import { SiteModule } from '$site';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { enableProdMode, ErrorHandler, Injector, NgModule } from '@angular/core'; // APP_INITIALIZER,
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Main entrypoint component
 import { AppComponent } from './app.component';
@@ -44,7 +44,8 @@ export let InjectorInstance: Injector;
 @NgModule({
   declarations: [APP_COMPONENTS],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'angular-starter' }),
+    BrowserModule.withServerTransition({ appId: environment.appID }),
+    BrowserTransferStateModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AppRouterModule,

@@ -4,6 +4,7 @@ import { EnvironmentConfig } from './environment.model';
  * Global defaults for environment configs
  */
 export const environment: EnvironmentConfig = {
+  appID: 'angular-starter',
   /** Use production bundling */
   production: false,
   properties: {
