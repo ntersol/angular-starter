@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 // Solid icons
-import { faPowerOff, faSpinner, faExclamationTriangle, faUser, faCaretDown, faBars, faHome, faCubes } from '@fortawesome/free-solid-svg-icons';
+import { faPowerOff, faSpinner, faExclamationTriangle, faUser, faCaretDown, faBars, faHome, faCubes, faX } from '@fortawesome/free-solid-svg-icons';
 // Regular (thinner) icons
 // import { faPowerOff } from '@fortawesome/free-regular-svg-icons';
 // Corporate brand icons
@@ -27,6 +27,6 @@ import { faPowerOff, faSpinner, faExclamationTriangle, faUser, faCaretDown, faBa
 })
 export class FontsModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faPowerOff, faSpinner, faExclamationTriangle, faUser, faCaretDown, faBars, faHome, faCubes);
+    library.addIcons(faPowerOff, faSpinner, faExclamationTriangle, faUser, faCaretDown, faBars, faHome, faCubes, faX);
   }
 }

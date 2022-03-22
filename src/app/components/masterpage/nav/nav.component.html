@@ -1,39 +1,42 @@
-<div class="d-flex">
+<!---->
+<div class="d-none d-lg-flex">
   <a class="menu-link main-menu" *ngFor="let nav of navMenu">
-    <span [innerHtml]="nav.label"></span>
+    <fa-icon [icon]="nav?.icon || 'question'" *ngIf="!!nav.icon" class="me-2"></fa-icon> <span [innerHtml]="nav.label"></span>
   </a>
-  <div class="align-self-center ms-auto">
-    <p-slideMenu #menu [model]="utilityMenu" [popup]="true" [viewportHeight]="utilityMenu.length * 70"></p-slideMenu>
-    <a label="Show" (click)="menu.toggle($event)">
+  <div class="menu-container align-self-center ms-auto" #temp>
+    <a label="Show" class="menu-bar-toggle">
       <fa-icon icon="user" class="me-2"></fa-icon> <span class="me-2">{{ userName$ | async }}</span>
-      <fa-icon icon="caret-down"></fa-icon>
+      <fa-icon icon="caret-down" class="icon-caret-down"></fa-icon>
     </a>
+    <div class="menu-bar">
+      <div class="menu-bar-container">
+        <a class="menu-link main-menu d-block thin" *ngFor="let nav of utilityMenu">
+          <fa-icon [icon]="nav?.icon || 'question'" *ngIf="!!nav.icon" class="me-2"></fa-icon>
+          <span [innerHtml]="nav.label"></span>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
-<!--
-<p-menubar [model]="navMenu" class="main-menu">
 
-  <ng-container *ngIf="hasUpdate$ | async as hasUpdate">
-    <button class="btn btn-primary" type="button" icon="fas fa-exclamation-triangle" (click)="updateApp()">
-      <fa-icon icon="exclamation-triangle" class="me-2"></fa-icon>
-      Update Available
-    </button>
-  </ng-container>
-  <p-slideMenu #menu [model]="utilityMenu" [popup]="true" [viewportHeight]="utilityMenu.length * 70"></p-slideMenu>
-  <a label="Show" (click)="menu.toggle($event)">
-    <fa-icon icon="user" class="me-2"></fa-icon> <span class="me-2">{{ userName$ | async }}</span>
-    <fa-icon icon="caret-down"></fa-icon>
-  </a>
-</p-menubar>
--->
-<div class="pt-2 float-end mobile-menu">
-  <a (click)="sidebarVisible = true" class="p-2">
+<div class="pt-2 float-end d-block d-lg-none">
+  <a (click)="sidebarVisible = !sidebarVisible" class="p-2">
     <fa-icon icon="bars" class="me-2 fa-lg"></fa-icon>
   </a>
 </div>
 
-<p-sidebar [(visible)]="sidebarVisible">
-  <p-menu [model]="navMenu"></p-menu>
+<p-sidebar [(visible)]="sidebarVisible" [baseZIndex]="10000" [appendTo]="'body'" [dismissible]="true" [showCloseIcon]="false">
+  <a (click)="sidebarVisible = !sidebarVisible" class="float-end">
+    <fa-icon icon="x"></fa-icon>
+  </a>
+
+  <a class="menu-link main-menu d-block" *ngFor="let nav of navMenu">
+    <fa-icon [icon]="nav?.icon || 'question'" *ngIf="!!nav.icon" class="me-2"></fa-icon> <span [innerHtml]="nav.label"></span>
+  </a>
   <hr />
-  <p-menu [model]="utilityMenu"></p-menu>
+
+  <a class="menu-link main-menu d-block" *ngFor="let nav of utilityMenu">
+    <fa-icon [icon]="nav?.icon || 'question'" *ngIf="!!nav.icon" class="me-2"></fa-icon>
+    <span [innerHtml]="nav.label"></span>
+  </a>
 </p-sidebar>

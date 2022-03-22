@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { DialogModule } from 'primeng/dialog';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { SlideMenuModule } from 'primeng/slidemenu';
@@ -28,6 +29,7 @@ const MODULES = [
   DialogModule,
   ConfirmDialogModule,
   DynamicDialogModule,
+  OverlayPanelModule,
 ];
 
 @NgModule({
