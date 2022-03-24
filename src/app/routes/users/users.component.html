@@ -21,8 +21,12 @@
                     <td>
                       <a [routerLink]="['./' + user.id]">{{ user.name }}</a>
                     </td>
-                    <td>{{ user.phone }}</td>
-                    <td>{{ user.email }}</td>
+                    <td>
+                      <a href="tel:{{ user.phone | phoneNumber }}">{{ user.phone | phoneNumber }}</a>
+                    </td>
+                    <td>
+                      <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                    </td>
                     <td>
                       <div class="text-end">
                         <a class="me-3" (click)="edit(user)"><fa-icon icon="cog"></fa-icon></a>

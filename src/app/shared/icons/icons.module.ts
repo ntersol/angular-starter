@@ -18,6 +18,8 @@ import {
   faX,
   faRefresh,
   faPlus,
+  faEnvelope,
+  faPhone,
 } from '@fortawesome/free-solid-svg-icons';
 // Regular (thinner) icons
 // import { faPowerOff } from '@fortawesome/free-regular-svg-icons';
@@ -44,6 +46,7 @@ import {
 export class IconsModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(
+      faEnvelope,
       faPowerOff,
       faSpinner,
       faRefresh,
