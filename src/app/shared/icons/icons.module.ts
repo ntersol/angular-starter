@@ -25,7 +25,7 @@ import { faPowerOff, faSpinner, faExclamationTriangle, faUser, faUsers, faCaretD
   imports: [CommonModule, FontAwesomeModule],
   exports: [FontAwesomeModule],
 })
-export class FontsModule {
+export class IconsModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faPowerOff, faSpinner, faExclamationTriangle, faUser, faUsers, faCaretDown, faBars, faHome, faCubes, faX);
   }
