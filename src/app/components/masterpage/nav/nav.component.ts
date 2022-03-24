@@ -13,6 +13,7 @@ interface MainMenuItem {
   icon?: IconProp;
   routerLink?: string;
   routerLinkActiveOptions?: any;
+  command?: () => any;
 }
 
 @Component({
@@ -45,7 +46,7 @@ export class NavComponent implements OnInit, OnDestroy {
     {
       label: 'Sign Out',
       icon: 'power-off',
-      // command: () => this.logOut(),
+      command: () => this.logOut(),
     },
   ];
 

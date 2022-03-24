@@ -1,6 +1,11 @@
 <!---->
 <div class="d-none d-lg-flex">
-  <a class="menu-link main-menu" *ngFor="let nav of navMenu" [routerLink]="[nav.routerLink]">
+  <a
+    class="menu-link main-menu"
+    *ngFor="let nav of navMenu"
+    [routerLink]="nav.routerLink ? [nav.routerLink] : null"
+    (click)="nav.command ? nav.command() : null"
+  >
     <fa-icon [icon]="nav?.icon || 'question'" *ngIf="!!nav.icon" class="me-2"></fa-icon> <span [innerHtml]="nav.label"></span>
   </a>
   <div class="menu-container align-self-center ms-auto" #temp>
@@ -10,7 +15,12 @@
     </a>
     <div class="menu-bar">
       <div class="menu-bar-container">
-        <a class="menu-link main-menu d-block thin" *ngFor="let nav of utilityMenu" [routerLink]="[nav.routerLink]">
+        <a
+          class="menu-link main-menu d-block thin"
+          *ngFor="let nav of utilityMenu"
+          [routerLink]="nav.routerLink ? [nav.routerLink] : null"
+          (click)="nav.command ? nav.command() : null"
+        >
           <fa-icon [icon]="nav?.icon || 'question'" *ngIf="!!nav.icon" class="me-2"></fa-icon>
           <span [innerHtml]="nav.label"></span>
         </a>
