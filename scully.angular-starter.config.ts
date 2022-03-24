@@ -4,12 +4,13 @@ import { httpGetJson, ScullyConfig } from '@scullyio/scully';
 import '@scullyio/scully-plugin-puppeteer';
 import './scully/plugins/plugins';
 import { getFlashPreventionPlugin } from '@scullyio/scully-plugin-flash-prevention';
-import { environment } from './src/environments/environment.defaults';
+// import { environment } from './src/environments/environment.defaults';
 require('scully-plugin-amp-css');
 
 export const config: ScullyConfig = {
   projectRoot: './src',
-  projectName: environment.appID,
+  projectName: 'angular-starter',
+  // projectName: environment.appID, // <- Scully throws error, can't find module. Lame.
   distFolder: './dist/browser', // output directory of your Angular build artifacts
   outDir: './dist/static', // directory for scully build artifacts
   defaultPostRenderers: ['combineStylesAmpPlugin', getFlashPreventionPlugin({ appRootSelector: 'app-root' })],

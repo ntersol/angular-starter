@@ -59,3 +59,4 @@ scullyStats.json
 /scully/**/*.js
 /scully/**/*.js.map
 /scully/**/*.d.ts
+scully.angular-starter.config.js

@@ -3,7 +3,7 @@ import { SiteModule } from '$site';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { enableProdMode, ErrorHandler, Injector, NgModule } from '@angular/core'; // APP_INITIALIZER,
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Main entrypoint component
 import { AppComponent } from './app.component';
 import { NoContentComponent } from './routes/no-content/no-content.component';
@@ -47,7 +47,7 @@ export let InjectorInstance: Injector;
     BrowserModule.withServerTransition({ appId: environment.appID }),
     BrowserTransferStateModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     AppRouterModule,
 
     /** Uncomment to enable SW
