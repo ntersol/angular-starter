@@ -29,8 +29,8 @@
 <!--
   Flyout sidebar
 -->
-<p-sidebar [(visible)]="sidebarVisible" [baseZIndex]="10000" [appendTo]="'body'" [dismissible]="true" [showCloseIcon]="false">
-  <a (click)="sidebarVisible = !sidebarVisible" class="float-end">
+<p-sidebar [(visible)]="sidebarVisible" [style]="{ 'z-index': 10000 }" appendTo="body" [baseZIndex]="10000" [dismissible]="true" [showCloseIcon]="false">
+  <a (click)="sidebarVisible = !sidebarVisible" class="sidebar-close float-end">
     <fa-icon icon="x"></fa-icon>
   </a>
 
@@ -43,3 +43,4 @@
     <span [innerHtml]="nav.label"></span>
   </a>
 </p-sidebar>
+<div class="sidebar-mask" *ngIf="sidebarVisible" (click)="sidebarVisible = false"></div>
