@@ -5,28 +5,7 @@
   display: block;
 }
 
-.nav-component {
-  .menu-link {
-    padding: 0.857rem;
-    color: #333;
-    border-radius: 3px;
-    -webkit-user-select: none;
-    user-select: none;
-    cursor: pointer;
-    display: inline-block;
-    align-items: center;
-    text-decoration: none;
-    overflow: hidden;
-    position: relative;
-    white-space: nowrap;
-    transition: 300ms ease;
-    &.thin {
-      padding: 0.4rem 0.857rem;
-    }
-    &:hover {
-      background: #eaeaea;
-    }
-  }
+#nav {
   .menu-container {
     position: relative;
   }
@@ -98,6 +77,28 @@
   }
 }
 
+.nav-menu-link {
+  padding: 0.857rem;
+  color: #333;
+  border-radius: 3px;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  display: inline-block;
+  align-items: center;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  transition: 300ms ease;
+  &.thin {
+    padding: 0.4rem 0.857rem;
+  }
+  &:hover {
+    background: #eaeaea;
+  }
+}
+
 .p-sidebar {
   .p-sidebar-content {
     overflow: initial; // Remove if you need scrolling in the sidebar
@@ -105,28 +106,5 @@
   .sidebar-close {
     position: relative;
     top: -17px;
-  }
-}
-// Current bug in primeng sidebar where the mask does not display
-// Can remove the mask when fixed in a future release
-.sidebar-mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  animation: fadeInSidebar 0.3s ease;
-  animation-fill-mode: forwards;
-}
-
-@keyframes fadeInSidebar {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }

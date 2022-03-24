@@ -51,12 +51,6 @@ export const ROUTES: Routes = [
         loadChildren: () => import('./routes/users/users.module').then(m => m.UsersModule),
       },
 
-      {
-        path: 'route',
-        pathMatch: 'full',
-        loadChildren: () => import('./routes/_route/route.module').then(m => m.RouteModule),
-      },
-
       // Empty path string for homepage ('') needs to be LAST otherwise it catches all other routes
       {
         path: '',

@@ -15,6 +15,7 @@ import { UrlSerializer } from '@angular/router';
 import { environment } from '$env';
 import { TrailingSlashUrlSerializer } from './shared/utils/url-serializer.util';
 import { AppRouterModule } from './app.routes.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Enables faster prod mode, does disable some dirty error checking though
 if (environment.production) {
@@ -47,7 +48,7 @@ export let InjectorInstance: Injector;
     BrowserModule.withServerTransition({ appId: environment.appID }),
     BrowserTransferStateModule,
     HttpClientModule,
-    // BrowserAnimationsModule,
+    BrowserAnimationsModule, // Adds 3k over no animation
     AppRouterModule,
 
     /** Uncomment to enable SW
