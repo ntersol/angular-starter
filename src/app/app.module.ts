@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NoContentComponent } from './routes/no-content/no-content.component';
 import { GlobalErrorHandler } from './shared/interceptors/error.interceptor';
 import { HttpInterceptorService } from './shared/interceptors/http.interceptor';
+import { ScullyLibModule } from '@scullyio/ng-lib';
 import { isBrowser } from './shared/services';
 import { UrlSerializer } from '@angular/router';
 import { environment } from '$env';
@@ -28,6 +29,17 @@ export const APP_COMPONENTS = [
   NoContentComponent,
 ];
 
+// Scully is not node compatible, only load Scully when not on node
+let Scully = [
+  ScullyLibModule.forRoot({
+    useTransferState: true,
+    alwaysMonitor: true,
+  }),
+];
+if (!isBrowser) {
+  Scully = [];
+}
+
 export let InjectorInstance: Injector;
 
 @NgModule({
@@ -36,7 +48,11 @@ export let InjectorInstance: Injector;
     BrowserModule.withServerTransition({ appId: environment.appID }),
     BrowserTransferStateModule,
     HttpClientModule,
+<<<<<<< HEAD
     BrowserAnimationsModule, // Adds 3k over no animation
+=======
+    // BrowserAnimationsModule,
+>>>>>>> ea3ae8e39f2112b87855493b989567b1b6617f86
     AppRouterModule,
 
     /** Uncomment to enable SW
@@ -46,6 +62,7 @@ export let InjectorInstance: Injector;
     }),
      */
     SiteModule,
+    ...Scully,
   ],
   providers: [
     { provide: UrlSerializer, useClass: TrailingSlashUrlSerializer },
