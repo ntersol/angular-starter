@@ -13,6 +13,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmationService } from 'primeng/api';
 import { IconsModule } from './shared/icons/icons.module';
+import { FontsModule } from './shared/fonts/fonts.module';
 
 const MODULES = [
   // Angular
@@ -21,6 +22,7 @@ const MODULES = [
   ReactiveFormsModule,
   // Font-awesome icons
   IconsModule,
+  FontsModule,
   // Prime NG UI Lib
   SlideMenuModule,
   MenubarModule,
