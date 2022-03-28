@@ -21,7 +21,6 @@ const MODULES = [
   FormsModule,
   ReactiveFormsModule,
   // Font-awesome icons
-  IconsModule,
   FontsModule,
   // Prime NG UI Lib
   SlideMenuModule,

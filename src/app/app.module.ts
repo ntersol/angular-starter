@@ -48,11 +48,7 @@ export let InjectorInstance: Injector;
     BrowserModule.withServerTransition({ appId: environment.appID }),
     BrowserTransferStateModule,
     HttpClientModule,
-<<<<<<< HEAD
     BrowserAnimationsModule, // Adds 3k over no animation
-=======
-    // BrowserAnimationsModule,
->>>>>>> ea3ae8e39f2112b87855493b989567b1b6617f86
     AppRouterModule,
 
     /** Uncomment to enable SW
