@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// Angular Materials icons
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+// Font Awesome icons
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 // Solid icons
 import {
@@ -40,12 +43,15 @@ import {
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, FontAwesomeModule],
-  exports: [FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, MatIconModule],
+  exports: [FontAwesomeModule, MatIconModule],
 })
 export class IconsModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(
+  constructor(private library: FaIconLibrary, private matIconRegistry: MatIconRegistry) {
+    // Angular Materials Icons
+    this.matIconRegistry.addSvgIcon('home', 'assets/img/icon/home.svg').addSvgIcon('add', 'assets/img/icon/add.svg');
+    // Font Awesome Icons
+    this.library.addIcons(
       faEnvelope,
       faPowerOff,
       faSpinner,
@@ -62,6 +68,7 @@ export class IconsModule {
       faHome,
       faCubes,
       faX,
+      faPhone,
     );
   }
 }

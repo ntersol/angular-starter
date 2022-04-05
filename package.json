@@ -60,6 +60,7 @@
     "@angular/core": "13.2.0",
     "@angular/elements": "13.2.0",
     "@angular/forms": "13.2.0",
+    "@angular/material": "^13.2.0",
     "@angular/platform-browser": "13.2.0",
     "@angular/platform-browser-dynamic": "13.2.0",
     "@angular/platform-server": "13.2.0",
