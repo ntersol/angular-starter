@@ -1,0 +1,30 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { SharedModule } from '$shared';
+import { LogoutModalComponent, FeedbackModalComponent } from '../modals';
+import { FooterComponent, HeaderComponent, LayoutMainComponent, NavComponent, LayoutSingleComponent } from './';
+import { routing } from './masterpage.routes';
+import { SidebarModule } from 'primeng/sidebar';
+import { ConfirmationService } from 'primeng/api';
+
+// Modals include
+const APP_MODALS = [LogoutModalComponent, FeedbackModalComponent];
+
+// Components to include
+export const APP_COMPONENTS = [...APP_MODALS, FooterComponent, HeaderComponent, LayoutMainComponent, LayoutSingleComponent, NavComponent];
+
+@NgModule({
+  imports: [
+    // Angular
+    CommonModule,
+    // Shared
+    SharedModule,
+    routing,
+    SidebarModule,
+  ],
+  providers: [ConfirmationService],
+  declarations: [APP_COMPONENTS],
+  exports: [APP_COMPONENTS],
+})
+export class MasterPageModule {}

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SiteModule } from '$site'; // Site modules
-
+import { SharedModule } from '$shared';
+import { MasterPageModule } from '$components';
 // Routing
 import { routing } from './home.routes';
 
@@ -13,9 +13,9 @@ import { RouteApiService } from './shared/stores/api/route-api.service';
 import { HomeComponent } from './home.component';
 
 @NgModule({
-    imports: [CommonModule, SiteModule, routing],
-    declarations: [HomeComponent],
-    providers: [RouteUiService, RouteApiService],
-    exports: []
+  imports: [CommonModule, SharedModule, routing, MasterPageModule],
+  declarations: [HomeComponent],
+  providers: [RouteUiService, RouteApiService],
+  exports: [],
 })
 export class HomeModule {}

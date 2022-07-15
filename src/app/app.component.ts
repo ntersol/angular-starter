@@ -4,15 +4,13 @@ import { Title } from '@angular/platform-browser';
 import { map, filter, mergeMap } from 'rxjs/operators';
 
 import { environment } from '$env';
-import { isBrowser, NtsVersionManagementService } from './shared/services';
+import { NtsVersionManagementService } from './shared/services';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  public isBrowser = isBrowser;
-
   /** Global/app errors */
   // public error$ = this.settings.error$;
   constructor(
