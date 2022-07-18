@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-temp',
-  template: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a viverra felis. Nunc pretium ut sem feugiat consequat. In malesuada tempus
-  quam, et interdum mauris laoreet ac. Phasellus tempus magna eget elit hendrerit, id hendrerit risus gravida. In odio sapien, dignissim eget sapien ac, posuere
-  sagittis tortor. Nam suscipit nisi vitae dignissim elementum. Quisque ac felis nec tellus porttitor cursus. Duis sit amet lacinia nibh, at malesuada lorem.
-  Nulla facilisis sollicitudin est et pretium. Nam id massa tincidunt, maximus mi ut, cursus arcu. In vel volutpat erat. Duis viverra dignissim est, a commodo
-  arcu varius vitae. Donec sodales cursus ipsum sed iaculis. Nunc condimentum felis in orci ornare tincidunt. Phasellus bibendum turpis et urna porta elementum.
-  Donec euismod vulputate tellus et vestibulum. Aliquam et tincidunt massa. Nullam eu lorem augue. Vestibulum posuere lacinia pretium. Donec mauris justo,
-  scelerisque vel eros et, pretium porta elit. Integer pellentesque sollicitudin sem at faucibus. Nunc gravida ultricies lectus, eget pellentesque est venenatis
-  eu. Donec non iaculis lorem, mattis ultrices magna. Aenean fermentum, mi non faucibus sodales, mauris odio pulvinar tellus, id fringilla arcu turpis eu lacus.
-  Sed id metus eu est maximus bibendum sed at odio. Fusce libero odio, eleifend in nunc non, pharetra consequat urna. Morbi rutrum elementum urna, non semper
-  quam ultrices vel. Vivamus condimentum pharetra tincidunt. Proin aliquam, lectus nec auctor porttitor, ligula diam laoreet velit, non aliquet neque libero non
-  ex. Aliquam erat volutpat. Sed porttitor quam eu orci interdum aliquam. Sed non commodo elit. Suspendisse potenti. Quisque purus ligula, efficitur vel
-  imperdiet sit amet, dapibus sit amet magna. Sed id augue at enim blandit feugiat. Nam sit amet nisl quis nulla accumsan malesuada nec nec sem. Ut at justo
+  template: `Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a viverra felis. Nunc pretium ut sem feugiat consequat. In malesuada
+  tempus quam, et interdum mauris laoreet ac. Phasellus tempus magna eget elit hendrerit, id hendrerit risus gravida. In odio sapien, dignissim eget sapien ac,
+  posuere sagittis tortor. Nam suscipit nisi vitae dignissim elementum. Quisque ac felis nec tellus porttitor cursus. Duis sit amet lacinia nibh, at malesuada
+  lorem. Nulla facilisis sollicitudin est et pretium. Nam id massa tincidunt, maximus mi ut, cursus arcu. In vel volutpat erat. Duis viverra dignissim est, a
+  commodo arcu varius vitae. Donec sodales cursus ipsum sed iaculis. Nunc condimentum felis in orci ornare tincidunt. Phasellus bibendum turpis et urna porta
+  elementum. Donec euismod vulputate tellus et vestibulum. Aliquam et tincidunt massa. Nullam eu lorem augue. Vestibulum posuere lacinia pretium. Donec mauris
+  justo, scelerisque vel eros et, pretium porta elit. Integer pellentesque sollicitudin sem at faucibus. Nunc gravida ultricies lectus, eget pellentesque est
+  venenatis eu. Donec non iaculis lorem, mattis ultrices magna. Aenean fermentum, mi non faucibus sodales, mauris odio pulvinar tellus, id fringilla arcu turpis
+  eu lacus. Sed id metus eu est maximus bibendum sed at odio. Fusce libero odio, eleifend in nunc non, pharetra consequat urna. Morbi rutrum elementum urna, non
+  semper quam ultrices vel. Vivamus condimentum pharetra tincidunt. Proin aliquam, lectus nec auctor porttitor, ligula diam laoreet velit, non aliquet neque
+  libero non ex. Aliquam erat volutpat. Sed porttitor quam eu orci interdum aliquam. Sed non commodo elit. Suspendisse potenti. Quisque purus ligula, efficitur
+  vel imperdiet sit amet, dapibus sit amet magna. Sed id augue at enim blandit feugiat. Nam sit amet nisl quis nulla accumsan malesuada nec nec sem. Ut at justo
   vitae lorem auctor lobortis. Sed laoreet nisi at sapien molestie, eget tempor neque ultricies. Curabitur commodo felis turpis, tristique pretium tortor mollis
   nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque lobortis ligula a consequat molestie. Sed in mi
   in enim consequat viverra vitae quis lacus. Aenean pretium varius dolor. Ut sit amet volutpat lacus. Cras eu velit iaculis, viverra neque in, vehicula nisi.
