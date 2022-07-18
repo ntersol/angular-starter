@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SharedModule } from '$shared';
+import { SharedModule, IconsModule } from '$shared';
 import { LogoutModalComponent, FeedbackModalComponent } from '../modals';
 import { FooterComponent, HeaderComponent, LayoutMainComponent, NavComponent, LayoutSingleComponent } from './';
-import { routing } from './masterpage.routes';
+
 import { SidebarModule } from 'primeng/sidebar';
 import { ConfirmationService } from 'primeng/api';
 
@@ -20,8 +20,8 @@ export const APP_COMPONENTS = [...APP_MODALS, FooterComponent, HeaderComponent, 
     CommonModule,
     // Shared
     SharedModule,
-    routing,
     SidebarModule,
+    IconsModule,
   ],
   providers: [ConfirmationService],
   declarations: [APP_COMPONENTS],
