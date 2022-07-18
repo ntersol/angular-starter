@@ -1,5 +1,6 @@
 <div class="container mt-3" *ngIf="users.state$ | async as state">
   <div class="row">
+    <app-temp></app-temp>
     <div class="col col-12 col-md-9">
       <a class="float-end" (click)="refresh()"><fa-icon icon="refresh"></fa-icon></a>
       <h1><fa-icon icon="users"></fa-icon> List of users ({{ state?.data?.length ?? 0 }})</h1>

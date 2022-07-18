@@ -17,6 +17,7 @@ import { AppRouterModule } from './app.routes.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ComponentsLazyLoad } from './components';
 
 // Enables faster prod mode, does disable some dirty error checking though
 if (environment.production) {
@@ -50,7 +51,9 @@ export let InjectorInstance: Injector;
     BrowserTransferStateModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AppRouterModule,
+    ComponentsLazyLoad, // Lazy loaded components on the global scope
+    AppRouterModule, // App top level routing
+
     /** Uncomment to enable SW
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: environment.settings.enableServiceWorker,
