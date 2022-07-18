@@ -10,9 +10,10 @@ import { RouteApiService } from './shared/stores/api/route-api.service';
 
 // Components
 import { HomeComponent } from './home.component';
+import { TempModule } from '../../components/temp/temp.module';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, routing],
+  imports: [CommonModule, SharedModule, routing, TempModule],
   declarations: [HomeComponent],
   providers: [RouteUiService, RouteApiService],
   exports: [],

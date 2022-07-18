@@ -24,7 +24,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { FontsModule } from './fonts/fonts.module';
 import { IconsModule } from './icons/icons.module';
 
 // Pipes + Directives
@@ -53,8 +52,6 @@ const MODULES = [
   RouterModule,
   FormsModule,
   ReactiveFormsModule,
-  // Font-awesome icons
-  FontsModule,
   IconsModule,
   ConfirmDialogModule,
   DynamicDialogModule,
