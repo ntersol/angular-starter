@@ -50,8 +50,7 @@ export const APP_PIPES_DIRECTIVES = [
 const MODULES = [
   // Angular
   RouterModule,
-  FormsModule,
-  ReactiveFormsModule,
+
   IconsModule,
   ConfirmDialogModule,
   DynamicDialogModule,
