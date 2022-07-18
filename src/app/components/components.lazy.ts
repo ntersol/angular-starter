@@ -7,7 +7,11 @@ const routes: Routes = [
   },
   {
     path: '~',
-    loadChildren: () => import('../shared/icons/icons.module').then(m => m.IconsModule),
+    loadChildren: () => import('../../../node_modules/@angular/forms').then(m => m.FormsModule),
+  },
+  {
+    path: '~',
+    loadChildren: () => import('../../../node_modules/@angular/forms').then(m => m.ReactiveFormsModule),
   },
 ];
 
