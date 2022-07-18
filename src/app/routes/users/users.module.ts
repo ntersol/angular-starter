@@ -7,9 +7,10 @@ import { UserComponent } from './routes/user/user.component';
 import { NtsStateManagementModule } from '@ntersol/state-management';
 import { NtsFormsModule } from '@ntersol/forms';
 import { TempModule } from '../../components/temp/temp.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, IconsModule, UsersRouting, NtsStateManagementModule, NtsFormsModule, TempModule],
+  imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule, IconsModule, UsersRouting, NtsStateManagementModule, NtsFormsModule, TempModule],
   declarations: [UsersComponent, UserComponent],
 })
 export class UsersModule {}
