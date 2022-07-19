@@ -1,22 +1,21 @@
 // @angular modules
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { enableProdMode, ErrorHandler, Injector, NgModule } from '@angular/core'; // APP_INITIALIZER,
+import { UrlSerializer } from '@angular/router';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Uncomment for animation, needed by some prime components
+import { ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ScullyLibModule } from '@scullyio/ng-lib';
 // Main entrypoint component
 import { AppComponent } from './app.component';
+import { AppRouterModule } from './app.routes.module';
 import { NoContentComponent } from './routes/no-content/no-content.component';
 import { GlobalErrorHandler } from './shared/interceptors/error.interceptor';
 import { HttpInterceptorService } from './shared/interceptors/http.interceptor';
-import { ScullyLibModule } from '@scullyio/ng-lib';
 import { isBrowser } from './shared/services';
-import { UrlSerializer } from '@angular/router';
 import { environment } from '$env';
 import { TrailingSlashUrlSerializer } from './shared/utils/url-serializer.util';
-import { AppRouterModule } from './app.routes.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ConfirmationService } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
 import { ComponentsLazyLoad } from './components';
 
 // Enables faster prod mode, does disable some dirty error checking though
@@ -50,8 +49,8 @@ export let InjectorInstance: Injector;
     BrowserModule.withServerTransition({ appId: environment.appID }),
     BrowserTransferStateModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    ComponentsLazyLoad, // Lazy loaded components on the global scope
+    BrowserAnimationsModule, // Uncomment for animation, needed by some prime components
+    ComponentsLazyLoad, // Lazy loaded modules on the global scope
     AppRouterModule, // App top level routing
 
     /** Uncomment to enable SW
