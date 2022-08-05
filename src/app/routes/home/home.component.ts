@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { StorageService } from '$shared';
+import { LocalStorageService } from '$shared';
 
 interface Temp {
   Hello: string;
@@ -12,7 +12,7 @@ interface Temp {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  constructor(private localStorage: StorageService) {}
+  constructor(private localStorage: LocalStorageService) {}
 
   ngOnInit() {
     this.localStorage.getItem$<Temp>('temp', { isJson: true }).subscribe(x => console.warn(x));
