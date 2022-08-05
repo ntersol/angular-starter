@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, identity, map, take } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, identity, map, Observable, take } from 'rxjs';
 import { DomService } from './dom.service';
 
 interface Options {
@@ -20,22 +20,32 @@ export class LocalStorageService {
    * @param options
    * @returns
    */
-  public getItem$ = <t>(key: string, options?: Options) =>
-    this.storage$.pipe(
-      map(() => this.getItem<t>(key, options?.isJson)),
-      options?.disableDistinct ? identity : distinctUntilChanged(),
-    );
 
   constructor(private dom: DomService) {}
+
+  /**
+   *
+   * @param key
+   * @param options
+   */
+  public getItem$<t>(key: string, options?: { isJson: false }): Observable<string | null>;
+  public getItem$<t>(key: string, options: { isJson: true }): Observable<t | null>;
+  public getItem$<t>(key: string, options?: Options): Observable<string | null> {
+    return this.storage$.pipe(
+      map(() => this.getItem<t>(key, !!options?.isJson)),
+      options?.disableDistinct ? identity : distinctUntilChanged(),
+    );
+  }
 
   /**
    * Returns the current value associated with the given key, or null if the given key does not exist.
    * @param key
    * @returns
    */
-  getItem<t>(key: string, isJson?: false): string | null;
-  getItem<t>(key: string, isJson: true): t | null;
-  getItem<t = string>(key: string, isJson?: boolean | undefined) {
+  public getItem<t>(key: string, isJson?: false): string | null;
+  public getItem<t>(key: string, isJson?: true): t | null;
+  public getItem<t>(key: string, isJson?: boolean): string | null;
+  public getItem<t = string>(key: string, isJson?: boolean | undefined) {
     const val = this.dom.localStorage.getItem(key);
     return val && isJson ? (JSON.parse(val) as t) : val;
   }
