@@ -20,7 +20,6 @@ import {
 } from './pipes';
 // Directives
 import { FullScreenDirective, FocusDirective } from './directives';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';

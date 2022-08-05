@@ -26,8 +26,6 @@ interface MainMenuItem {
 export class NavComponent implements OnInit, OnDestroy {
   /** Turn the username into title case */
   public userName$ = this.settings.userName$;
-  /**   Does the app have an update */
-  public hasUpdate$ = this.ui.updateAvailable$;
 
   public navMenu: MainMenuItem[] = [
     {

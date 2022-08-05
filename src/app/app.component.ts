@@ -7,12 +7,5 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {
-    /**
-    // If service worker
-    if (environment.settings.enableServiceWorker) {
-      this.sw.pollforUpdates();
-    }
-    */
-  }
+  ngOnInit() {}
 }

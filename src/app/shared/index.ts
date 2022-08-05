@@ -5,3 +5,5 @@ export * from './stores';
 export * from './pipes';
 export * from './services';
 export * from './icons/icons.module';
+export * from './guards';
+export * from './interceptors';
