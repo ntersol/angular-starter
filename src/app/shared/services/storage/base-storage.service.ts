@@ -2,7 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, identity, map, Observable, take } from 'rxjs';
 
 interface Options {
+  /** Convert the response to JSON from a string */
   isJson?: boolean;
+  /** By default only distinct emissions are allowed through the observable. This allows all updates through */
   disableDistinct?: boolean;
 }
 
@@ -16,7 +18,7 @@ export class StorageService {
   /** Is currently a browser */
   private isBrowser = !this.isNode;
 
-  /** Abstraction for storage. Doesn't need to do anything other than catch methods and props */
+  /** Abstraction for storage to add support for SSR. Doesn't need to do anything other than catch methods and props */
   private _storage = {
     setItem: (_prop: string, _value: string) => {},
     getItem: (_prop: string): string | null => null,
@@ -26,8 +28,12 @@ export class StorageService {
     length: 0,
   };
 
-  /** Get current data out of lstorage and convert to object */
-  private storage$ = new BehaviorSubject(Object.keys(window.localStorage).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>);
+  /**
+   * A Record of the storage object to keep track of changes for the observable
+   * Note that while data is present in this object, the getItem$ observable pulls from storage NOT from this object
+   * This ensures a single source of truth for storage data
+   */
+  private storage$ = new BehaviorSubject(this.getStorage());
 
   constructor(@Inject('') private isLocalStorage: boolean) {}
 
@@ -40,15 +46,15 @@ export class StorageService {
   public getItem$<t>(key: string, options: { isJson: true }): Observable<t | null>;
   public getItem$<t>(key: string, options?: Options): Observable<string | null> {
     return this.storage$.pipe(
-      map(() => this.getItem<t>(key, !!options?.isJson)),
-      options?.disableDistinct ? identity : distinctUntilChanged(),
+      map(() => this.getItem<t>(key, !!options?.isJson)), // Get data from storage NOT from the observable object
+      options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
     );
   }
 
   /**
    * Returns the current value associated with the given key, or null if the given key does not exist.
    * @param key
-   * @returns
+   * @param isJson Convert the response to JSON from a string
    */
   public getItem<t>(key: string, isJson?: false): string | null;
   public getItem<t>(key: string, isJson?: true): t | null;
@@ -67,7 +73,7 @@ export class StorageService {
    * @param key
    * @param value
    */
-  setItem(key: string, value: string | object) {
+  public setItem(key: string, value: string | object) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
     this.storage.setItem(key, val);
     this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
@@ -76,10 +82,10 @@ export class StorageService {
   /**
    * Removes the key/value pair with the given key, if a key/value pair with the given key exists.
 
-    Dispatches a storage event on Window objects holding an equivalent Storage object.
+     Dispatches a storage event on Window objects holding an equivalent Storage object.
    * @param key
    */
-  removeItem(key: string) {
+  public removeItem(key: string) {
     this.storage.removeItem(key);
     this.storage$.pipe(take(1)).subscribe(s => {
       let storage = { ...s };
@@ -91,9 +97,9 @@ export class StorageService {
   /**
    * Removes all key/value pairs, if there are any.
 
-    Dispatches a storage event on Window objects holding an equivalent Storage object.
+     Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
-  clear() {
+  public clear() {
     this.storage.clear();
     this.storage$.next({});
   }
@@ -103,12 +109,30 @@ export class StorageService {
    * @param index
    * @returns
    */
-  key(index: number): string | null {
+  public key(index: number): string | null {
     return this.storage.key(index);
   }
 
-  length() {
+  /**
+   * Returns the number of key/value pairs.
+   * @returns
+   */
+  public length() {
     return this.storage.length;
+  }
+
+  /** Refresh all values in the observable from the storage object
+  public update() {
+    this.storage$.next(this.getStorage());
+  }
+   */
+
+  /**
+   * Convert the storage class into a Record for the observable
+   * @returns
+   */
+  private getStorage() {
+    return Object.keys(this.storage).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>;
   }
 
   /**
