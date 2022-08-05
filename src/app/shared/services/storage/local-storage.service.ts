@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, identity, map, Observable, take } from 'rxjs';
-import { DomService } from './dom.service';
 
 interface Options {
   isJson?: boolean;
@@ -10,21 +9,30 @@ interface Options {
 @Injectable({
   providedIn: 'root',
 })
-export class LocalStorageService {
+export class StorageService {
+  /** Is currently node  */
+  private isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
+
+  /** Is currently a browser */
+  private isBrowser = !this.isNode;
+
+  /** Abstraction for localstorage. Doesn't need to do anything other than catch methods and props */
+  private _localStorage = {
+    setItem: (_prop: string, _value: string) => {},
+    getItem: (_prop: string): string | null => null,
+    removeItem: (_prop: string) => {},
+    clear: () => {},
+    key: (_index: number): string | null => null,
+    length: 0,
+  };
+
   /** Get current data out of localstorage and convert to object */
   private storage$ = new BehaviorSubject(Object.keys(localStorage).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>);
 
-  /**
-   *
-   * @param key
-   * @param options
-   * @returns
-   */
-
-  constructor(private dom: DomService) {}
+  constructor() {}
 
   /**
-   *
+   * Returns the current value associated with the given key as an observable, or null if the given key does not exist.
    * @param key
    * @param options
    */
@@ -46,8 +54,8 @@ export class LocalStorageService {
   public getItem<t>(key: string, isJson?: true): t | null;
   public getItem<t>(key: string, isJson?: boolean): string | null;
   public getItem<t = string>(key: string, isJson?: boolean | undefined) {
-    const val = this.dom.localStorage.getItem(key);
-    return val && isJson ? (JSON.parse(val) as t) : val;
+    const val = this._localStorage.getItem(key);
+    return !!val && isJson ? (JSON.parse(val) as t) : val;
   }
 
   /**
@@ -61,7 +69,7 @@ export class LocalStorageService {
    */
   setItem(key: string, value: string | object) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
-    this.dom.localStorage.setItem(key, val);
+    this._localStorage.setItem(key, val);
     this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
   }
 
@@ -72,7 +80,7 @@ export class LocalStorageService {
    * @param key
    */
   removeItem(key: string) {
-    this.dom.localStorage.removeItem(key);
+    this._localStorage.removeItem(key);
     this.storage$.pipe(take(1)).subscribe(s => {
       let storage = { ...s };
       delete storage[key];
@@ -86,7 +94,7 @@ export class LocalStorageService {
     Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
   clear() {
-    this.dom.localStorage.clear();
+    this._localStorage.clear();
     this.storage$.next({});
   }
 
@@ -96,10 +104,17 @@ export class LocalStorageService {
    * @returns
    */
   key(index: number): string | null {
-    return this.dom.localStorage.key(index);
+    return this._localStorage.key(index);
   }
 
   length() {
-    return this.dom.localStorage.length;
+    return this._localStorage.length;
+  }
+
+  /**
+   * Abstraction for localstorage
+   */
+  get localStorage(): Storage {
+    return this.isBrowser ? window.localStorage : this._localStorage;
   }
 }
