@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, identity, map, of } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, identity, map, take } from 'rxjs';
 import { DomService } from './dom.service';
 
 interface Options {
-  isJson: boolean;
-  disableDistinct: boolean;
+  isJson?: boolean;
+  disableDistinct?: boolean;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  private storage = this.dom.localStorage;
-  private storage$ = new BehaviorSubject(this.storage);
+  /** Get current data out of localstorage and convert to object */
+  private storage$ = new BehaviorSubject(Object.keys(localStorage).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>);
 
   /**
    *
@@ -20,12 +20,9 @@ export class LocalStorageService {
    * @param options
    * @returns
    */
-  public getItem$ = <t = string>(key: string, options?: Options) =>
+  public getItem$ = <t>(key: string, options?: Options) =>
     this.storage$.pipe(
-      map(s => {
-        const val = s.getItem(key);
-        return (val && options?.isJson ? JSON.parse(val) : val) as t;
-      }),
+      map(() => this.getItem<t>(key, options?.isJson)),
       options?.disableDistinct ? identity : distinctUntilChanged(),
     );
 
@@ -37,8 +34,8 @@ export class LocalStorageService {
    * @returns
    */
   getItem<t>(key: string, isJson?: false): string | null;
-  getItem<t>(key: string, isJson?: true): t | null;
-  getItem<t = string>(key: string, isJson?: boolean) {
+  getItem<t>(key: string, isJson: true): t | null;
+  getItem<t = string>(key: string, isJson?: boolean | undefined) {
     const val = this.dom.localStorage.getItem(key);
     return val && isJson ? (JSON.parse(val) as t) : val;
   }
@@ -55,6 +52,7 @@ export class LocalStorageService {
   setItem(key: string, value: string | object) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
     this.dom.localStorage.setItem(key, val);
+    this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
   }
 
   /**
@@ -65,6 +63,11 @@ export class LocalStorageService {
    */
   removeItem(key: string) {
     this.dom.localStorage.removeItem(key);
+    this.storage$.pipe(take(1)).subscribe(s => {
+      let storage = { ...s };
+      delete storage[key];
+      this.storage$.next(storage);
+    });
   }
 
   /**
@@ -74,6 +77,7 @@ export class LocalStorageService {
    */
   clear() {
     this.dom.localStorage.clear();
+    this.storage$.next({});
   }
 
   /**
@@ -83,5 +87,9 @@ export class LocalStorageService {
    */
   key(index: number): string | null {
     return this.dom.localStorage.key(index);
+  }
+
+  length() {
+    return this.dom.localStorage.length;
   }
 }
