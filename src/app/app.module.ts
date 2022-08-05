@@ -8,15 +8,12 @@ import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 // Main entrypoint component
+import { environment } from '$env';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.routes.module';
 import { NoContentComponent } from './routes/no-content/no-content.component';
-import { GlobalErrorHandler } from './shared/interceptors/error.interceptor';
-import { HttpInterceptorService } from './shared/interceptors/http.interceptor';
-import { isBrowser } from './shared/services';
-import { environment } from '$env';
-import { TrailingSlashUrlSerializer } from './shared/utils/url-serializer.util';
 import { ComponentsLazyLoad } from './components';
+import { isBrowser, HttpInterceptorService, GlobalErrorHandler, TrailingSlashUrlSerializer } from '$shared';
 
 // Enables faster prod mode, does disable some dirty error checking though
 if (environment.production) {

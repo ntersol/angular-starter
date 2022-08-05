@@ -3,10 +3,8 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, Http
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { SettingsService } from '$settings';
-import { AuthService, AuthState } from '../services';
+import { AuthService, AuthState, isNode } from '../services';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
-
-export const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
