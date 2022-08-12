@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from './storage';
 
 interface LocalStorage {
-  token: number;
+  token: string;
+  user: {
+    name: string;
+  };
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppStorageService {
-  public token$ = this.localStorage.getItem$('');
+  public token$ = this.localStorage.getItem$('token');
+
   public set token(token: string | null) {
     this.localStorage.setItem('token', token);
   }
@@ -17,5 +21,12 @@ export class AppStorageService {
     return this.localStorage.getItem('token');
   }
 
-  constructor(private localStorage: LocalStorageService<LocalStorage>) {}
+  public user$ = this.localStorage.getItem$('user', { isJson: true });
+  public get user() {
+    return this.localStorage.getItem('user', true);
+  }
+
+  constructor(private localStorage: LocalStorageService<LocalStorage>) {
+    this.user;
+  }
 }

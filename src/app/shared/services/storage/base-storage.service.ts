@@ -42,11 +42,11 @@ export class StorageService<t> {
    * @param key
    * @param options
    */
-  public getItem$<t>(key: keyof t, options?: { isJson: false }): Observable<string | null>;
-  public getItem$<t>(key: keyof t, options: { isJson: true }): Observable<t | null>;
-  public getItem$<t>(key: keyof t, options?: Options): Observable<string | null> {
+  public getItem$(key: keyof t, options?: { isJson: false }): Observable<string | null>;
+  public getItem$(key: keyof t, options: { isJson: true }): Observable<any | null>;
+  public getItem$(key: keyof t, options?: Options) {
     return this.storage$.pipe(
-      map(() => this.getItem<t>(key, !!options?.isJson)), // Get data from storage NOT from the observable object
+      map(() => this.getItem(key, !!options?.isJson)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
     );
   }
@@ -56,12 +56,16 @@ export class StorageService<t> {
    * @param key
    * @param isJson Convert the response to JSON from a string
    */
-  public getItem<t>(key: keyof t, isJson?: false): string | null;
-  public getItem<t>(key: keyof t, isJson?: true): t | null;
-  public getItem<t>(key: keyof t, isJson?: boolean): string | null;
-  public getItem<t = string>(key: string, isJson?: boolean | undefined) {
-    const val = this.storage.getItem(key);
-    return !!val && isJson ? (JSON.parse(val) as t) : val;
+  public getItem(key: keyof t, isJson: false): string | null;
+  public getItem(key: keyof t, isJson: true): t[keyof t] | null;
+  public getItem(key: keyof t, isJson?: boolean): string | null;
+  public getItem(key: keyof t, isJson?: boolean | undefined) {
+    const val = this.storage.getItem(String(key));
+    if (val && isJson) {
+      return JSON.parse(val);
+    }
+
+    return val;
   }
 
   /**
@@ -73,7 +77,7 @@ export class StorageService<t> {
    * @param key
    * @param value
    */
-  public setItem(key: keyof t, value: string | object | null | undefined) {
+  public setItem(key: keyof t, value: string | number | object | null | undefined) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
     this.storage.setItem(String(key), val);
     this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
