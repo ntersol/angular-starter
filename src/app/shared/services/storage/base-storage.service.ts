@@ -11,12 +11,12 @@ interface Options {
 @Injectable({
   providedIn: 'root',
 })
-export class StorageService {
+export class StorageService<t> {
   /** Is currently node  */
   private isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
   /** Is currently a browser */
-  private isBrowser = !this.isNode;
+  protected isBrowser = !this.isNode;
 
   /** Abstraction for storage to add support for SSR. Doesn't need to do anything other than catch methods and props */
   private _storage = {
@@ -42,9 +42,9 @@ export class StorageService {
    * @param key
    * @param options
    */
-  public getItem$<t>(key: string, options?: { isJson: false }): Observable<string | null>;
-  public getItem$<t>(key: string, options: { isJson: true }): Observable<t | null>;
-  public getItem$<t>(key: string, options?: Options): Observable<string | null> {
+  public getItem$<t>(key: keyof t, options?: { isJson: false }): Observable<string | null>;
+  public getItem$<t>(key: keyof t, options: { isJson: true }): Observable<t | null>;
+  public getItem$<t>(key: keyof t, options?: Options): Observable<string | null> {
     return this.storage$.pipe(
       map(() => this.getItem<t>(key, !!options?.isJson)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
@@ -56,9 +56,9 @@ export class StorageService {
    * @param key
    * @param isJson Convert the response to JSON from a string
    */
-  public getItem<t>(key: string, isJson?: false): string | null;
-  public getItem<t>(key: string, isJson?: true): t | null;
-  public getItem<t>(key: string, isJson?: boolean): string | null;
+  public getItem<t>(key: keyof t, isJson?: false): string | null;
+  public getItem<t>(key: keyof t, isJson?: true): t | null;
+  public getItem<t>(key: keyof t, isJson?: boolean): string | null;
   public getItem<t = string>(key: string, isJson?: boolean | undefined) {
     const val = this.storage.getItem(key);
     return !!val && isJson ? (JSON.parse(val) as t) : val;
@@ -73,9 +73,9 @@ export class StorageService {
    * @param key
    * @param value
    */
-  public setItem(key: string, value: string | object) {
+  public setItem(key: keyof t, value: string | object | null | undefined) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
-    this.storage.setItem(key, val);
+    this.storage.setItem(String(key), val);
     this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
   }
 
@@ -121,11 +121,12 @@ export class StorageService {
     return this.storage.length;
   }
 
-  /** Refresh all values in the observable from the storage object
+  /**
+   * Refresh all values in the observable from the storage object
+   */
   public update() {
     this.storage$.next(this.getStorage());
   }
-   */
 
   /**
    * Convert the storage class into a Record for the observable
