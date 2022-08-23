@@ -16,6 +16,13 @@ ren angular-starter MY_APP_NAME
 # Navigate into the newly renamed directory
 cd MY_APP_NAME
 
+# Relies on node 14 installed, higher versions not yet supported
+nvm use
+
+# See Angular CLI github page for full usage: https://github.com/angular/angular-cli
+npm install -g @angular/cli
+npm install -g webpack
+
 # Install the repo with npm
 npm i
 
@@ -25,7 +32,7 @@ ng serve
 
 ## Usage
 
-See Angular CLI github page for full usage: https://github.com/angular/angular-cli
+
 
 ```bash
 # Serve dev on http://localhost:4200/
