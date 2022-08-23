@@ -21,7 +21,6 @@ nvm use
 
 # See Angular CLI github page for full usage: https://github.com/angular/angular-cli
 npm install -g @angular/cli
-npm install -g webpack
 
 # Install the repo with npm
 npm i
