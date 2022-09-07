@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Models } from '../models';
 import { LocalStorageService } from './storage';
-
-interface LocalStorage {
-  token: string;
-  user: {
-    name: string;
-  };
-}
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +15,13 @@ export class AppStorageService {
     return this.localStorage.getItem('token');
   }
 
-  public user$ = this.localStorage.getItem$('user', { isJson: true });
+  public user$ = this.localStorage.getItem$<Models.User>('user', { isJson: true });
   public get user() {
     return this.localStorage.getItem('user', true);
   }
-
-  constructor(private localStorage: LocalStorageService<LocalStorage>) {
-    this.user;
+  public set user(user: Models.User | null) {
+    this.localStorage.setItem('user', user);
   }
+  /***/
+  constructor(public localStorage: LocalStorageService) {}
 }

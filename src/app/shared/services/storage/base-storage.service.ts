@@ -1,9 +1,14 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, identity, map, Observable, take } from 'rxjs';
 
-interface Options {
+interface StorageOptions {
   /** Convert the response to JSON from a string */
   isJson?: boolean;
+  /** By default localstorage is used for all data, set this to true to use sessionStorage instead */
+  useSession?: true;
+}
+
+interface StorageOptionsObv extends StorageOptions {
   /** By default only distinct emissions are allowed through the observable. This allows all updates through */
   disableDistinct?: boolean;
 }
@@ -11,7 +16,7 @@ interface Options {
 @Injectable({
   providedIn: 'root',
 })
-export class StorageService<t> {
+export class StorageService {
   /** Is currently node  */
   private isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
@@ -35,16 +40,16 @@ export class StorageService<t> {
    */
   private storage$ = new BehaviorSubject(this.getStorage());
 
-  constructor(@Inject('') private isLocalStorage: boolean) {}
+  constructor() {}
 
   /**
    * Returns the current value associated with the given key as an observable, or null if the given key does not exist.
    * @param key
    * @param options
    */
-  public getItem$(key: keyof t, options?: { isJson: false }): Observable<string | null>;
-  public getItem$(key: keyof t, options: { isJson: true }): Observable<any | null>;
-  public getItem$(key: keyof t, options?: Options) {
+  public getItem$(key: string, options?: { isJson: false }): Observable<string | null>;
+  public getItem$<t>(key: string, options: { isJson: true }): Observable<t | null>;
+  public getItem$(key: string, options?: StorageOptionsObv) {
     return this.storage$.pipe(
       map(() => this.getItem(key, !!options?.isJson)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
@@ -56,11 +61,11 @@ export class StorageService<t> {
    * @param key
    * @param isJson Convert the response to JSON from a string
    */
-  public getItem(key: keyof t, isJson: false): string | null;
-  public getItem(key: keyof t, isJson: true): t[keyof t] | null;
-  public getItem(key: keyof t, isJson?: boolean): string | null;
-  public getItem(key: keyof t, isJson?: boolean | undefined) {
-    const val = this.storage.getItem(String(key));
+  public getItem(key: string, isJson: false): string | null;
+  public getItem<t>(key: string, isJson: true): t | null;
+  public getItem(key: string, isJson?: boolean): string | null;
+  public getItem(key: string, isJson?: boolean | undefined) {
+    const val = this.storage().getItem(String(key));
     if (val && isJson) {
       return JSON.parse(val);
     }
@@ -77,9 +82,9 @@ export class StorageService<t> {
    * @param key
    * @param value
    */
-  public setItem(key: keyof t, value: string | number | object | null | undefined) {
+  public setItem<t>(key: string, value: t | null | undefined) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
-    this.storage.setItem(String(key), val);
+    this.storage().setItem(String(key), val);
     this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
   }
 
@@ -90,7 +95,7 @@ export class StorageService<t> {
    * @param key
    */
   public removeItem(key: string) {
-    this.storage.removeItem(key);
+    this.storage().removeItem(key);
     this.storage$.pipe(take(1)).subscribe(s => {
       let storage = { ...s };
       delete storage[key];
@@ -104,7 +109,7 @@ export class StorageService<t> {
      Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
   public clear() {
-    this.storage.clear();
+    this.storage().clear();
     this.storage$.next({});
   }
 
@@ -114,7 +119,7 @@ export class StorageService<t> {
    * @returns
    */
   public key(index: number): string | null {
-    return this.storage.key(index);
+    return this.storage().key(index);
   }
 
   /**
@@ -122,7 +127,7 @@ export class StorageService<t> {
    * @returns
    */
   public length() {
-    return this.storage.length;
+    return this.storage().length;
   }
 
   /**
@@ -137,13 +142,13 @@ export class StorageService<t> {
    * @returns
    */
   private getStorage() {
-    return Object.keys(this.storage).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>;
+    return Object.keys(this.storage()).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>;
   }
 
   /**
    * Abstraction for local/session storage
    */
-  get storage(): Storage {
-    return this.isBrowser ? (this.isLocalStorage ? window.localStorage : window.sessionStorage) : this._storage;
+  private storage(useSession = false): Storage {
+    return this.isBrowser ? (useSession ? window.sessionStorage : window.localStorage) : this._storage;
   }
 }
