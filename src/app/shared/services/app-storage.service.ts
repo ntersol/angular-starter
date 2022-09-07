@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Models } from '../models';
-import { LocalStorageService } from './storage';
+import { StorageService } from './storage/base-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppStorageService {
-  public token$ = this.localStorage.getItem$('token');
+  public token$ = this.storage.getItem$('token');
 
   public set token(token: string | null) {
-    this.localStorage.setItem('token', token);
+    this.storage.setItem('token', token);
   }
   public get token() {
-    return this.localStorage.getItem('token');
+    return this.storage.getItem('token');
   }
 
-  public user$ = this.localStorage.getItem$<Models.User>('user', { isJson: true });
+  public user$ = this.storage.getItem$<Models.User>('user', { isJson: true });
   public get user() {
-    return this.localStorage.getItem('user', true);
+    return this.storage.getItem('user', { isJson: true });
   }
   public set user(user: Models.User | null) {
-    this.localStorage.setItem('user', user);
+    this.storage.setItem('user', user);
   }
   /***/
-  constructor(public localStorage: LocalStorageService) {}
+  constructor(public storage: StorageService) {}
 }

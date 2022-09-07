@@ -1,11 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, identity, map, Observable, take } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, distinctUntilChanged, fromEvent, identity, map, Observable, of, take, tap } from 'rxjs';
 
 interface StorageOptions {
   /** Convert the response to JSON from a string */
   isJson?: boolean;
   /** By default localstorage is used for all data, set this to true to use sessionStorage instead */
   useSession?: true;
+}
+
+/** Enforce proper typing for function overload */
+interface StorageOptionsJson extends StorageOptions {
+  isJson?: true;
 }
 
 interface StorageOptionsObv extends StorageOptions {
@@ -33,6 +39,9 @@ export class StorageService {
     length: 0,
   };
 
+  /** Listen to the storage event and update local storage when localstorage is updated in other tabs  */
+  public storageEvent$ = this.isBrowser && this.window ? fromEvent(this.window, 'storage').pipe(tap(() => this.update())) : of();
+
   /**
    * A Record of the storage object to keep track of changes for the observable
    * Note that while data is present in this object, the getItem$ observable pulls from storage NOT from this object
@@ -40,7 +49,7 @@ export class StorageService {
    */
   private storage$ = new BehaviorSubject(this.getStorage());
 
-  constructor() {}
+  constructor(@Inject(DOCUMENT) private _doc: Document) {}
 
   /**
    * Returns the current value associated with the given key as an observable, or null if the given key does not exist.
@@ -51,7 +60,7 @@ export class StorageService {
   public getItem$<t>(key: string, options: { isJson: true }): Observable<t | null>;
   public getItem$(key: string, options?: StorageOptionsObv) {
     return this.storage$.pipe(
-      map(() => this.getItem(key, !!options?.isJson)), // Get data from storage NOT from the observable object
+      map(() => this.getItem(key, options)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
     );
   }
@@ -61,12 +70,11 @@ export class StorageService {
    * @param key
    * @param isJson Convert the response to JSON from a string
    */
-  public getItem(key: string, isJson: false): string | null;
-  public getItem<t>(key: string, isJson: true): t | null;
-  public getItem(key: string, isJson?: boolean): string | null;
-  public getItem(key: string, isJson?: boolean | undefined) {
+  public getItem<t>(key: string, options: StorageOptionsJson): t | null;
+  public getItem(key: string, options?: StorageOptions): string | null;
+  public getItem(key: string, options?: StorageOptions) {
     const val = this.storage().getItem(String(key));
-    if (val && isJson) {
+    if (val && options?.isJson) {
       return JSON.parse(val);
     }
 
@@ -146,9 +154,17 @@ export class StorageService {
   }
 
   /**
+   * Get DOM window
+   * @returns
+   */
+  private get window(): Window | null {
+    return this.isBrowser ? window : this._doc.defaultView;
+  }
+
+  /**
    * Abstraction for local/session storage
    */
   private storage(useSession = false): Storage {
-    return this.isBrowser ? (useSession ? window.sessionStorage : window.localStorage) : this._storage;
+    return this.isBrowser ? (useSession ? window?.sessionStorage : window?.localStorage) : this._storage;
   }
 }
