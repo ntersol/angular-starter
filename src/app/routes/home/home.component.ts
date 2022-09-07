@@ -1,9 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { LocalStorageService } from '$shared';
-
-interface Temp {
-  Hello: string;
-}
+import { AppStorageService } from '$shared';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +8,18 @@ interface Temp {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  constructor(private localStorage: LocalStorageService) {}
+  constructor(private storage: AppStorageService) {}
 
   ngOnInit() {
-    this.localStorage.getItem$<Temp>('temp', { isJson: true }).subscribe(x => console.warn(x));
+    // this.localStorage.getItem$('user', { isJson: true }).subscribe(x => console.warn(x));
+    const token = this.storage.token;
+    const user = this.storage.user;
 
-    // this.localStorage.setItem('temp', { Hello: 'World' });
-    this.localStorage.setItem('temp', { Hello: 'World 2' });
+    this.storage.token = 'test';
+    this.storage.user = { name: 'test', id: 1234, username: 'test2' };
 
-    this.localStorage.setItem('temp', { Hello: 'World 3' });
+    this.storage.user$.subscribe(x => console.log(x));
+    // const name = user?.name;
   }
 
   ngOnDestroy() {}
