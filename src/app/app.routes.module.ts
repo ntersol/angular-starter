@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NoPreloading, PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { environment } from '../environments/environment';
+import { environment } from '$env';
 import { LayoutMainComponent } from './components/masterpage';
 import { NoContentComponent } from './routes/no-content/no-content.component';
 import { titleAppendSlug } from '$shared';

@@ -23,7 +23,7 @@ import { FullScreenDirective, FocusDirective } from './directives';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { IconsModule } from './icons/icons.module';
+import { IconsModule } from '../components/icons/icons.module';
 
 // Pipes + Directives
 export const APP_PIPES_DIRECTIVES = [

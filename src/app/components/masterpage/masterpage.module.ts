@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SharedModule, IconsModule } from '$shared';
+import { SharedModule } from '$shared';
 import { LogoutModalComponent, FeedbackModalComponent } from '../modals';
 import { FooterComponent, HeaderComponent, LayoutMainComponent, NavComponent, LayoutSingleComponent } from './';
 
 import { SidebarModule } from 'primeng/sidebar';
 import { ConfirmationService } from 'primeng/api';
+import { IconsModule } from '$components';
 
 // Modals include
 const APP_MODALS = [LogoutModalComponent, FeedbackModalComponent];
