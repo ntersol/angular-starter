@@ -6,13 +6,13 @@ import { StorageService } from './storage/base-storage.service';
   providedIn: 'root',
 })
 export class AppStorageService {
-  public token$ = this.storage.getItem$('token');
+  public token$ = this.storage.getItem$('token', { useSession: true });
 
   public set token(token: string | null) {
-    this.storage.setItem('token', token);
+    this.storage.setItem('token', token, true);
   }
   public get token() {
-    return this.storage.getItem('token');
+    return this.storage.getItem('token', { useSession: true });
   }
 
   public user$ = this.storage.getItem$<Models.User>('user', { isJson: true });

@@ -2,21 +2,33 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, fromEvent, identity, map, Observable, of, take, tap } from 'rxjs';
 
-interface StorageOptions {
-  /** Convert the response to JSON from a string */
-  isJson?: boolean;
-  /** By default localstorage is used for all data, set this to true to use sessionStorage instead */
-  useSession?: true;
-}
+type UseSession = boolean | undefined | null;
 
-/** Enforce proper typing for function overload */
-interface StorageOptionsJson extends StorageOptions {
-  isJson?: true;
-}
-
-interface StorageOptionsObv extends StorageOptions {
-  /** By default only distinct emissions are allowed through the observable. This allows all updates through */
-  disableDistinct?: boolean;
+namespace Storage {
+  export type UseSession = boolean | undefined | null;
+  export interface Options {
+    /** Convert the response to JSON from a string */
+    isJson?: boolean;
+    /** By default localstorage is used for all data, set this to true to use sessionStorage instead */
+    useSession?: UseSession;
+  }
+  export interface JSON extends Options {
+    isJson: true;
+  }
+  export interface NoJSON extends Options {
+    isJson?: false | undefined;
+  }
+  // Observable options
+  export interface Options$ extends Options {
+    /** By default only distinct emissions are allowed through the observable. This allows all updates through */
+    disableDistinct?: boolean;
+  }
+  export interface JSON$ extends Options$ {
+    isJson: true;
+  }
+  export interface NoJSON$ extends Options$ {
+    isJson?: false | undefined;
+  }
 }
 
 @Injectable({
@@ -27,7 +39,7 @@ export class StorageService {
   private isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
   /** Is currently a browser */
-  protected isBrowser = !this.isNode;
+  private isBrowser = !this.isNode;
 
   /** Abstraction for storage to add support for SSR. Doesn't need to do anything other than catch methods and props */
   private _storage = {
@@ -56,9 +68,9 @@ export class StorageService {
    * @param key
    * @param options
    */
-  public getItem$(key: string, options?: { isJson: false }): Observable<string | null>;
-  public getItem$<t>(key: string, options: { isJson: true }): Observable<t | null>;
-  public getItem$(key: string, options?: StorageOptionsObv) {
+  public getItem$(key: string, options?: Storage.NoJSON$): Observable<string | null>;
+  public getItem$<t>(key: string, options: Storage.JSON$): Observable<t | null>;
+  public getItem$(key: string, options?: Storage.NoJSON$ | Storage.JSON$) {
     return this.storage$.pipe(
       map(() => this.getItem(key, options)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
@@ -70,10 +82,11 @@ export class StorageService {
    * @param key
    * @param isJson Convert the response to JSON from a string
    */
-  public getItem<t>(key: string, options: StorageOptionsJson): t | null;
-  public getItem(key: string, options?: StorageOptions): string | null;
-  public getItem(key: string, options?: StorageOptions) {
-    const val = this.storage().getItem(String(key));
+  public getItem<t>(key: string, options: Storage.JSON): t | null;
+  public getItem(key: string, options?: Storage.NoJSON): string | null;
+  public getItem(key: string, options?: Storage.Options): string | null;
+  public getItem(key: string, options?: Storage.Options) {
+    const val = this.storage(options?.useSession).getItem(String(key));
     if (val && options?.isJson) {
       return JSON.parse(val);
     }
@@ -90,9 +103,9 @@ export class StorageService {
    * @param key
    * @param value
    */
-  public setItem<t>(key: string, value: t | null | undefined) {
+  public setItem<t>(key: string, value: t | null | undefined, useSession?: boolean) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
-    this.storage().setItem(String(key), val);
+    this.storage(useSession).setItem(String(key), val);
     this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
   }
 
@@ -102,8 +115,8 @@ export class StorageService {
      Dispatches a storage event on Window objects holding an equivalent Storage object.
    * @param key
    */
-  public removeItem(key: string) {
-    this.storage().removeItem(key);
+  public removeItem(key: string, useSession?: boolean) {
+    this.storage(useSession).removeItem(key);
     this.storage$.pipe(take(1)).subscribe(s => {
       let storage = { ...s };
       delete storage[key];
@@ -116,8 +129,8 @@ export class StorageService {
 
      Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
-  public clear() {
-    this.storage().clear();
+  public clear(useSession?: boolean) {
+    this.storage(useSession).clear();
     this.storage$.next({});
   }
 
@@ -126,16 +139,16 @@ export class StorageService {
    * @param index
    * @returns
    */
-  public key(index: number): string | null {
-    return this.storage().key(index);
+  public key(index: number, useSession?: boolean): string | null {
+    return this.storage(useSession).key(index);
   }
 
   /**
    * Returns the number of key/value pairs.
    * @returns
    */
-  public length() {
-    return this.storage().length;
+  public length(useSession?: boolean) {
+    return this.storage(useSession).length;
   }
 
   /**
@@ -149,8 +162,8 @@ export class StorageService {
    * Convert the storage class into a Record for the observable
    * @returns
    */
-  private getStorage() {
-    return Object.keys(this.storage()).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>;
+  private getStorage(useSession?: boolean) {
+    return Object.keys(this.storage(useSession)).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>;
   }
 
   /**
@@ -164,7 +177,7 @@ export class StorageService {
   /**
    * Abstraction for local/session storage
    */
-  private storage(useSession = false): Storage {
+  private storage(useSession: UseSession = false): Storage {
     return this.isBrowser ? (useSession ? window?.sessionStorage : window?.localStorage) : this._storage;
   }
 }
