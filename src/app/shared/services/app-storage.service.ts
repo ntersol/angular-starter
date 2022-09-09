@@ -8,8 +8,8 @@ type LocalStorageKeys = 'token' | 'user';
   providedIn: 'root',
 })
 export class AppStorageService extends StorageService<LocalStorageKeys> {
+  // Token
   public token$ = this.localStorage.getItem$('token');
-
   public set token(token: string | null) {
     this.localStorage.setItem('token', token);
   }
@@ -17,6 +17,7 @@ export class AppStorageService extends StorageService<LocalStorageKeys> {
     return this.localStorage.getItem('token');
   }
 
+  // User
   public user$ = this.localStorage.getItem$<Models.User>('user', { isJson: true });
   public get user() {
     return this.localStorage.getItem('user', { isJson: true });

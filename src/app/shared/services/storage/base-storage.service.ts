@@ -45,9 +45,6 @@ export class AppStorageService extends StorageService<LocalStorageKeys, SessionS
       }
 }
  */
-@Injectable({
-  providedIn: 'root',
-})
 export class StorageService<LocalStorageKeys, SessionStorageKeys = void> {
   /** LocalStorage */
   public localStorage = new BaseStorageService<LocalStorageKeys>();
