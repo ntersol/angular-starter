@@ -12,7 +12,7 @@ export class DomService {
   public isBrowser = !this.isNode;
 
   /** Abstraction for localstorage. Doesn't need to do anything other than catch methods and props */
-  private _localStorage = {
+  private _storage = {
     setItem: (_prop: string, _value: string) => {},
     getItem: (_prop: string): string | null => null,
     removeItem: (_prop: string) => {},
@@ -51,6 +51,13 @@ export class DomService {
    * Abstraction for localstorage
    */
   get localStorage(): Storage {
-    return this.isBrowser ? window.localStorage : this._localStorage;
+    return this.isBrowser ? window.localStorage : this._storage;
+  }
+
+  /**
+   * Abstraction for localstorage
+   */
+  get sessionStorage(): Storage {
+    return this.isBrowser ? window.sessionStorage : this._storage;
   }
 }

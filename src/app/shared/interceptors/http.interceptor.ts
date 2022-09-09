@@ -3,7 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, Http
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { SettingsService } from '$settings';
-import { AuthService, AuthState, isNode } from '../services';
+import { AuthService, AuthState, isNode } from '$shared';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 
 @Injectable()

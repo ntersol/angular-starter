@@ -1,11 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormControl, NonNullableFormBuilder } from '@angular/forms';
-import { Models } from '../../shared/models';
-import { ApiService } from '../../shared/stores/api';
+import { Models, ApiService } from '$shared';
 
 interface UserForm {
-  address: FormControl<Models.Address>;
-  company: FormControl<Models.Company>;
+  address: FormControl<any>;
+  company: FormControl<any>;
   email: FormControl<string>;
   id: FormControl<number>;
   name: FormControl<string>;

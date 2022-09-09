@@ -24,6 +24,8 @@ export module Models {
     username: string;
     email?: string;
     favColor?: Color;
+    website?: string;
+    phone?: string;
   }
 
   export enum Color {
