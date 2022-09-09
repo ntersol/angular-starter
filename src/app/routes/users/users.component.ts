@@ -19,10 +19,10 @@ interface UserForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  public user = this.storage.user;
+  public user = this.appStorage.user;
 
-  public name = this.storage.user?.name;
-  public user$ = this.storage.user$;
+  public token = this.appStorage.token;
+  public token$ = this.appStorage.token$;
 
   public users = this.api.users;
 
@@ -41,20 +41,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   /** Create or edit a user */
   public isEdit = false;
 
-  constructor(private api: ApiService, private fb: NonNullableFormBuilder, private storage: AppStorageService) {}
+  constructor(private api: ApiService, private fb: NonNullableFormBuilder, private appStorage: AppStorageService) {}
 
-  ngOnInit() {
-    this.users.refresh().subscribe();
-
-    const token = this.storage.token;
-    const user = this.storage.user;
-
-    this.storage.user$.subscribe(x => console.log(x));
-    this.storage.token$.subscribe(x => console.log(x));
-    this.storage.token = '123456';
-
-    this.storage.storage.removeItem('token');
-  }
+  ngOnInit() {}
 
   /**
    * Save a new user or update existing
@@ -111,6 +100,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   public update(name: string) {
-    this.storage.token = name;
+    this.appStorage.token = name;
   }
 }
