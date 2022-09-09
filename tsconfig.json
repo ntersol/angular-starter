@@ -21,16 +21,7 @@
     "typeRoots": ["node_modules/@types"],
     "paths": {
       "$components": ["./src/app/components"],
-      "$shared": ["./src/app/shared"],
-      "$env": ["./src/environments/environment.ts"],
-      "$libs": ["./src/app/libs"],
-      "$site": ["./src/app/site.module"],
-      "$ui": ["./src/app/shared/stores/ui"],
-      "$domain": ["./src/app/shared/stores/domain"],
-      "private appStorage: AppStorageService": ["./src/app/shared/stores/settings"],
-      "$utils": ["./src/app/shared/utils"],
-      "$models": ["./src/shared/models"],
-      "$modals": ["./src/compoments/modals"]
+      "$shared": ["./src/app/shared"]
     }
   },
   "angularCompilerOptions": {
