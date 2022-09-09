@@ -2,7 +2,7 @@ import { ErrorHandler, Injectable } from '@angular/core';
 
 import { environment } from '$env';
 import { SettingsService } from '$settings';
-import { isBrowser } from '../services';
+import { isBrowser } from '$shared';
 
 interface AngularError {
   promise: any;
