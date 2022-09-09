@@ -22,6 +22,6 @@ export class AppStorageService {
   public set user(user: Models.User | null) {
     this.storage.setItem('user', user);
   }
-  /***/
+
   constructor(public storage: StorageService) {}
 }
