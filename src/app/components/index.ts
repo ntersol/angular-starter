@@ -1,2 +1,2 @@
 export * from './masterpage';
-export * from './components.lazy';
+export * from './icons/icons.module';

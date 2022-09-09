@@ -12,7 +12,7 @@ import { environment } from '$env';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.routes.module';
 import { NoContentComponent } from './routes/no-content/no-content.component';
-import { ComponentsLazyLoad } from './components';
+import { ComponentsLazyLoad } from './components/components.lazy';
 import { isBrowser, HttpInterceptorService, GlobalErrorHandler, TrailingSlashUrlSerializer } from '$shared';
 
 // Enables faster prod mode, does disable some dirty error checking though
