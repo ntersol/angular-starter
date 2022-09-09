@@ -1,4 +1,3 @@
-import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, fromEvent, identity, map, Observable, of, take, tap } from 'rxjs';
 
@@ -6,8 +5,6 @@ namespace Storage {
   export interface Options {
     /** If true, convert the response to JSON from a string */
     isJson?: boolean;
-    /** By default localstorage is used for all data, set this to true to use sessionStorage instead */
-    useSession?: boolean | undefined | null;
   }
   export interface JSON extends Options {
     isJson: true;
@@ -28,10 +25,41 @@ namespace Storage {
   }
 }
 
+/**
+ * A wrapper for local & session storage
+ *
+ * Adds type safety, automatic json deserialization, observables and SSR support
+ *
+ * Requires keys used in the storage event
+ * @example
+ * type LocalStorageKeys = 'token' | 'user';
+type SessionStorageKeys = 'someKey'
+
+export class AppStorageService extends StorageService<LocalStorageKeys, SessionStorageKeys> {
+      public token$ = this.localStorage.getItem$('token');
+      public set token(token: string | null) {
+        this.localStorage.setItem('token', token);
+      }
+      public get token() {
+        return this.localStorage.getItem('token');
+      }
+}
+ */
 @Injectable({
   providedIn: 'root',
 })
-export class StorageService<keys> {
+export class StorageService<LocalStorageKeys, SessionStorageKeys = void> {
+  /** LocalStorage */
+  public localStorage = new BaseStorageService<LocalStorageKeys>();
+  /** SessionStorage */
+  public sessionStorage = new BaseStorageService<SessionStorageKeys>(true);
+  constructor() {}
+}
+
+/**
+ * Base class for interacting with storage
+ */
+class BaseStorageService<Keys> {
   /** Is currently node  */
   private isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
@@ -48,8 +76,8 @@ export class StorageService<keys> {
     length: 0,
   };
 
-  /** Listen to the storage event and update local storage when localstorage is updated in other tabs  */
-  public storageEvent$ = this.isBrowser && this.window ? fromEvent(this.window, 'storage').pipe(tap(() => this.update())) : of();
+  /** Listen to the storage event and update local storage when localstorage is updated in other tabs. Does not update on this tab  */
+  public storageEvent$ = this.isBrowser ? fromEvent(window, 'storage').pipe(tap(() => this.update())) : of();
 
   /**
    * A Record of the storage object to keep track of changes for the observable
@@ -58,16 +86,16 @@ export class StorageService<keys> {
    */
   private storage$ = new BehaviorSubject(this.getStorage());
 
-  constructor(@Inject(DOCUMENT) private _doc: Document) {}
+  constructor(@Inject('') private useSessionStorage = false) {}
 
   /**
    * Returns the current value associated with the given key as an observable, or null if the given key does not exist.
    * @param key
    * @param options
    */
-  public getItem$(key: keys, options?: Storage.NoJSON$): Observable<string | null>;
-  public getItem$<t>(key: keys, options: Storage.JSON$): Observable<t | null>;
-  public getItem$(key: keys, options?: Storage.Options$) {
+  public getItem$(key: Keys, options?: Storage.NoJSON$): Observable<string | null>;
+  public getItem$<t>(key: Keys, options: Storage.JSON$): Observable<t | null>;
+  public getItem$(key: Keys, options?: Storage.Options$) {
     return this.storage$.pipe(
       map(() => this.getItem(key, options)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
@@ -79,20 +107,19 @@ export class StorageService<keys> {
    * @param key
    * @param options
    */
-  public getItem<t>(key: keys, options: Storage.JSON): t | null;
-  public getItem(key: keys, options?: Storage.NoJSON): string | null;
-  public getItem(key: keys, options?: Storage.Options): string | null;
-  public getItem(key: keys, options?: Storage.Options) {
-    const val = this.storage(options?.useSession).getItem(String(key));
+  public getItem<t>(key: Keys, options: Storage.JSON): t | null;
+  public getItem(key: Keys, options?: Storage.NoJSON): string | null;
+  public getItem(key: Keys, options?: Storage.Options): string | null;
+  public getItem(key: Keys, options?: Storage.Options) {
+    const val = this.storage.getItem(String(key));
     if (val && options?.isJson) {
       return JSON.parse(val);
     }
-
     return val;
   }
 
   /**
-   * Sets the value of the pair identified by key to value, creating a new key/value pair if none existed for key previously.
+   * Sets the value of the pair identified by key to value, creating a new key/value pair if none existed for key previously. Nill values will be removed instead
 
     Throws a "QuotaExceededError" DOMException exception if the new value couldn't be set. (Setting could fail if, e.g., the user has disabled storage for the site, or if the quota has been exceeded.)
 
@@ -100,10 +127,16 @@ export class StorageService<keys> {
    * @param key
    * @param value
    */
-  public setItem<t>(key: keys, value: t | null | undefined, useSession?: boolean) {
-    const val = typeof value === 'string' ? value : JSON.stringify(value);
-    this.storage(useSession).setItem(String(key), val);
-    this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [String(key)]: val }));
+  public setItem<t>(key: Keys, value: t | null | undefined) {
+    // If set item is a nill value, remove from storage instead
+    if (!value) {
+      this.removeItem(key);
+    } else {
+      const val = typeof value === 'string' ? value : JSON.stringify(value);
+      this.storage.setItem(String(key), val);
+    }
+
+    this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [String(key)]: value }));
   }
 
   /**
@@ -112,8 +145,8 @@ export class StorageService<keys> {
      Dispatches a storage event on Window objects holding an equivalent Storage object.
    * @param key
    */
-  public removeItem(key: keys, useSession?: boolean) {
-    this.storage(useSession).removeItem(String(key));
+  public removeItem(key: Keys) {
+    this.storage.removeItem(String(key));
     this.storage$.pipe(take(1)).subscribe(s => {
       let storage = { ...s };
       delete storage[String(key)];
@@ -126,8 +159,8 @@ export class StorageService<keys> {
 
      Dispatches a storage event on Window objects holding an equivalent Storage object.
    */
-  public clear(useSession?: boolean) {
-    this.storage(useSession).clear();
+  public clear() {
+    this.storage.clear();
     this.storage$.next({});
   }
 
@@ -136,16 +169,16 @@ export class StorageService<keys> {
    * @param index
    * @returns
    */
-  public key(index: number, useSession?: boolean): string | null {
-    return this.storage(useSession).key(index);
+  public key(index: number): string | null {
+    return this.storage.key(index);
   }
 
   /**
    * Returns the number of key/value pairs.
    * @returns
    */
-  public length(useSession?: boolean) {
-    return this.storage(useSession)?.length;
+  public length() {
+    return this.storage?.length;
   }
 
   /**
@@ -159,22 +192,14 @@ export class StorageService<keys> {
    * Convert the storage class into a Record for the observable
    * @returns
    */
-  private getStorage(useSession?: boolean) {
-    return Object.keys(this.storage(useSession)).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {}) as Record<string, string>;
-  }
-
-  /**
-   * Get DOM window in SSR safe fashion
-   * @returns
-   */
-  private get window(): Window | null {
-    return this.isBrowser ? window : this._doc.defaultView;
+  private getStorage(): Record<string, unknown> {
+    return Object.keys(this.storage).reduce((a, b) => ({ ...a, [b]: localStorage[b] }), {});
   }
 
   /**
    * Abstraction for local/session storage in SSR safe fashion
    */
-  private storage(useSession: boolean | null | undefined = false): Storage {
-    return this.isBrowser ? (useSession ? window?.sessionStorage : window?.localStorage) : this._storage;
+  private get storage(): Storage {
+    return this.isBrowser ? (this.useSessionStorage ? window?.sessionStorage : window?.localStorage) : this._storage;
   }
 }
