@@ -48,7 +48,12 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     const token = this.storage.token;
     const user = this.storage.user;
+
     this.storage.user$.subscribe(x => console.log(x));
+    this.storage.token$.subscribe(x => console.log(x));
+    this.storage.token = '123456';
+
+    this.storage.storage.removeItem('token');
   }
 
   /**
@@ -106,7 +111,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   public update(name: string) {
-    console.log(name);
-    this.storage.user = Object.assign({}, this.storage.user, { name: name });
+    this.storage.token = name;
   }
 }

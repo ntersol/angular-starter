@@ -2,15 +2,12 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, fromEvent, identity, map, Observable, of, take, tap } from 'rxjs';
 
-type UseSession = boolean | undefined | null;
-
 namespace Storage {
-  export type UseSession = boolean | undefined | null;
   export interface Options {
-    /** Convert the response to JSON from a string */
+    /** If true, convert the response to JSON from a string */
     isJson?: boolean;
     /** By default localstorage is used for all data, set this to true to use sessionStorage instead */
-    useSession?: UseSession;
+    useSession?: boolean | undefined | null;
   }
   export interface JSON extends Options {
     isJson: true;
@@ -70,7 +67,7 @@ export class StorageService {
    */
   public getItem$(key: string, options?: Storage.NoJSON$): Observable<string | null>;
   public getItem$<t>(key: string, options: Storage.JSON$): Observable<t | null>;
-  public getItem$(key: string, options?: Storage.NoJSON$ | Storage.JSON$) {
+  public getItem$(key: string, options?: Storage.Options$) {
     return this.storage$.pipe(
       map(() => this.getItem(key, options)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
@@ -80,7 +77,7 @@ export class StorageService {
   /**
    * Returns the current value associated with the given key, or null if the given key does not exist.
    * @param key
-   * @param isJson Convert the response to JSON from a string
+   * @param options
    */
   public getItem<t>(key: string, options: Storage.JSON): t | null;
   public getItem(key: string, options?: Storage.NoJSON): string | null;
@@ -148,7 +145,7 @@ export class StorageService {
    * @returns
    */
   public length(useSession?: boolean) {
-    return this.storage(useSession).length;
+    return this.storage(useSession)?.length;
   }
 
   /**
@@ -167,7 +164,7 @@ export class StorageService {
   }
 
   /**
-   * Get DOM window
+   * Get DOM window in SSR safe fashion
    * @returns
    */
   private get window(): Window | null {
@@ -175,9 +172,9 @@ export class StorageService {
   }
 
   /**
-   * Abstraction for local/session storage
+   * Abstraction for local/session storage in SSR safe fashion
    */
-  private storage(useSession: UseSession = false): Storage {
+  private storage(useSession: boolean | null | undefined = false): Storage {
     return this.isBrowser ? (useSession ? window?.sessionStorage : window?.localStorage) : this._storage;
   }
 }
