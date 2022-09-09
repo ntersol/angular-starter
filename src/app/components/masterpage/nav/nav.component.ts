@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { SettingsService } from '$settings';
 
 import { UiStateService } from '$ui';
-import { AuthService, AuthState } from '../../../shared/services';
+import { AppStorageService, AuthService, AuthState } from '../../../shared/services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
@@ -25,7 +24,7 @@ interface MainMenuItem {
 })
 export class NavComponent implements OnInit, OnDestroy {
   /** Turn the username into title case */
-  public userName$ = this.settings.userName$;
+  public user$ = this.appStorage.user$;
 
   public navMenu: MainMenuItem[] = [
     {
@@ -53,7 +52,7 @@ export class NavComponent implements OnInit, OnDestroy {
   public sidebarVisible = false;
   public dropDownMenuVisible = false;
 
-  constructor(private settings: SettingsService, private ui: UiStateService, private router: Router, private auth: AuthService) {}
+  constructor(private appStorage: AppStorageService, private ui: UiStateService, private router: Router, private auth: AuthService) {}
 
   ngOnInit(): void {
     // On route change, if mobile nav is open close it

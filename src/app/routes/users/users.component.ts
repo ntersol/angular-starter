@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormControl, NonNullableFormBuilder } from '@angular/forms';
-import { Models, ApiService } from '$shared';
+import { Models, ApiService, AppStorageService } from '$shared';
 
 interface UserForm {
   address: FormControl<any>;
@@ -19,6 +19,11 @@ interface UserForm {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent implements OnInit, OnDestroy {
+  public user = this.storage.user;
+
+  public name = this.storage.user?.name;
+  public user$ = this.storage.user$;
+
   public users = this.api.users;
 
   /** Form used to create/edit user */
@@ -36,10 +41,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   /** Create or edit a user */
   public isEdit = false;
 
-  constructor(private api: ApiService, private fb: NonNullableFormBuilder) {}
+  constructor(private api: ApiService, private fb: NonNullableFormBuilder, private storage: AppStorageService) {}
 
   ngOnInit() {
     this.users.refresh().subscribe();
+
+    const token = this.storage.token;
+    const user = this.storage.user;
+    this.storage.user$.subscribe(x => console.log(x));
   }
 
   /**
@@ -95,4 +104,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  public update(name: string) {
+    console.log(name);
+    this.storage.user = Object.assign({}, this.storage.user, { name: name });
+  }
 }

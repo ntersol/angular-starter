@@ -71,3 +71,9 @@
     </div>
   </div>
 </div>
+<hr />
+
+<input [ngModel]="name" (ngModelChange)="update($event)" /><br />
+<div *ngIf="user$ | async as user">
+  {{ user | json }}
+</div>
