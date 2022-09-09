@@ -2,28 +2,30 @@ import { Injectable } from '@angular/core';
 import { Models } from '../models';
 import { StorageService } from './storage/base-storage.service';
 
-type Keys = 'token' | 'user';
+type LocalStorageKeys = 'token' | 'user';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppStorageService {
-  public token$ = this.storage.getItem$('token', { useSession: true });
+export class AppStorageService extends StorageService<LocalStorageKeys> {
+  public token$ = this.localStorage.getItem$('token');
 
   public set token(token: string | null) {
-    this.storage.setItem('token', token, true);
+    this.localStorage.setItem('token', token);
   }
   public get token() {
-    return this.storage.getItem('token', { useSession: true });
+    return this.localStorage.getItem('token');
   }
 
-  public user$ = this.storage.getItem$<Models.User>('user', { isJson: true });
+  public user$ = this.localStorage.getItem$<Models.User>('user', { isJson: true });
   public get user() {
-    return this.storage.getItem('user', { isJson: true });
+    return this.localStorage.getItem('user', { isJson: true });
   }
   public set user(user: Models.User | null) {
-    this.storage.setItem('user', user);
+    this.localStorage.setItem('user', user);
   }
 
-  constructor(public storage: StorageService<Keys>) {}
+  constructor() {
+    super();
+  }
 }
