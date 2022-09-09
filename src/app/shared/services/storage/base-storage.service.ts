@@ -31,7 +31,7 @@ namespace Storage {
 @Injectable({
   providedIn: 'root',
 })
-export class StorageService {
+export class StorageService<keys> {
   /** Is currently node  */
   private isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
@@ -65,9 +65,9 @@ export class StorageService {
    * @param key
    * @param options
    */
-  public getItem$(key: string, options?: Storage.NoJSON$): Observable<string | null>;
-  public getItem$<t>(key: string, options: Storage.JSON$): Observable<t | null>;
-  public getItem$(key: string, options?: Storage.Options$) {
+  public getItem$(key: keys, options?: Storage.NoJSON$): Observable<string | null>;
+  public getItem$<t>(key: keys, options: Storage.JSON$): Observable<t | null>;
+  public getItem$(key: keys, options?: Storage.Options$) {
     return this.storage$.pipe(
       map(() => this.getItem(key, options)), // Get data from storage NOT from the observable object
       options?.disableDistinct ? identity : distinctUntilChanged(), // Allow non distinct emissions
@@ -79,10 +79,10 @@ export class StorageService {
    * @param key
    * @param options
    */
-  public getItem<t>(key: string, options: Storage.JSON): t | null;
-  public getItem(key: string, options?: Storage.NoJSON): string | null;
-  public getItem(key: string, options?: Storage.Options): string | null;
-  public getItem(key: string, options?: Storage.Options) {
+  public getItem<t>(key: keys, options: Storage.JSON): t | null;
+  public getItem(key: keys, options?: Storage.NoJSON): string | null;
+  public getItem(key: keys, options?: Storage.Options): string | null;
+  public getItem(key: keys, options?: Storage.Options) {
     const val = this.storage(options?.useSession).getItem(String(key));
     if (val && options?.isJson) {
       return JSON.parse(val);
@@ -100,10 +100,10 @@ export class StorageService {
    * @param key
    * @param value
    */
-  public setItem<t>(key: string, value: t | null | undefined, useSession?: boolean) {
+  public setItem<t>(key: keys, value: t | null | undefined, useSession?: boolean) {
     const val = typeof value === 'string' ? value : JSON.stringify(value);
     this.storage(useSession).setItem(String(key), val);
-    this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [key]: val }));
+    this.storage$.pipe(take(1)).subscribe(s => this.storage$.next({ ...s, [String(key)]: val }));
   }
 
   /**
@@ -112,11 +112,11 @@ export class StorageService {
      Dispatches a storage event on Window objects holding an equivalent Storage object.
    * @param key
    */
-  public removeItem(key: string, useSession?: boolean) {
-    this.storage(useSession).removeItem(key);
+  public removeItem(key: keys, useSession?: boolean) {
+    this.storage(useSession).removeItem(String(key));
     this.storage$.pipe(take(1)).subscribe(s => {
       let storage = { ...s };
-      delete storage[key];
+      delete storage[String(key)];
       this.storage$.next(storage);
     });
   }

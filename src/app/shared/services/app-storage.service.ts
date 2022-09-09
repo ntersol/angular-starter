@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Models } from '../models';
 import { StorageService } from './storage/base-storage.service';
 
+type Keys = 'token' | 'user';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -23,5 +25,5 @@ export class AppStorageService {
     this.storage.setItem('user', user);
   }
 
-  constructor(public storage: StorageService) {}
+  constructor(public storage: StorageService<Keys>) {}
 }
