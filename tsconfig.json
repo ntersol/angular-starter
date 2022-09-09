@@ -21,7 +21,8 @@
     "typeRoots": ["node_modules/@types"],
     "paths": {
       "$components": ["./src/app/components"],
-      "$shared": ["./src/app/shared"]
+      "$shared": ["./src/app/shared"],
+      "$env": ["./src/environments/environment.ts"]
     }
   },
   "angularCompilerOptions": {
