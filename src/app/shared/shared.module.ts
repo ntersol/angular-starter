@@ -20,6 +20,12 @@ import {
 } from './pipes';
 // Directives
 import { FullScreenDirective, FocusDirective } from './directives';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FontsModule } from './fonts/fonts.module';
+import { IconsModule } from './icons/icons.module';
 
 // Pipes + Directives
 export const APP_PIPES_DIRECTIVES = [
@@ -42,13 +48,22 @@ export const APP_PIPES_DIRECTIVES = [
   FocusDirective,
 ];
 
+const MODULES = [
+  // Angular
+  RouterModule,
+  FormsModule,
+  ReactiveFormsModule,
+  // Font-awesome icons
+  FontsModule,
+  IconsModule,
+  ConfirmDialogModule,
+  DynamicDialogModule,
+];
+
 @NgModule({
-    imports: [
-        // Angular
-        CommonModule,
-    ],
-    providers: [DatePipe, CurrencyPipe],
-    declarations: [APP_PIPES_DIRECTIVES],
-    exports: [APP_PIPES_DIRECTIVES]
+  imports: [CommonModule, MODULES],
+  providers: [DatePipe, CurrencyPipe],
+  declarations: [APP_PIPES_DIRECTIVES],
+  exports: [APP_PIPES_DIRECTIVES, MODULES],
 })
 export class SharedModule {}

@@ -1,5 +1,4 @@
 // @angular modules
-import { SiteModule } from '$site';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { enableProdMode, ErrorHandler, Injector, NgModule } from '@angular/core'; // APP_INITIALIZER,
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
@@ -16,6 +15,8 @@ import { environment } from '$env';
 import { TrailingSlashUrlSerializer } from './shared/utils/url-serializer.util';
 import { AppRouterModule } from './app.routes.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 // Enables faster prod mode, does disable some dirty error checking though
 if (environment.production) {
@@ -43,46 +44,47 @@ if (!isBrowser) {
 export let InjectorInstance: Injector;
 
 @NgModule({
-    declarations: [APP_COMPONENTS],
-    imports: [
-        BrowserModule.withServerTransition({ appId: environment.appID }),
-        BrowserTransferStateModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AppRouterModule,
-        /** Uncomment to enable SW
+  declarations: [APP_COMPONENTS],
+  imports: [
+    BrowserModule.withServerTransition({ appId: environment.appID }),
+    BrowserTransferStateModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AppRouterModule,
+    /** Uncomment to enable SW
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: environment.settings.enableServiceWorker,
           registrationStrategy: 'registerImmediately',
         }),
          */
-        SiteModule,
-        ...Scully,
-    ],
-    providers: [
-        { provide: UrlSerializer, useClass: TrailingSlashUrlSerializer },
-        // AppConfigService, // App config/env settings
-        // Global error handling
-        {
-            provide: ErrorHandler,
-            useClass: GlobalErrorHandler,
-        },
-        // HTTP interceptor for auth
-        HttpInterceptorService,
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: HttpInterceptorService,
-            multi: true,
-        },
-        // App initializer for startup
-        // {
-        //  provide: APP_INITIALIZER,
-        //  useFactory: AppInit,
-        //  deps: [AppSettings, AppConfigService],
-        //  multi: true,
-        // },
-    ],
-    bootstrap: [AppComponent]
+    ...Scully,
+  ],
+  providers: [
+    ConfirmationService,
+    DialogService,
+    { provide: UrlSerializer, useClass: TrailingSlashUrlSerializer },
+    // AppConfigService, // App config/env settings
+    // Global error handling
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
+    // HTTP interceptor for auth
+    HttpInterceptorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
+    // App initializer for startup
+    // {
+    //  provide: APP_INITIALIZER,
+    //  useFactory: AppInit,
+    //  deps: [AppSettings, AppConfigService],
+    //  multi: true,
+    // },
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(private injector: Injector) {
