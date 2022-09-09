@@ -1,6 +1,7 @@
 {
   "name": "angular-starter",
   "license": "MIT",
+  "version": "4.0.0",
   "scripts": {
     "localize": "ren tsconfig.json tsconfig.old.json && ren tsconfig.bak.json tsconfig.json",
     "start": "npm run format && ng serve",
