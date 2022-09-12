@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '$shared';
+import { IconsModule, MasterPageModule } from '$components';
 // Routing
 import { routing } from './home.routes';
 
@@ -8,7 +9,7 @@ import { routing } from './home.routes';
 import { HomeComponent } from './home.component';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, routing],
+  imports: [CommonModule, SharedModule, routing, MasterPageModule, IconsModule],
   declarations: [HomeComponent],
   providers: [],
   exports: [],

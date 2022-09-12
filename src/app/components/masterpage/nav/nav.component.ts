@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
-import { UiStateService } from '$ui';
-import { AppStorageService, AuthService, AuthState } from '../../../shared/services';
+import { AppStorageService, AuthService, AuthState, UiStateService } from '$shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 

@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { isBrowser } from '$shared';
 
 @Component({
-  selector: 'app-layout-main',
-  templateUrl: './layout-main.component.html',
+  selector: 'app-masterpage',
+  templateUrl: './masterpage.component.html',
 })
-export class LayoutMainComponent {
+export class MasterpageComponent {
   public isBrowser = isBrowser;
 
   constructor() {}
