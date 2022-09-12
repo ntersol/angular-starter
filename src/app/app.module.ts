@@ -11,7 +11,6 @@ import { ScullyLibModule } from '@scullyio/ng-lib';
 import { environment } from '$env';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.routes.module';
-import { NoContentComponent } from './routes/no-content/no-content.component';
 import { ComponentsLazyLoad } from './components/components.lazy';
 import { isBrowser, HttpInterceptorService, GlobalErrorHandler, TrailingSlashUrlSerializer } from '$shared';
 
@@ -24,7 +23,6 @@ if (environment.production) {
 export const APP_COMPONENTS = [
   // App component
   AppComponent,
-  NoContentComponent,
 ];
 
 // Scully is not node compatible, only load Scully when not on node
