@@ -73,7 +73,7 @@
     "@nguniversal/express-engine": "14.0.0",
     "@ntersol/forms": "0.0.7",
     "@ntersol/schematics": "1.0.7",
-    "@ntersol/services": "1.0.1",
+    "@ntersol/services": "1.0.2",
     "@ntersol/state-management": "3.0.6",
     "@schematics/update": "0.1102.18",
     "@scullyio/init": "2.1.36",

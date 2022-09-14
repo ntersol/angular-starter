@@ -34,7 +34,6 @@ export const ROUTES: Routes = [
       useHash: false,
       preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
       scrollPositionRestoration: 'enabled',
-      relativeLinkResolution: 'legacy',
       initialNavigation: 'enabledBlocking',
     }),
   ],
