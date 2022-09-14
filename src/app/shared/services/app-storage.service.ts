@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Models } from '../models';
-import { StorageService } from './storage/base-storage.service';
+import { StorageService } from '@ntersol/services';
 
 type LocalStorageKeys = 'token' | 'user';
 

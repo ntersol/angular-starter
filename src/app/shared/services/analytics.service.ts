@@ -1,6 +1,6 @@
 /// <reference types="@types/gtag.js" />
 import { Injectable } from '@angular/core';
-import { DomService } from './dom.service';
+import { DomService } from '@ntersol/services';
 
 declare global {
   interface Window {
@@ -56,11 +56,13 @@ export class AnalyticsService {
     this.gtag('js', new Date());
     this.gtag('config', gaId);
     // Load script asynchronously
-    const scriptGa = this.dom.document.createElement('script');
-    scriptGa.type = 'text/javascript';
-    scriptGa.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-    scriptGa.onload = () => (this.loaded = true);
-    this.dom.document.head.appendChild(scriptGa);
+    if (this.dom.document) {
+      const scriptGa = this.dom.document.createElement('script');
+      scriptGa.type = 'text/javascript';
+      scriptGa.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+      scriptGa.onload = () => (this.loaded = true);
+      this.dom.document?.head.appendChild(scriptGa);
+    }
   }
 
   /**

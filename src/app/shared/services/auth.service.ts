@@ -8,7 +8,7 @@ import { environment } from '$env';
 import { Models } from '../models/global.models';
 import { LogoutModalComponent } from '../../components/modals';
 import { AppStorageService } from './app-storage.service';
-import { DomService } from './dom.service';
+import { DomService } from '@ntersol/services';
 
 export enum AuthState {
   initial,
