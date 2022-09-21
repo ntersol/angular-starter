@@ -71,7 +71,6 @@
     "@fortawesome/free-solid-svg-icons": "6.2.0",
     "@ngneat/until-destroy": "9.2.0",
     "@nguniversal/express-engine": "14.2.0",
-    "@ntersol/forms": "0.0.10",
     "@ntersol/schematics": "1.0.9",
     "@ntersol/services": "1.0.2",
     "@ntersol/state-management": "3.0.7",
