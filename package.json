@@ -4,7 +4,7 @@
   "version": "4.0.0",
   "scripts": {
     "localize": "ren tsconfig.json tsconfig.old.json && ren tsconfig.bak.json tsconfig.json",
-    "start": "npm run format && ng serve",
+    "start": "ng serve --hmr",
     "reinstall": "rmdir node_modules /s /q && rmdir .angular /s /q && del package-lock.json /q &&  npm i",
     "format": "npm run format-glob -- \"src/{app,environments}/**/*{.ts,.js,.json,.css,.scss,.html}\"",
     "format-glob": "prettier --write",
