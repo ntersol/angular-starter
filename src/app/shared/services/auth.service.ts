@@ -28,11 +28,11 @@ export class AuthService {
   public logOutModal: any | null | undefined;
 
   /** How often to refresh the token after user interaction */
-  private tokenRefreshInterval = 60 * 1000; // 60 seconds default, 60 * 1000
+  private tokenRefreshInterval = 5; // In seconds. 60 = 1 minute
   /** How long should the user be idle before loading the modal */
-  private idleDuration = 60 * 5; // In seconds
+  private idleDuration = 10; // In seconds 60 * 5 = 5 minutes
   /** How long will the log out modal will display before logging a user out automatically */
-  private logoutModalDuration = 60; // In seconds
+  private logoutModalDuration = 60; // In seconds = 1 minute
   /** Is the current timer expired */
   private logoutModalVisible = false;
 
@@ -48,20 +48,20 @@ export class AuthService {
   public logoutTimerExpired$ = this.refreshEvent$.pipe(
     switchMap(() => interval(1000)), // Reset interval everytime refresh fires
     filter(() => !!this.appStorage.token), // Only capture refresh events if token present
-    tap(x => console.log('Counter', x)),
     map(val => (val > this.idleDuration ? true : false)), // If val is greater than duration, convert to true or false
     startWith(false),
     distinctUntilChanged(),
-    filter(expired => expired && !this.logoutModalVisible),
+    filter(expired => expired && !this.logoutModalVisible), // Don't show if logout modal is already visible
     tap(() => this.launchLogoutModal()),
   );
 
   /** Refresh the token automatically */
   public refreshToken$ = this.refreshEvent$.pipe(
-    filter(refreshEvent => !!refreshEvent), // Token refresh can only occur after refreshEvent$ is initialized
-    filter(() => !!this.appStorage.token), // Only capture refresh events if token present
-    throttleTime(this.tokenRefreshInterval), // Throttle time using refresh interval
-    filter(() => !this.logoutModalVisible), // Only refresh token if timer not expired
+    //Token refresh can only occur after refreshEvent$ is initialized
+    //Only capture refresh events if token present
+    // Only refresh token if timer not expired
+    filter(refreshEvent => !!refreshEvent && !!this.appStorage.token && !this.logoutModalVisible),
+    throttleTime(this.tokenRefreshInterval * 1000), // Throttle time using refresh interval
     tap(() => this.refreshToken()),
   );
 
@@ -79,7 +79,6 @@ export class AuthService {
         this.appStorage.token = params['token'];
       }
     });
-    console.log('Init');
   }
 
   /**
@@ -108,24 +107,15 @@ export class AuthService {
    * Refresh the token
    */
   public refreshToken() {
-    // Null check against env files
-    if (!environment.endpoints.apiUrl || !environment.endpoints.authTokenRefresh) {
-      return false;
-    }
-
     const authApi =
       environment.endpoints.apiUrl && environment.endpoints.authTokenRefresh
         ? this.http.post<Models.Auth>(environment.endpoints.apiUrl + environment.endpoints.authTokenRefresh, {})
-        : this.http.post<any>('https://jsonplaceholder.typicode.com/posts/', {
-            userId: 1,
-            id: 1,
-            title: '',
-            body: '',
-          });
+        : // Stub refresh API
+          this.http
+            .post<Models.Auth>('https://jsonplaceholder.typicode.com/posts/', {})
+            .pipe(map(() => ({ data: { token: '12345', userGuid: '12345' }, success: true, meta: {} } as Models.Auth)));
 
-    const refreshApi = this.http.post<Models.Auth>(environment.endpoints.apiUrl + environment.endpoints.authTokenRefresh, {});
-
-    refreshApi.subscribe(
+    authApi.subscribe(
       response => {
         if (this.appStorage.token) {
           // Make sure a token is present before it is replaced
@@ -136,7 +126,7 @@ export class AuthService {
       () => this.logOut(AuthState.sessionExpired),
     );
     // Return observable if needed by a component
-    return refreshApi;
+    return authApi;
   } // end RefreshToken
 
   /**

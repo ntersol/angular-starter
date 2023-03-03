@@ -14,11 +14,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Handle logout modal
     this.auth.logoutTimerExpired$.pipe(untilDestroyed(this)).subscribe();
-
-    // Handle refresh token if endpoint specified
-    if (environment.endpoints.authTokenRefresh) {
-      this.auth.refreshToken$.pipe(untilDestroyed(this)).subscribe();
-    }
+    // Handle refresh token
+    this.auth.refreshToken$.pipe(untilDestroyed(this)).subscribe();
   }
 
   ngOnDestroy(): void {}
