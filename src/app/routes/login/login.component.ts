@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Validators, NonNullableFormBuilder, UntypedFormControl } from '@angular/forms';
+import { Validators, NonNullableFormBuilder, UntypedFormControl, FormControl } from '@angular/forms';
 import { DomService } from '@ntersol/services';
 import { AuthService, AuthState } from '$shared';
 
 interface LoginForm {
-  userName: UntypedFormControl<string>;
-  password: UntypedFormControl<string>;
-  remember: UntypedFormControl<boolean>;
+  userName: FormControl<string>;
+  password: FormControl<string>;
+  remember: FormControl<boolean>;
 }
 // Localstorage key to store username
 const savedUserName = 'savedUserName';
@@ -18,9 +18,9 @@ const savedUserName = 'savedUserName';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public formMain = this.fb.group<LoginForm>({
-    userName: new UntypedFormControl('juser', { validators: Validators.required, nonNullable: true }),
-    password: new UntypedFormControl('password', { validators: Validators.required, nonNullable: true }),
-    remember: new UntypedFormControl(false, { nonNullable: true }),
+    userName: new FormControl('juser', { validators: Validators.required, nonNullable: true }),
+    password: new FormControl('password', { validators: Validators.required, nonNullable: true }),
+    remember: new FormControl(false, { nonNullable: true }),
   });
   public waiting: boolean | undefined;
   public errorApi: any | null | undefined;
