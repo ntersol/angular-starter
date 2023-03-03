@@ -1,16 +1,16 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { FormControl, NonNullableFormBuilder } from '@angular/forms';
+import { UntypedFormControl, NonNullableFormBuilder } from '@angular/forms';
 import { Models, ApiService, AppStorageService } from '$shared';
 
 interface UserForm {
-  address: FormControl<any>;
-  company: FormControl<any>;
-  email: FormControl<string>;
-  id: FormControl<number>;
-  name: FormControl<string>;
-  phone: FormControl<string>;
-  username: FormControl<string>;
-  website: FormControl<string>;
+  address: UntypedFormControl<any>;
+  company: UntypedFormControl<any>;
+  email: UntypedFormControl<string>;
+  id: UntypedFormControl<number>;
+  name: UntypedFormControl<string>;
+  phone: UntypedFormControl<string>;
+  username: UntypedFormControl<string>;
+  website: UntypedFormControl<string>;
 }
 @Component({
   selector: 'app-users',
@@ -28,14 +28,14 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   /** Form used to create/edit user */
   public userForm = this.fb.group<UserForm>({
-    address: new FormControl(),
-    company: new FormControl(),
-    email: new FormControl(),
-    id: new FormControl(),
-    name: new FormControl(),
-    phone: new FormControl(),
-    username: new FormControl(),
-    website: new FormControl(),
+    address: new UntypedFormControl(),
+    company: new UntypedFormControl(),
+    email: new UntypedFormControl(),
+    id: new UntypedFormControl(),
+    name: new UntypedFormControl(),
+    phone: new UntypedFormControl(),
+    username: new UntypedFormControl(),
+    website: new UntypedFormControl(),
   });
 
   /** Create or edit a user */
