@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { environment } from '$env';
 import { AuthService } from './shared';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -12,6 +11,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
+    // Manage authentication events. These are subscriptions so for memory management reasons they are managed here instead of the service
     // Handle logout modal
     this.auth.logoutTimerExpired$.pipe(untilDestroyed(this)).subscribe();
     // Handle refresh token
