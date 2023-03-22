@@ -45,7 +45,7 @@ export class AuthService {
   /** Throttle userActions  */
   public refreshEvent$ = this.userActions$.pipe(
     startWith(0),
-    throttleTime(1000), // Throttle to every one second
+    throttleTime(1000, undefined, { leading: false, trailing: true }), // Throttle to every one second
   );
 
   /** Logout timer that resets after every user interaction event */
@@ -62,7 +62,7 @@ export class AuthService {
   public refreshToken$ = this.refreshEvent$.pipe(
     // Throttle time using refresh interval
     // Needs to be before filter to prevent duplicate calls when the logout modal fires or on login
-    throttleTime(this.tokenRefreshInterval * 1000),
+    throttleTime(this.tokenRefreshInterval * 1000, undefined, { leading: false, trailing: true }),
     // Token refresh can only occur after refreshEvent$ is initialized
     // Only capture refresh events if token present
     // Only refresh token if timer not expired
