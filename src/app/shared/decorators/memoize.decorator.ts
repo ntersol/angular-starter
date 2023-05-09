@@ -13,7 +13,7 @@
  */
 export function Memoize() {
   const cache = new Map();
-  return (target: unknown, key: string, descriptor: PropertyDescriptor) => {
+  return (_target: unknown, _key: string, descriptor: PropertyDescriptor) => {
     const originalMethod = descriptor.value;
 
     descriptor.value = function (...args: any[]) {
