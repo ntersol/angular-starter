@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -47,8 +47,7 @@ export class NavComponent implements OnInit, OnDestroy {
     },
   ];
 
-  public sidebarVisible = false;
-  public dropDownMenuVisible = false;
+  public sidebarVisible = signal(false);
 
   constructor(private appStorage: AppStorageService, private ui: UiStateService, private router: Router, private auth: AuthService) {
     // On route change, if mobile nav is open close it
@@ -57,10 +56,17 @@ export class NavComponent implements OnInit, OnDestroy {
         takeUntilDestroyed(),
         filter(event => event instanceof NavigationEnd),
       )
-      .subscribe(() => (this.sidebarVisible = false));
+      .subscribe(() => this.sidebarVisible.set(false));
   }
 
   ngOnInit(): void {}
+
+  /**
+   * Toggle sidebar
+   */
+  public toggleSidebar() {
+    this.sidebarVisible.update(v => !v);
+  }
 
   /**
    * Update application
