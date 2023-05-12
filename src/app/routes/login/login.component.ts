@@ -31,15 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     showPassword: true,
   });
 
-  // public waiting: boolean | undefined;
-  // public errorApi: any | null | undefined;
-  // public showErrorDetails = false;
-
   public authState$ = this.authService.authState$;
   public authStateType = AuthState;
-
-  // public loggedout: boolean | undefined;
-  // public showPassword = false;
 
   constructor(
     private authService: AuthService,
