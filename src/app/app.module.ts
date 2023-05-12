@@ -4,12 +4,12 @@ import { ErrorHandler, Injector, NgModule, enableProdMode } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Uncomment for animation, needed by some prime components
 import { UrlSerializer } from '@angular/router';
-import { ScullyLibModule } from '@scullyio/ng-lib';
+
 import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 // Main entrypoint component
 import { environment } from '$env';
-import { GlobalErrorHandler, HttpInterceptorService, TrailingSlashUrlSerializer, isBrowser } from '$shared';
+import { GlobalErrorHandler, HttpInterceptorService, TrailingSlashUrlSerializer } from '$shared';
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.routes.module';
 import { ComponentsLazyLoad } from './components/components.lazy';
@@ -24,17 +24,6 @@ export const APP_COMPONENTS = [
   // App component
   AppComponent,
 ];
-
-// Scully is not node compatible, only load Scully when not on node
-let Scully = [
-  ScullyLibModule.forRoot({
-    useTransferState: true,
-    alwaysMonitor: true,
-  }),
-];
-if (!isBrowser) {
-  Scully = [];
-}
 
 export let InjectorInstance: Injector;
 
@@ -54,7 +43,6 @@ export let InjectorInstance: Injector;
           registrationStrategy: 'registerImmediately',
         }),
          */
-    ...Scully,
   ],
   providers: [
     ConfirmationService,

@@ -18,7 +18,7 @@
  * BROWSER POLYFILLS
  */
 
-/** IE9, IE10 and IE11 requires all of the following polyfills. 
+/** IE9, IE10 and IE11 requires all of the following polyfills.
  * All IE only polyfills moved to polyfills-ie.ts
 import 'core-js/es7/array';
 import 'core-js/es6/symbol';
@@ -79,7 +79,7 @@ import 'zone.js'; // Included with Angular CLI.
 // import 'intl/locale-data/jsonp/en';
 
 /***************************************************************************************************
-* SCULLY IMPORTS
+
 */
 // tslint:disable-next-line: align
 import 'zone.js/dist/task-tracking';
