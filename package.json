@@ -69,7 +69,6 @@
     "@fortawesome/free-brands-svg-icons": "6.3.0",
     "@fortawesome/free-regular-svg-icons": "6.3.0",
     "@fortawesome/free-solid-svg-icons": "6.3.0",
-    "@nguniversal/express-engine": "16.0.1",
     "@ntersol/schematics": "1.0.9",
     "@ntersol/services": "1.0.3",
     "@ntersol/state-management": "4.2.10",
