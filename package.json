@@ -73,7 +73,7 @@
     "document-register-element": "1.14.10",
     "express": "4.18.1",
     "primeicons": "^6.0.1",
-    "primeng": "15.4.1",
+    "primeng": "16.0.0-rc.1",
     "ramda": "0.28.0",
     "rxjs": "7.5.5",
     "sass": "1.58.3",
