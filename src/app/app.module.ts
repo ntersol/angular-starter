@@ -1,7 +1,7 @@
 // @angular modules
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, Injector, NgModule, enableProdMode } from '@angular/core'; // APP_INITIALIZER,
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Uncomment for animation, needed by some prime components
 import { UrlSerializer } from '@angular/router';
 import { ScullyLibModule } from '@scullyio/ng-lib';
@@ -57,6 +57,7 @@ export let InjectorInstance: Injector;
     ...Scully,
   ],
   providers: [
+    provideClientHydration(), // Hydration for SSR
     ConfirmationService,
     DialogService,
     { provide: UrlSerializer, useClass: TrailingSlashUrlSerializer },
