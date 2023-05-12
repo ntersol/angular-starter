@@ -30,11 +30,11 @@ export const ROUTES: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(ROUTES, {
-      useHash: false,
-      preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
-      scrollPositionRestoration: 'enabled',
-      initialNavigation: 'enabledBlocking',
-    }),
+    useHash: false,
+    preloadingStrategy: environment.settings.preloadRoutes ? PreloadAllModules : NoPreloading,
+    scrollPositionRestoration: 'enabled',
+    initialNavigation: 'enabledBlocking',
+}),
   ],
   exports: [RouterModule],
 })
