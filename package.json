@@ -18,10 +18,10 @@
     "build:qa": "ng build --configuration=qa",
     "build:uat": "ng build --configuration=uat",
     "build:prod": "ng build --configuration=production",
-    "au:dev": "ng run angular-starter:serve-ssr",
-    "au:build": "ng build && ng run angular-starter:server",
-    "au:serve": "node dist/server/main.js",
-    "au:prerender": "ng run angular-starter:prerender --routes-file routes.txt",
+    "ssr:dev": "ng run angular-starter:serve-ssr",
+    "ssr:build": "ng build && ng run angular-starter:server",
+    "ssr:serve": "node dist/server/main.js",
+    "ssr:prerender": "ng run angular-starter:prerender --routes-file routes.txt",
     "deploy": "ng build --configuration=production --base-href /angular-starter/ && angular-cli-ghpages --no-silent --dir=dist/browser",
     "gzip": "gzipper --verbose ./dist/browser",
     "docs": "compodoc -p tsconfig.json",
@@ -32,11 +32,7 @@
     "e2e": "ng e2e",
     "build:client-and-server-bundles": "ng build --configuration=production && ng run angular-starter:server",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
-    "build-ie-polyfills": "webpack-cli src/polyfills-ie.ts -o src/assets/scripts/polyfills-ie.min.js -c webpack-polyfill.config.js",
-    "dev:ssr": "ng run angular-starter:serve-ssr",
-    "serve:ssr": "node dist/server/main.js",
-    "build:ssr": "ng build && ng run angular-starter:server",
-    "prerender": "ng run angular-starter:prerender --routes-file routes.txt"
+    "build-ie-polyfills": "webpack-cli src/polyfills-ie.ts -o src/assets/scripts/polyfills-ie.min.js -c webpack-polyfill.config.js"
   },
   "prettier": {
     "tabWidth": 2,
