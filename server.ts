@@ -34,6 +34,11 @@ export function app(): express.Express {
     }),
   );
 
+  // Don't let Node/SSR handle requests for this path. IE API requests
+  server.get('/api/**', (_req, res) => {
+    res.status(404).send('data requests are not yet supported');
+  });
+
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
