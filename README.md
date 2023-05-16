@@ -49,7 +49,7 @@ npm run format
 
 # Run prod build and then use webpack bundle analyzer to check bundle sizes and composition
 # Documentation located in /documentation/
-npm run stats
+npm run build:stats
 
 # Automatically generate documentation
 npm run docs
@@ -65,6 +65,11 @@ ng update
 
 # Deploy dist folder to git pages. Be sure to update deploy script in package.json
 npm run deploy
+
+# Angular Universal/SSR Commands
+npm run ssr:dev # Run SSR locally for development purposes
+npm run ssr:build # Create an SSR prod build
+npm run ssr:serve # Serve SSR prod build
 
 ```
 

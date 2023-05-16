@@ -1,7 +1,11 @@
+'use strict';
 import 'zone.js/node';
+
+// Advanced example of server file: https://github.com/mzuccaroli/express_server_for_angular_example/blob/master/server.js
 
 import { APP_BASE_HREF } from '@angular/common';
 import { ngExpressEngine } from '@nguniversal/express-engine';
+import * as compression from 'compression';
 import * as express from 'express';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -10,7 +14,8 @@ import { AppServerModule } from './src/main.server';
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/browser');
+  server.use(compression()); // Compress requests for static files
+  const distFolder = join(process.cwd(), 'dist/browser'); // Only allow requests from dist folder for security reasons
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
@@ -24,9 +29,7 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
-  // Serve static files from /browser
+  // Serve static files from /browser. Set long cache time
   server.get(
     '*.*',
     express.static(distFolder, {
@@ -34,13 +37,14 @@ export function app(): express.Express {
     }),
   );
 
-  // Don't let Node/SSR handle requests for this path. IE API requests
+  // Don't let the server requests for this path. IE API requests
   server.get('/api/**', (_req, res) => {
     res.status(404).send('data requests are not yet supported');
   });
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
+    // res.set('Content-Encoding', 'gzip');
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 
