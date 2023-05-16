@@ -20,7 +20,6 @@ import {
   faUser,
   faUsers,
   faX,
-  fas,
 } from '@fortawesome/free-solid-svg-icons';
 // Regular (thinner) icons
 // import { faPowerOff } from '@fortawesome/free-regular-svg-icons';
@@ -46,7 +45,7 @@ import {
 })
 export class IconsModule {
   constructor(library: FaIconLibrary) {
-    library.addIconPacks(fas);
+    // library.addIconPacks(fas); // Adding an icon pack increases filesizes dramatically. It will not be tree shaken
     library.addIcons(
       faPhone,
       faEnvelope,
