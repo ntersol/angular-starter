@@ -385,8 +385,6 @@ MIT
 @ntersol/state-management
 MIT
 
-@scullyio/ng-lib
-
 primeng
 MIT
 
