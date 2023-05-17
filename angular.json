@@ -204,6 +204,21 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "deploy-ssr": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {},
+          "configurations": {
+            "production": {
+              "browserTarget": "angular-starter:build:production",
+              "serverTarget": "angular-starter:server:production"
+            },
+            "development": {
+              "browserTarget": "angular-starter:build:development",
+              "serverTarget": "angular-starter:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     },

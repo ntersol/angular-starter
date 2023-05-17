@@ -23,6 +23,7 @@
     "ssr:serve": "node dist/server/main.js",
     "ssr:prerender": "ng run angular-starter:prerender --routes-file routes.txt",
     "deploy": "ng build --configuration=production --base-href /angular-starter/ && angular-cli-ghpages --no-silent --dir=dist/browser",
+    "deploy:ssr": "ng run angular-starter:deploy-ssr --routes-file routes.txt && angular-cli-ghpages --no-silent --dir=dist/browser",
     "gzip": "gzipper --verbose ./dist/browser",
     "docs": "compodoc -p tsconfig.json",
     "docs:serve": "compodoc -p tsconfig.json -s",

@@ -66,6 +66,11 @@ ng update
 # Deploy dist folder to git pages. Be sure to update deploy script in package.json
 npm run deploy
 
+# Deploy dist folder to git pages with prerendered pages
+1. Add "baseHref": "/angular-starter/", to angular.json in projects>angular-starter>architect>build>options
+2. Run "npm run deploy:ssr"
+3. Remove update from #1. Prerender does not (yet) support the --base-href prop in the build command
+
 # Angular Universal/SSR Commands
 npm run ssr:dev # Run SSR locally for development purposes
 npm run ssr:build # Create an SSR prod build
