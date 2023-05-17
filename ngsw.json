@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1684330377560,
+  "timestamp": 1684330864771,
   "index": "/angular-starter/index.html",
   "assetGroups": [
     {
@@ -149,7 +149,7 @@
     "/angular-starter/color.dae87a04d07ca92b.png": "ff4c4bcb2207891b292f544edb4da9d2df5d45cf",
     "/angular-starter/common.e3ab280a38e29f6f.js": "fc8b773957cb4d9b9ea200a71ea349505e8ca32a",
     "/angular-starter/hue.8b1818380241e6ac.png": "f81ae627637a684614aa726e206c73ce099a01fd",
-    "/angular-starter/index.html": "92f1bcaa3553bc6600cd48e983826a3d581b8af0",
+    "/angular-starter/index.html": "da73ac36ab4762cf3c4707e870f95b3c736f3028",
     "/angular-starter/main.a18023ae4d05469d.js": "69fdbe714b83f323717b685425b20d696f000952",
     "/angular-starter/manifest.webmanifest": "7fbbd85f507a68b45c31b744a2a59335359342e3",
     "/angular-starter/polyfills.751e79ef08534fad.js": "c954b700398dacca6835fe643ba828d9f4461252",
