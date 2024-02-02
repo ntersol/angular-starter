@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DomService } from '@ntersol/services'; // Adjust the path as necessary
-import 'jasmine';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AuthService } from './shared';
