@@ -23,17 +23,7 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [{ type: 'html' }, { type: 'text-summary' }],
     },
-    webpack: {
-      resolve: {
-        extensions: ['.js', '.ts'],
-        fallback: {
-          path: require.resolve('path-browserify'),
-        },
-      },
-    },
-    mime: {
-      'text/x-typescript': ['ts'],
-    },
+
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

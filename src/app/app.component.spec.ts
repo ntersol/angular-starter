@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { DomService } from '@ntersol/services'; // Adjust the path as necessary
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ describe('AppComponent', () => {
         { provide: AuthService, useValue: authServiceSpy },
         { provide: DomService, useValue: domServiceSpy },
       ],
+      imports: [RouterTestingModule], // Import RouterTestingModule
     }).compileComponents();
   }));
 
