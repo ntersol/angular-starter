@@ -34,7 +34,9 @@
     "e2e": "ng e2e",
     "build:client-and-server-bundles": "ng build --configuration=production && ng run angular-starter:server",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
-    "build-ie-polyfills": "webpack-cli src/polyfills-ie.ts -o src/assets/scripts/polyfills-ie.min.js -c webpack-polyfill.config.js"
+    "build-ie-polyfills": "webpack-cli src/polyfills-ie.ts -o src/assets/scripts/polyfills-ie.min.js -c webpack-polyfill.config.js",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "prettier": {
     "tabWidth": 2,
@@ -92,6 +94,7 @@
     "@angular/compiler-cli": "17.1.2",
     "@angular/language-service": "17.1.2",
     "@compodoc/compodoc": "1.1.19",
+    "@cypress/schematic": "^2.5.1",
     "@types/compression": "^1.7.2",
     "@types/express": "^4.17.0",
     "@types/gtag.js": "0.0.12",
