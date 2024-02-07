@@ -33,8 +33,8 @@
                       </td>
                       <td>
                         <div class="text-end">
-                          <a class="me-3" (click)="edit(user)"><app-icons icon="cog"></app-icons></a>
-                          <a (click)="delete(user)"><app-icons icon="trash"></app-icons></a>
+                          <a class="edit-user me-3" (click)="edit(user)"><app-icons icon="cog"></app-icons></a>
+                          <a class="delete-user" (click)="delete(user)"><app-icons icon="trash"></app-icons></a>
                         </div>
                       </td>
                     </tr>
@@ -61,7 +61,7 @@
             <h3>Add a new user</h3>
             }
             <hr class="mb-4" />
-            <form [formGroup]="userForm">
+            <form [formGroup]="userForm" (ngSubmit)="save()">
               <p class="mb-4">
                 <span class="p-float-label w-100">
                   <input id="name" class="w-100" type="text" pInputText formControlName="name" />
@@ -82,9 +82,13 @@
               </p>
               <div class="float-end">
                 @if (isEdit()) {
-                <button class="btn btn-primary" [disabled]="state.modifying" (click)="save()"><app-icons icon="cog"></app-icons> Save User</button>
+                <button class="btn btn-primary" type="submit" [disabled]="state.modifying" (click)="save()">
+                  <app-icons icon="cog"></app-icons> Save User
+                </button>
                 } @if (!isEdit()) {
-                <button class="btn btn-primary" [disabled]="state.modifying" (click)="save()"><app-icons icon="plus"></app-icons> Create User</button>
+                <button class="btn btn-primary" type="submit" [disabled]="state.modifying" (click)="save()">
+                  <app-icons icon="plus"></app-icons> Create User
+                </button>
                 }
               </div>
             </form>

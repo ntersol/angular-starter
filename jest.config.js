@@ -1,9 +1,9 @@
 const { pathsToModuleNameMapper } = require('ts-jest');
 const { compilerOptions } = require('./tsconfig.json');
-import { environment } from './src/environments/environment.defaults';
+// const environment = require('./src/environments/environment.defaults');
 
 module.exports = {
-  displayName: environment.appID,
+  // displayName: environment.appID,
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   collectCoverage: true,
   globals: {
