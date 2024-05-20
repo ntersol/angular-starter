@@ -7,13 +7,13 @@
       <p-card>
         <!-- Logout and session expired messages -->
         @if (authState$ | async; as authState) { @if (authState === authStateType.sessionExpired) {
-        <p-message severity="warn" styleClass="w-100 mb-3" text="Session expired, please log in again"></p-message>
+        <p-message severity="warning" styleClass="w-100 mb-3" text="Session expired, please log in again"></p-message>
         } @if (authState === authStateType.loggedOut) {
         <p-message severity="success" styleClass="w-100 mb-3" text="You have successfully logged out"> </p-message>
         } }
         <!-- Login failure -->
         @if (state().error) {
-        <p-message severity="error" text="Unable to log in, please check your username and password"> </p-message>
+        <p-message severity="danger" text="Unable to log in, please check your username and password"> </p-message>
         }
 
         <p class="mb-4">Please enter your username and password.</p>
