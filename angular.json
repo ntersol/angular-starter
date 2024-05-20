@@ -17,12 +17,24 @@
             "main": "./src/main.ts",
             "tsConfig": "./tsconfig.app.json",
             "preserveSymlinks": true,
-            "polyfills": ["zone.js"],
-            "assets": ["./src/assets", "./src/favicon.ico", "./src/apple-touch-icon.png", "./src/safari-pinned-tab.svg", "./src/manifest.webmanifest"],
+            "polyfills": [
+              "zone.js"
+            ],
+            "assets": [
+              "./src/assets",
+              "./src/favicon.ico",
+              "./src/apple-touch-icon.png",
+              "./src/safari-pinned-tab.svg",
+              "./src/manifest.webmanifest"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles/globals"]
+              "includePaths": [
+                "src/styles/globals"
+              ]
             },
-            "styles": ["./src/styles.scss"],
+            "styles": [
+              "./src/styles.scss"
+            ],
             "scripts": [
               {
                 "input": "node_modules/document-register-element/build/document-register-element.js",
@@ -142,14 +154,33 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["./tsconfig.app.json", "./tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**"]
+            "tsConfig": [
+              "./tsconfig.app.json",
+              "./tsconfig.spec.json",
+              "cypress/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "./tsconfig.spec.json"
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
           }
         },
         "server": {
@@ -191,7 +222,9 @@
         "prerender": {
           "builder": "@angular-devkit/build-angular:prerender",
           "options": {
-            "routes": ["/"]
+            "routes": [
+              "/"
+            ]
           },
           "configurations": {
             "production": {
@@ -219,6 +252,51 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-starter:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-starter:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "ct": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-starter:serve",
+            "watch": true,
+            "headless": false,
+            "testingType": "component"
+          },
+          "configurations": {
+            "development": {
+              "devServerTarget": "angular-starter:serve:development"
+            }
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-starter:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-starter:serve:production"
+            }
+          }
         }
       }
     },
@@ -236,17 +314,61 @@
           }
         },
         "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+          "builder": "@cypress/schematic:cypress",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "angular-starter:serve"
+            "devServerTarget": "angular-starter-e2e:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-starter-e2e:serve:production"
+            }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**"]
+            "tsConfig": [
+              "e2e/cypress/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-starter-e2e:serve",
+            "configFile": "e2e/cypress.config.ts"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-starter-e2e:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false,
+            "configFile": "e2e/cypress.config.ts"
+          }
+        },
+        "ct": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-starter-e2e:serve",
+            "watch": true,
+            "headless": false,
+            "testingType": "component"
+          },
+          "configurations": {
+            "development": {
+              "devServerTarget": "angular-starter-e2e:serve:development"
+            }
           }
         }
       }
@@ -262,9 +384,12 @@
       "prefix": "app"
     }
   },
-
   "cli": {
     "analytics": false,
-    "schematicCollections": ["@ntersol/schematics"]
+    "schematicCollections": [
+      "@cypress/schematic",
+      "@ntersol/schematics",
+      "@schematics/angular"
+    ]
   }
 }
